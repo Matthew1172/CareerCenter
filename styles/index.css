@@ -1,0 +1,59 @@
+ul
+{
+	list-style: none;
+	padding: 0;
+}
+
+ul li
+{
+		padding: 10px;
+}
+
+#main-button
+{
+	width: 100%;
+}
+
+footer
+{
+	text-align:center;
+	background-color: #494949;
+	margin-top: 300px;
+}
+
+.main {
+
+	width: 100%;
+	background-color: #f0f0f0;
+}
+
+.main p
+{
+	padding-top: 20px;
+	text-align: center;
+}
+
+.main input {
+	width: 100%;
+}
+
+.nav-form
+{
+	width: 100%;
+}
+
+@media screen and (min-width: 500px)
+{
+	.main
+	{
+	width: 50%;
+	}
+}
+
+@media screen and (min-width: 900px)
+{
+	.main
+	{
+	width: 30%;
+	}
+}
