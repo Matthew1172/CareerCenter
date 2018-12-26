@@ -1,0 +1,54 @@
+ @import url('https://fonts.googleapis.com/css?family=Muli|Open+Sans+Condensed:300');
+body
+{
+    background-color: white;
+}
+
+footer
+{
+	text-align:center;
+	background-color: #dcdcdc;
+	margin-top: 130px;
+}
+
+h1, h2, h3, h4, h6
+{
+
+    	font-family: 'Muli', sans-serif;
+
+		color: #00aaff;
+
+}
+
+.event
+{
+	background-color: white;
+}
+
+.form-error
+{
+	color: red;
+}
+
+.form-success
+{
+	color: green;
+}
+
+.input-error
+{
+	box-shadow: 0 0 5px red;
+}
+
+.navbar-nav
+{
+	align-items: baseline;
+}
+
+@media screen and (min-width: 1000px)
+{
+	.navbar-nav ul li
+	{
+		padding: 10px;
+	}
+}

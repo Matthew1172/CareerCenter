@@ -1,0 +1,86 @@
+.hero1
+{
+    grid-column: 1/-1;
+    grid-row: 1;
+    background-color: #00aaff;
+}
+
+.greet
+{
+    grid-area: g;
+    padding-left: 20px;
+}
+
+.event-list
+{
+    grid-area: el;
+
+/*All this shit is for text-wrapping*/
+    white-space: -moz-pre-wrap !important;  /* Mozilla, since 1999 */
+     white-space: -pre-wrap;      /* Opera 4-6 */
+     white-space: -o-pre-wrap;    /* Opera 7 */
+     white-space: pre-wrap;       /* css-3 */
+     word-wrap: break-word;       /* Internet Explorer 5.5+ */
+     white-space: -webkit-pre-wrap; /* Newer versions of Chrome/Safari*/
+     word-break: break-all;
+     white-space: normal;
+}
+
+.job-list
+{
+    grid-area: jl;
+
+/*All this shit is for text-wrapping*/
+    white-space: -moz-pre-wrap !important;  /* Mozilla, since 1999 */
+     white-space: -pre-wrap;      /* Opera 4-6 */
+     white-space: -o-pre-wrap;    /* Opera 7 */
+     white-space: pre-wrap;       /* css-3 */
+     word-wrap: break-word;       /* Internet Explorer 5.5+ */
+     white-space: -webkit-pre-wrap; /* Newer versions of Chrome/Safari*/
+     word-break: break-all;
+     white-space: normal;
+}
+
+.more-btn
+{
+    width: 40%;
+}
+
+.show-more-container
+{
+    text-align: center;
+}
+
+.call-btn
+{
+    margin-top: 20px;
+}
+
+.grid
+{
+    display: grid;
+    grid-template-rows: auto 100px auto 100px auto;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-areas:
+    "g g g g"
+    ". . . ."
+    "el el el el"
+    ". . . ."
+    "jl jl jl jl";
+}
+
+@media screen and (min-width: 1000px)
+{
+    .grid
+    {
+        display: grid;
+        grid-template-rows: auto 100px auto 100px auto;
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+        grid-template-areas:
+        ". g g g g g g ."
+        ". . . . . . . ."
+        ". el el el el el el ."
+        ". . . . . . . ."
+        ". jl jl jl jl jl jl .";
+    }
+}

@@ -2,5 +2,5 @@
 session_start();
 session_unset();
 session_destroy();
-header("Location: ../pages/index.php?loggedout");
+header("Location: ../index.php?loggedout");
 ?>

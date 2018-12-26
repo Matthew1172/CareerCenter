@@ -1,0 +1,51 @@
+.hero1
+{
+    grid-column: 1/-1;
+    grid-row: 1;
+    background-color: #00aaff;
+}
+
+.greet
+{
+    grid-area: g;
+    padding-left: 20px;
+}
+
+.btn-control-group
+{
+    grid-area: bc;
+}
+
+.event-list
+{
+    grid-area: el;
+}
+
+.grid
+{
+    display: grid;
+    grid-template-rows: auto 100px auto 100px auto;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-areas:
+    "g g g g"
+    ". . . ."
+    "bc bc bc bc"
+    ". . . ."
+    "el el el el";
+}
+
+@media screen and (min-width: 1000px)
+{
+    .grid
+    {
+        display: grid;
+        grid-template-rows: auto 100px auto 100px auto;
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+        grid-template-areas:
+        ". g g g g g g ."
+        ". . . . . . . ."
+        ". bc bc bc bc bc bc ."
+        ". . . . . . . ."
+        ". el el el el el el .";
+    }
+}

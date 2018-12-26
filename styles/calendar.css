@@ -1,0 +1,44 @@
+.hero1
+{
+	grid-column: 1/-1;
+	grid-row: 1;
+    background-color: #00aaff;
+}
+
+.cal
+{
+    grid-area: c;
+}
+
+.intro
+{
+    grid-area: i;
+    color: white;
+	padding-left: 20px;
+	padding-right: 20px;
+}
+
+.grid
+{
+    display: grid;
+    grid-template-rows: auto 100px auto;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-areas:
+    "i i i i"
+    ". . . ."
+    "c c c c";
+}
+
+@media screen and (min-width: 1000px)
+{
+    .grid
+    {
+        display: grid;
+        grid-template-rows: auto 100px auto;
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+        grid-template-areas:
+        " . i i i i i i . "
+        " . . . . . . . . "
+        " . c c c c c c . ";
+    }
+}

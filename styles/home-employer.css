@@ -1,0 +1,87 @@
+.main-btn
+{
+	width: 100%;
+}
+
+.modal-content ul
+{
+	padding: 0;
+	list-style-type: none;
+}
+
+.modal-content ul li
+{
+	padding: 10px;
+}
+
+.modal-content p
+{
+	padding-top: 20px;
+	text-align: center;
+}
+
+.modal-content ul input
+{
+	width: 100%;
+}
+
+.hero1
+{
+    grid-column: 1/-1;
+    grid-row: 1;
+    background-color: #00aaff;
+}
+
+.greet
+{
+    grid-area: g;
+    padding-left: 20px;
+}
+
+.postJob
+{
+    grid-area: pj;
+}
+
+.jobList
+{
+	grid-area: jl;
+
+		white-space: -moz-pre-wrap !important;  /* Mozilla, since 1999 */
+		 white-space: -pre-wrap;      /* Opera 4-6 */
+		 white-space: -o-pre-wrap;    /* Opera 7 */
+		 white-space: pre-wrap;       /* css-3 */
+		 word-wrap: break-word;       /* Internet Explorer 5.5+ */
+		 white-space: -webkit-pre-wrap; /* Newer versions of Chrome/Safari*/
+		 word-break: normal;
+		 white-space: normal;
+}
+
+.grid
+{
+    display: grid;
+    grid-template-rows: auto 100px auto 100px auto;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-areas:
+    "g g g g"
+    ". . . ."
+    "pj pj pj pj"
+	". . . ."
+	"jl jl jl jl";
+}
+
+@media screen and (min-width: 1000px)
+{
+    .grid
+    {
+        display: grid;
+        grid-template-rows: auto 100px auto 100px auto;
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+        grid-template-areas:
+        ". g g g g g g ."
+        ". . . . . . . ."
+        ". pj pj pj pj pj pj ."
+		". . . . . . . ."
+		". jl jl jl jl jl jl .";
+    }
+}
