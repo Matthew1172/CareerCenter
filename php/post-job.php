@@ -34,10 +34,8 @@ if(isset($_POST['submit']))
             $sql->execute([$result['user_id']]);
             $resultEmployer = $sql->fetch();
 
-
             $sql = $conn->prepare('INSERT INTO jobs(employer_id, job_title, job_description, job_position, job_location, isMedical, isIT, isHealthcare, isBusiness, isFoodservice, isHospitality, isCulinary) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
             $sql->execute([$resultEmployer['employer_id'], $job_title, $job_description, $job_position, $job_location, $job_med, $job_it, $job_health, $job_bus, $job_food, $job_hosp, $job_cul]);
-
 
             echo("<span class='form-success'>Success~!</span>");
         }
@@ -49,7 +47,6 @@ else
 ?>
 
 <script>
-
     $("#postJob-title, #postJob-description, #postJob-position, #postJob-location").removeClass("input-error");
 
 	var errorEmpty = "<?php echo $errorEmpty; ?>";

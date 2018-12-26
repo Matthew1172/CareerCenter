@@ -12,7 +12,28 @@ if (isset($_SESSION['user_uid']))
     {
             echo("<link href='styles/home-admin.css' rel='stylesheet'>");
 
+            echo('<script>');
+            echo('
+                $(document).ready(function(){
+                    $("#reset-form").submit(function(event){
+                        event.preventDefault();
 
+                        var reset_email = $("#reset-email").val();
+                        var reset_pw = $("#reset-pw").val();
+                        var reset_pw2 = $("#reset-pw2").val();
+
+                        var submit = $("#submit").val();
+
+                            $(".form-message").load("php/reset-pw.php", {
+                                reset_email: reset_email,
+                                reset_pw: reset_pw,
+                                reset_pw2: reset_pw2,
+                                submit: submit
+                            });
+                    });
+                });
+                ');
+            echo('</script>');
 
             echo("<div class='grid'>");
 
@@ -22,14 +43,12 @@ if (isset($_SESSION['user_uid']))
             echo("</div>");
 
             echo("<div class='btn-control-group'>");
-            echo('<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#changePw">Change user password</button>');
-
+            echo('<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#reset">Reset user password</button>');
             echo("</div>");
 
             echo("<div class='event-list'>");
             echo("<h2>Current Workshops: </h2><hr>");
             echo("<div id='event-list' class='container'>");
-
             $stm = $conn->prepare('SELECT * from events');
             $stm->execute();
             while($event = $stm->fetch(PDO::FETCH_ASSOC))
@@ -47,8 +66,7 @@ if (isset($_SESSION['user_uid']))
                         "</div>");
 
                         echo("<div class='col-xs-3 col-sm-3 col-md-2 col-lg-2'>");
-                            echo('<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#delEvent">Delete Event</button>');
-                            echo("<ul>");
+                            echo("<ul class='user-attendance'>");
                             $sql = $conn->prepare('SELECT user_id FROM user_event WHERE event_id = ?');
                             $sql->execute([$eventID]);
                             if($sql->rowCount() > 0)
@@ -76,6 +94,33 @@ if (isset($_SESSION['user_uid']))
             echo("</div>");
 
             echo("</div>");
+
+                        //MODAL FOR RESET USER PASSWORD
+                        echo('
+                                <div class="modal fade" id="reset" tabindex="-1" role="dialog" aria-labelledby="resetLabel">
+                                  <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                      <div class="modal-header">
+                                        <h4 class="modal-title" id="resetLabel">Reset user password</h4>
+                                      </div>
+                                      <div class="modal-body">
+                                          <form id="reset-form">
+                                          <p class="form-message"></p>
+                                              <ul>
+                                                  <li><input id="reset-email" type="text" placeholder="User email" class="form-control" aria-label="small"></li>
+                                                  <li><input id="reset-pw" type="text" placeholder="New user password" class="form-control" aria-label="small"></li>
+                                                  <li><input id="reset-pw2" type="text" placeholder="Re-type new user password" class="form-control" aria-label="small"></li>
+                                              </ul>
+                                              <button id="submit" type="submit" class="btn btn-primary main-btn"><b>Reset Password</b></button>
+                                          </form>
+                                      </div>
+                                      <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                ');
     }
     elseif ($result['user_type'] == "employer")
     {
@@ -200,7 +245,7 @@ if (isset($_SESSION['user_uid']))
                             <h4 class="modal-title" id="postJobLabel">Post job</h4>
                           </div>
                           <div class="modal-body">
-                              <form id="postJob-form" action="php/post-job.php" method="POST">
+                              <form id="postJob-form">
                               <p class="form-message"></p>
                                   <ul>
                                       <li><input id="postJob-title" type="text" placeholder="Job title" class="form-control" aria-label="small"></li>
