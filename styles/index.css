@@ -15,9 +15,9 @@
 .contact
 {
 		grid-area: contact;
-		padding-left: 20px;
+		padding-left: 50px;
 		padding-right: 20px;
-		text-align: center;
+		/*text-align: center;*/
 }
 
 .contact ul
@@ -53,12 +53,6 @@
 .news
 {
 	grid-area: n;
-
-/*
-	border: 1px;
-	border-style: solid;
-	border-color: grey;
-*/
 	/*All this shit is for text-wrapping*/
 	    white-space: -moz-pre-wrap !important;  /* Mozilla, since 1999 */
 	     white-space: -pre-wrap;      /* Opera 4-6 */

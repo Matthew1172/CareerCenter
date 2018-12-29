@@ -53,13 +53,25 @@ echo('</div><button id="button" class="btn btn-primary">Show more</button></div>
 echo('
 <div class="contact">
 <ul>
-    <li><h4><a href="#">Contact:</a></h4></li>
-    <li><p></p></li>
-    <li>John Doe Alexander</li>
-    <li>RCC Career Center</li>
-    <li>145 College Rd</li>
-    <li>Suffern, New York</li>
-    <li>Phone: (845)845-8545</li>
+    <li><h4>Contact:</h4></li>
+
+    <li><p><b>Phone: </b>(845)845-8545</p></li>
+    <li><p><b>Hours: </b>Monday – Friday, 8:30 AM – 4:30 PM</p></li>
+
+    <li><p><b>Rockland County Career Center locations: </b></p></li>
+    <li><p>
+    145 College Rd
+    <br/>
+    Brucker Hall, Room 6104
+    <br/>
+    Suffern, New York 10901
+    </p></li>
+
+    <li><p>
+    37 West Broad Street
+    <br/>
+    Haverstraw, NY 10927
+    </p></li>    
 </ul>
 </div>
 
