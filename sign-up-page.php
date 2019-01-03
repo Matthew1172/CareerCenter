@@ -7,6 +7,7 @@ echo("<link href='formhelper/css/bootstrap-formhelpers.css' rel='stylesheet'/>")
 echo('
 <script>
     $(document).ready(function(){
+        $("[data-toggle=\"tooltip\"]").tooltip();
 
         $("#selector").on("change",function(){
             var selection = $(this).val();
@@ -26,6 +27,7 @@ echo('
             }
          });
 
+
         $("#signup").submit(function(event){
             event.preventDefault();
 
@@ -36,11 +38,8 @@ echo('
             var uid = $("#signup-uid").val();
             var pw = $("#signup-pw").val();
             var pw2 = $("#signup-pw2").val();
-
             var submit = $("#submit").val();
-
             var type = $("#selector").val();
-
 
             if(type == "seeker")
             {
@@ -112,9 +111,7 @@ echo('
                     submit: submit
                 });
             }
-
         });
-
 
     });
 </script>
@@ -128,16 +125,16 @@ echo('
     <form id="signup" action="php/create-user.php" method="POST">
     <p class="form-message"></p>
             <ul>
-                <li><input id="signup-fName" type="text" name="user_first" placeholder="First Name" class="form-control" aria-label="small"></li>
-                <li><input id="signup-lName" type="text" name="user_last" placeholder="Last Name" class="form-control" aria-label="small"></li>
-                <li><input id="signup-email" type="text" name="user_email" placeholder="Email" class="form-control" aria-label="small"></li>
-                <li><input id="signup-phone" type="text" name="user_phone" class="input-small form-control bfh-phone" data-country="US" aria-label="small"></li>
-                <li><input id="signup-uid" type="text" name="user_uid" placeholder="Username" class="form-control" aria-label="small"></li>
-                <li><input id="signup-pw" type="password" name="user_pw" placeholder="Password" class="form-control" aria-label="small"></li>
-                <li><input id="signup-pw2" type="password" name="user_pw2" placeholder="Retype-Password" class="form-control" aria-label="small"></li>
+                <li><input id="signup-fName" type="text" name="user_first" placeholder="First Name" class="form-control" aria-label="small" data-toggle="tooltip" title="Enter your first name"></li>
+                <li><input id="signup-lName" type="text" name="user_last" placeholder="Last Name" class="form-control" aria-label="small" data-toggle="tooltip" title="Enter your last name"></li>
+                <li><input id="signup-email" type="text" name="user_email" placeholder="Email" class="form-control" aria-label="small" data-toggle="tooltip" title="Enter your email address"></li>
+                <li><input id="signup-phone" type="text" name="user_phone" class="input-small form-control bfh-phone" data-country="US" aria-label="small" data-toggle="tooltip" title="Enter your phone number (only digits)"></li>
+                <li><input id="signup-uid" type="text" name="user_uid" placeholder="Username" class="form-control" aria-label="small" data-toggle="tooltip" title="Enter a user name with more than 8 characters"></li>
+                <li><input id="signup-pw" type="password" name="user_pw" placeholder="Password" class="form-control" aria-label="small" data-toggle="tooltip" title="Enter a password that has atleast 8 characters, and no special characters"></li>
+                <li><input id="signup-pw2" type="password" name="user_pw2" placeholder="Retype-Password" class="form-control" aria-label="small" data-toggle="tooltip" title="Re-type the password"></li>
 
                 <li>
-                    <select class="mb-5" id="selector" name="selector">
+                    <select class="mb-5 form-control" id="selector" name="selector">
                         <option>What kind of user are you?</option>
                         <option value="seeker">Job Seeker</option>
                         <option value="employer">Employer</option>
@@ -145,7 +142,7 @@ echo('
                 </li>
 
                 <div class="partB" id="seekerPartB" style="display:none;">
-                <li><input id="signup-stateNum" type="text" name="user_stateNum" class="form-control" placeholder="State Number" aria-label="small"></li>
+                <li><input id="signup-stateNum" type="text" name="user_stateNum" class="form-control" placeholder="State Number" aria-label="small" data-toggle="tooltip" title="Enter your state number (10 digits long)"></li>
                 <li><h6>What fields are you skilled in? <br/>(check all that apply)</h6></li>
                 <li>
                     <div class="form-check">
@@ -175,10 +172,10 @@ echo('
                 </div>
 
                 <div class="partB" id="employerPartB" style="display:none;">
-                <li><input id="employer-company" type="text" name="" placeholder="Company Name" class="form-control" aria-label="small"></li>
-                <li><input id="employer-web" type="text" name="" placeholder="Company Website (if any)" class="form-control" aria-label="small"></li>
-                <li><input id="employer-tax" type="text" name="" placeholder="Federal Tax ID #" class="form-control" aria-label="small"></li>
-                <li><input id="employer-unemployNum" type="text" name="" placeholder="Unemployment Insur. ID #" class="form-control" aria-label="small"></li>
+                <li><input id="employer-company" type="text" name="" placeholder="Company Name" class="form-control" aria-label="small" data-toggle="tooltip" title="Enter the name of your company"></li>
+                <li><input id="employer-web" type="text" name="" placeholder="Company Website (if any)" class="form-control" aria-label="small" data-toggle="tooltip" title="Copy and paste your company\'s website URL"></li>
+                <li><input id="employer-tax" type="text" name="" placeholder="Federal Tax ID #" class="form-control" aria-label="small" data-toggle="tooltip" title="Enter your federal tax id number"></li>
+                <li><input id="employer-unemployNum" type="text" name="" placeholder="Unemployment Insur. ID #" class="form-control" aria-label="small" data-toggle="tooltip" title="Enter your unemployment insurance id number"></li>
                 <li><h6>What sections is your company involved with? <br/>(check all that apply)</h6></li>
                 <li>
                     <div class="form-check">
@@ -213,6 +210,7 @@ echo('
     </div>
 
 </div>
+
 ');
 
 echo("<script src='formhelper/js/bootstrap-formhelpers-phone.js'></script>");
