@@ -2,17 +2,15 @@
 session_start();
 if (isset($_SESSION['user_uid']))
 {
-    include 'connect.php';
-    $allEventNewCount = $_POST['allEventNewCount'];
+        include 'connect.php';
+        $allEventNewCount = $_POST['allEventNewCount'];
 
-    $sql = $conn->prepare("SELECT * FROM users WHERE user_uid=?");
-    $sql->execute([$_SESSION['user_uid']]);
-    $result = $sql->fetch(PDO::FETCH_ASSOC);
+        $sql = $conn->prepare("SELECT * FROM users WHERE user_uid=?");
+        $sql->execute([$_SESSION['user_uid']]);
+        $result = $sql->fetch(PDO::FETCH_ASSOC);
 
-    $stm = $conn->prepare('SELECT * FROM events LIMIT ' . $allEventNewCount . ';');
-    $stm->execute();
-    if($stm->rowCount > 0)
-    {
+        $stm = $conn->prepare('SELECT * FROM events LIMIT ' . $allEventNewCount . ';');
+        $stm->execute();
         while($event = $stm->fetch(PDO::FETCH_ASSOC))
         {
                 echo(
@@ -51,10 +49,5 @@ if (isset($_SESSION['user_uid']))
                 }
                 echo("</div></div><hr>");
         }
-    }
-    else
-    {
-        echo("<div class='row event my-4 p-2'><h3>There are no events.</h3></div>");
-    }
 }
 ?>

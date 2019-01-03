@@ -292,73 +292,71 @@ if (isset($_SESSION['user_uid']))
     }
     else
     {
-        echo("<link href='styles/home-user.css' rel='stylesheet'>");
-        echo("
-        <script>
-        $(document).ready(function() {
-            var allEventCount = 2;
-            var ownEventCount = 2;
-            $(document).on('click','.event-btn',function(){
-                var ID = $(this).attr('id');
-                $('#event'+ID).hide();
-                    $.ajax({
-                        type: 'POST',
-                        url: 'php/subscribe.php',
-                        data: {
-                            ID: ID
-                        },
-                        success: function(html){
-                            $('#event'+ID).remove();
-                        }
+            echo("<link href='styles/home-user.css' rel='stylesheet'>");
+            echo("
+            <script>
+            $(document).ready(function() {
+                var allEventCount = 2;
+                var ownEventCount = 2;
+                $(document).on('click','.event-btn',function(){
+                    var ID = $(this).attr('id');
+                    $('#event'+ID).hide();
+                        $.ajax({
+                            type: 'POST',
+                            url: 'php/subscribe.php',
+                            data: {
+                                ID: ID
+                            },
+                            success: function(html){
+                                $('#event'+ID).remove();
+                            }
+                        });
+                });
+                $(document).on('click','.sub-event-btn',function(){
+                    var ID = $(this).attr('id');
+                    $('#sub-event'+ID).hide();
+                        $.ajax({
+                            type: 'POST',
+                            url: 'php/unsubscribe.php',
+                            data: {
+                                ID: ID
+                            },
+                            success: function(html){
+                                $('#event'+ID).remove();
+                            }
+                        });
+                });
+                $(document).on('click','.all-btn',function(){
+
+                    $('#all-events-list-section').load('php/load-all-events.php', {
+                        allEventNewCount: allEventCount
                     });
-            });
-            $(document).on('click','.sub-event-btn',function(){
-                var ID = $(this).attr('id');
-                $('#sub-event'+ID).hide();
-                    $.ajax({
-                        type: 'POST',
-                        url: 'php/unsubscribe.php',
-                        data: {
-                            ID: ID
-                        },
-                        success: function(html){
-                            $('#event'+ID).remove();
-                        }
+                    $('#own-events-list').hide();
+                    $('#all-events-list').show();
+                });
+                $(document).on('click','.own-btn',function(){
+
+                    $('#own-events-list-section').load('php/load-own-events.php', {
+                        ownEventNewCount: ownEventCount
                     });
-            });
-            $(document).on('click','.all-btn',function(){
-
-                $('#all-events-list-section').load('php/load-all-events.php', {
-                    allEventNewCount: allEventCount
+                    $('#all-events-list').hide();
+                    $('#own-events-list').show();
                 });
-                $('#own-events-list').hide();
-                $('#all-events-list').show();
-            });
-            $(document).on('click','.own-btn',function(){
-
-                $('#own-events-list-section').load('php/load-own-events.php', {
-                    ownEventNewCount: ownEventCount
+                $('#more-all-events-button').click(function(){
+                    allEventCount += 2;
+                    $('#all-events-list-section').load('php/load-all-events.php', {
+                        allEventNewCount: allEventCount
+                    });
                 });
-                $('#all-events-list').hide();
-                $('#own-events-list').show();
-            });
-            $('#more-all-events-button').click(function(){
-                allEventCount += 2;
-                $('#all-events-list-section').load('php/load-all-events.php', {
-                    allEventNewCount: allEventCount
+                $('#more-own-events-button').click(function(){
+                    ownEventCount += 2;
+                    $('#own-events-list-section').load('php/load-own-events.php', {
+                        ownEventNewCount: ownEventCount
+                    });
                 });
             });
-            $('#more-own-events-button').click(function(){
-                ownEventCount += 2;
-                $('#own-events-list-section').load('php/load-own-events.php', {
-                    ownEventNewCount: ownEventCount
-                });
-            });
-        });
-
-        </script>
-        ");
-
+            </script>
+            ");
             echo("<div class='grid'>");
 
             echo("<div class='hero1'></div>");
@@ -385,18 +383,17 @@ if (isset($_SESSION['user_uid']))
             $stm->execute();
             while($event = $stm->fetch(PDO::FETCH_ASSOC))
             {
-                        echo(
-                        "<div id='event" . $event['event_id'] . "' class='row event my-4 p-2'>" .
-                        "<div class='col-xs-9 col-sm-9 col-md-10 col-lg-10'>" .
-                        "<h3>"                   . $event['title']        . "</h3>" .
-                        "<b>Type: </b>"          . $event['type']         . "<br/>" .
-                        "<p>"                    . $event['description']  . "</p><br/><br/>" .
-                        "<b>Location: </b>"      . $event['location']     . "<br/>" .
-                        "<b>Date: </b>"          . $event['startTime']    . "<br/>" .
-                        "<b>Date Posted: </b>"   . $event['dateStamp']    . "<br/>" .
-                        "</div>");
-                        echo("<div class='col-xs-3 col-sm-3 col-md-2 col-lg-2'>");
-
+                            echo(
+                            "<div id='event" . $event['event_id'] . "' class='row event my-4 p-2'>" .
+                            "<div class='col-xs-9 col-sm-9 col-md-10 col-lg-10'>" .
+                            "<h3>"                   . $event['title']        . "</h3>" .
+                            "<b>Type: </b>"          . $event['type']         . "<br/>" .
+                            "<p>"                    . $event['description']  . "</p><br/><br/>" .
+                            "<b>Location: </b>"      . $event['location']     . "<br/>" .
+                            "<b>Date: </b>"          . $event['startTime']    . "<br/>" .
+                            "<b>Date Posted: </b>"   . $event['dateStamp']    . "<br/>" .
+                            "</div>");
+                            echo("<div class='col-xs-3 col-sm-3 col-md-2 col-lg-2'>");
                             $stm2 = $conn->prepare('SELECT event_id from user_event WHERE user_id = ?');
                             $stm2->execute([$result['user_id']]);
                             $map_result = $stm2->fetchAll(PDO::FETCH_ASSOC);
@@ -420,7 +417,7 @@ if (isset($_SESSION['user_uid']))
                             {
                                     echo("<button id='" . $event['event_id'] . "' class='btn btn-primary event-btn'>subscribe</button>");
                             }
-                        echo("</div></div><hr>");
+                            echo("</div></div><hr>");
             }
             echo("</div>");
             echo("<div class='show-more-container'>");
@@ -431,52 +428,35 @@ if (isset($_SESSION['user_uid']))
             echo("<div id='own-events-list' class='event-list' style='display:none;'>");
             echo("<h2>Your Workshops: </h2><hr>");
             echo("<div id='own-events-list-section' class='container'>");
-
-            $stm2 = $conn->prepare('SELECT * from user_event WHERE user_id = ? LIMIT 2');
-            $stm2->execute([$result['user_id']]);
-            while($map_result = $stm2->fetch(PDO::FETCH_ASSOC))
+            $stm = $conn->prepare('SELECT * FROM user_event WHERE user_id = ? LIMIT 2');
+            $stm->execute([$result['user_id']]);
+            if($stm->rowCount() > 0)
             {
-                $stm = $conn->prepare('SELECT * FROM events WHERE event_id = ?');
-                $stm->execute([$map_result['event_id']]);
-                while($event = $stm->fetch(PDO::FETCH_ASSOC))
+                while($map_result = $stm->fetch(PDO::FETCH_ASSOC))
                 {
-                            echo(
-                            "<div id='event" . $event['event_id'] . "' class='row event my-4 p-2'>" .
-                            "<div class='col-xs-9 col-sm-9 col-md-10 col-lg-10'>" .
-                            "<h3>"                   . $event['title']        . "</h3>" .
-                            "<b>Type: </b>"          . $event['type']         . "<br/>" .
-                            "<p>"                    . $event['description']  . "</p><br/><br/>" .
-                            "<b>Location: </b>"      . $event['location']     . "<br/>" .
-                            "<b>Date: </b>"          . $event['startTime']    . "<br/>" .
-                            "<b>Date Posted: </b>"   . $event['dateStamp']    . "<br/>" .
-                            "</div>");
-                            echo("<div class='col-xs-3 col-sm-3 col-md-2 col-lg-2'>");
-
-                                $stm2 = $conn->prepare('SELECT event_id from user_event WHERE user_id = ?');
-                                $stm2->execute([$result['user_id']]);
-                                $map_result = $stm2->fetchAll(PDO::FETCH_ASSOC);
-                                if(!empty($map_result))
-                                {
-                                    $flag = false;
-                                        foreach($map_result as $a)
-                                        {
-                                            if($a['event_id'] == $event['event_id'])
-                                            {
-                                                echo("<button id='" . $event['event_id'] . "' class='btn btn-primary sub-event-btn'>un-subscribe</button>");
-                                                $flag = true;
-                                            }
-                                        }
-                                        if(!$flag)
-                                        {
-                                            echo("<button id='" . $event['event_id'] . "' class='btn btn-primary event-btn'>subscribe</button>");
-                                        }
-                                }
-                                else
-                                {
-                                        echo("<button id='" . $event['event_id'] . "' class='btn btn-primary event-btn'>subscribe</button>");
-                                }
-                            echo("</div></div><hr>");
+                    $stm2 = $conn->prepare('SELECT * FROM events WHERE event_id = ?');
+                    $stm2->execute([$map_result['event_id']]);
+                    while($event = $stm2->fetch(PDO::FETCH_ASSOC))
+                    {
+                        echo(
+                        "<div id='event" . $event['event_id'] . "' class='row event my-4 p-2'>" .
+                        "<div class='col-xs-9 col-sm-9 col-md-10 col-lg-10'>" .
+                        "<h3>"                   . $event['title'] . "</h3>" .
+                        "<b>Type: </b>"          . $event['type']         . "<br/>" .
+                        "<p>"                    . $event['description']  . "</p><br/><br/>" .
+                        "<b>Location: </b>"      . $event['location']     . "<br/>" .
+                        "<b>Date: </b>"          . $event['startTime']    . "<br/>" .
+                        "<b>Date Posted: </b>"   . $event['dateStamp']    . "<br/>" .
+                        "</div>");
+                        echo("<div class='col-xs-3 col-sm-3 col-md-2 col-lg-2'>");
+                        echo("<button id='" . $event['event_id'] . "' class='btn btn-primary sub-event-btn'>un-subscribe</button>");
+                        echo("</div></div><hr>");
+                    }
                 }
+            }
+            else
+            {
+                echo("<div class='row event my-4 p-2'><h3>You have no events.</h3></div>");
             }
             echo("</div>");
             echo("<div class='show-more-container'>");
