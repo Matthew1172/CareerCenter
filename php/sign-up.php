@@ -84,7 +84,6 @@ if(isset($_POST['submit']))
 
     					$stm = $conn->prepare('INSERT INTO users(user_first, user_last, user_email, user_phone, user_uid, user_pw, user_type) VALUES (?, ?, ?, ?, ?, ?, ?)');
     					$stm->execute([$user_first, $user_last, $user_email, $user_phone, $user_uid, $hashPwd, 'employer']);
-    					$usr = $stm->fetch();
 
                         $stm = $conn->prepare('SELECT user_id FROM users WHERE user_uid = ?');
     					$stm->execute([$user_uid]);
@@ -92,11 +91,9 @@ if(isset($_POST['submit']))
 
                         $stm = $conn->prepare('INSERT INTO employers(user_id, employer_company, employer_tax, employer_unemployNum, employer_web) VALUES (?, ?, ?, ?, ?)');
                         $stm->execute([$result['user_id'], $employer_company, $employer_tax, $employer_employ, $employer_web]);
-                        $usr = $stm->fetch();
 
                         $stm = $conn->prepare('INSERT INTO occupations(user_id, medical, IT, business, foodservice, healthcare, hospitality, culinary) VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
         				$stm->execute([$result['user_id'], $user_med, $user_it, $user_bus, $user_food, $user_health, $user_hosp, $user_cul]);
-        				$usr = $stm->fetch();
 
     					echo("<span class='form-success'>Success~!</span>");
     				}
@@ -164,7 +161,6 @@ if(isset($_POST['submit']))
 
     					$stm = $conn->prepare('INSERT INTO users(user_first, user_last, user_email, user_phone, user_uid, user_pw, user_type) VALUES (?, ?, ?, ?, ?, ?, ?)');
     					$stm->execute([$user_first, $user_last, $user_email, $user_phone, $user_uid, $hashPwd, 'user']);
-    					$usr = $stm->fetch();
 
                         $stm = $conn->prepare('SELECT user_id FROM users WHERE user_uid = ?');
     					$stm->execute([$user_uid]);
@@ -172,11 +168,9 @@ if(isset($_POST['submit']))
 
                         $stm = $conn->prepare('INSERT INTO seekers(user_id, user_stateNum) VALUES (?, ?)');
                         $stm->execute([$result['user_id'], $seeker_stateNum]);
-                        $usr = $stm->fetch();
 
                         $stm = $conn->prepare('INSERT INTO occupations(user_id, medical, IT, business, foodservice, healthcare, hospitality, culinary) VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
         				$stm->execute([$result['user_id'], $user_med, $user_it, $user_bus, $user_food, $user_health, $user_hosp, $user_cul]);
-        				$usr = $stm->fetch();
 
     					echo("<span class='form-success'>Success~!</span>");
     				}

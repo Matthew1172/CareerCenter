@@ -1,7 +1,13 @@
  @import url('https://fonts.googleapis.com/css?family=Muli|Open+Sans+Condensed:300');
+
 body
 {
     background-color: white;
+}
+
+nav
+{
+    margin-bottom: 100px;
 }
 
 footer
@@ -13,11 +19,8 @@ footer
 
 h1, h2, h3, h4, h6
 {
-
     	font-family: 'Muli', sans-serif;
-
 		color: #00aaff;
-
 }
 
 .event

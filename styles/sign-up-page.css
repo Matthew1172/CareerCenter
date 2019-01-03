@@ -1,0 +1,49 @@
+.main
+{
+		grid-area: m;
+        background-color: #fafafa;
+		text-align: center;
+}
+
+.main button
+{
+        width: 50%;
+        margin-top: 40px;
+}
+
+.main ul
+{
+	padding: 0px;
+	list-style-type: none;
+}
+
+.main ul li
+{
+	padding-top: 10px;
+}
+
+.form-check
+{
+	text-align: left;
+}
+
+.grid
+{
+		display: grid;
+		grid-template-columns: 1fr 1fr 1fr 1fr;
+		grid-template-rows: auto;
+		grid-template-areas:
+		". m m .";
+}
+
+@media screen and (min-width: 800px)
+{
+        .grid
+        {
+        	display: grid;
+        	grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+        	grid-template-rows: auto;
+        	grid-template-areas:
+            ". . . m m . . .";
+        }
+}

@@ -4,15 +4,17 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <!-- Bootstrap CSS -->
+
+    <!-- Bootstrap CSS      -->
 	<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
 	<!--	CUSTOM	STYLE	-->
 	<link href="styles/style.css" rel="stylesheet">
 
-	<!--	ION-ICONS	-->
+	<!--	ION-ICONS     	-->
 	<link href="https://unpkg.com/ionicons@4.4.6/dist/css/ionicons.min.css" rel="stylesheet">
 
+    <!--	JQUERY	        -->
     <script src='js/jquery.min.js'></script>
 
 <title>Career Center</title>
@@ -63,6 +65,7 @@
         });
     });
 </script>
+
 </head>
 <body>
 <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light">
@@ -81,6 +84,7 @@
                         <li class="nav-item"><a class="nav-link" href="contact.php">Contact</a></li>
                         <li class="nav-item"><a class="nav-link" href="index.php">Home</a></li>
                         <li class="nav-item"><a class="nav-link" href="job-list.php">Job board</a></li>
+
                         <li class="nav-item"><a class="nav-link" href="home.php">Profile</a></li>
 
                         <form action="php/sign-out.php" method="POST">
@@ -97,21 +101,8 @@
                         <li class="nav-item"><a class="nav-link" href="contact.php">Contact</a></li>
                         <li class="nav-item"><a class="nav-link" href="index.php">Home</a></li>
                         <li class="nav-item"><a class="nav-link" href="job-list.php">Job board</a></li>
-                        <li class="nav-item"><a class="nav-link" href="sign-up-page.php">Sign up</a></li>
 
-
-
-                        <form id="signin-form" action="php/sign-in.php" method="POST">
-
-                        <div class="input-group mb-3">
-                            <input id="signin-uid" type="text" placeholder="Username" class="form-control" aria-label="small" aria-describedby="basic-addon1"/>
-                            <input id="signin-pw" type="password" placeholder="Password" class="form-control" aria-label="small" aria-describedby="basic-addon1"/>
-                            <div class="input-group-append">
-                            <button id="login" class="btn btn-outline-secondary mr-2" type="button">Log In</button>
-                            </div>
-                        </div>
-                        </form>
-                        <li><a href="#">Forgot account?</a></li>
+                        <li class="nav-item"><a class="nav-link" href="sign-in-page.php">Sign up or sign in</a></li>
                 ';
         }
 
