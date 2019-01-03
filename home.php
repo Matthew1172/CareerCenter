@@ -333,6 +333,25 @@ if (isset($_SESSION['user_uid']))
                         }
                     });
             });
+            $(document).on('click','.all-btn',function(){
+                eventCount += 2;
+
+                $('#all-events-list').load('php/load-all-events.php', {
+                    eventNewCount: eventCount
+                });
+
+                $('#own-events-list').hide();
+                $('#all-events-list').show();
+            });
+            $(document).on('click','.own-btn',function(){
+                eventCount += 2;
+
+                $('#own-events-list').load('php/load-own-events.php', {
+                    eventNewCount: eventCount
+                });
+                $('#all-events-list').hide();
+                $('#own-events-list').show();
+            });
         });
 
         </script>
@@ -346,8 +365,18 @@ if (isset($_SESSION['user_uid']))
             echo("<h1 style='color: white' id='demo'>Welcome, " . $_SESSION['user_uid'] . "<br/>" . "You logged in as an: " . $result['user_type']  . "</h1>");
             echo("</div>");
 
-            echo("<div class='event-list'>");
-            echo("<h2>New Workshops: </h2><hr>");
+            echo("<div class='dashboard-control'>");
+            echo('<ul class="dashboard">');
+            echo('<li><button class="all-btn">All Workshops</button></li>');
+            echo('<li><button class="own-btn">Your Workshops</button></li>');
+            echo('<li><button>Change personal info</button></li>');
+            echo('</ul>');
+            echo("</div>");
+
+            echo("<div class='control-area'>");
+
+            echo("<div id='all-events-list' class='event-list'>");
+            echo("<h2>All Workshops: </h2><hr>");
             echo("<div id='event-list' class='container'>");
 
             $stm = $conn->prepare('SELECT * from events LIMIT 2');
@@ -395,6 +424,64 @@ if (isset($_SESSION['user_uid']))
             echo("<div class='show-more-container'>");
             echo('<button id="more-event-button" class="btn btn-primary more-btn mt-2">Show more</button>');
             echo("</div>");
+            echo("</div>");
+
+            echo("<div id='own-events-list' class='event-list' style='display:none;'>");
+            echo("<h2>Your Workshops: </h2><hr>");
+            echo("<div id='event-list' class='container'>");
+
+            $stm2 = $conn->prepare('SELECT * from user_event WHERE user_id = ?');
+            $stm2->execute([$result['user_id']]);
+            while($map_result = $stm2->fetch(PDO::FETCH_ASSOC))
+            {
+                $stm = $conn->prepare('SELECT * FROM events WHERE event_id = ?');
+                $stm->execute([$map_result['event_id']]);
+                while($event = $stm->fetch(PDO::FETCH_ASSOC))
+                {
+                            echo(
+                            "<div id='event" . $event['event_id'] . "' class='row event my-4 p-2'>" .
+                            "<div class='col-xs-9 col-sm-9 col-md-10 col-lg-10'>" .
+                            "<h3>"                   . $event['title']        . "</h3>" .
+                            "<b>Type: </b>"          . $event['type']         . "<br/>" .
+                            "<p>"                    . $event['description']  . "</p><br/><br/>" .
+                            "<b>Location: </b>"      . $event['location']     . "<br/>" .
+                            "<b>Date: </b>"          . $event['startTime']    . "<br/>" .
+                            "<b>Date Posted: </b>"   . $event['dateStamp']    . "<br/>" .
+                            "</div>");
+                            echo("<div class='col-xs-3 col-sm-3 col-md-2 col-lg-2'>");
+
+                                $stm2 = $conn->prepare('SELECT event_id from user_event WHERE user_id = ?');
+                                $stm2->execute([$result['user_id']]);
+                                $map_result = $stm2->fetchAll(PDO::FETCH_ASSOC);
+                                if(!empty($map_result))
+                                {
+                                    $flag = false;
+                                        foreach($map_result as $a)
+                                        {
+                                            if($a['event_id'] == $event['event_id'])
+                                            {
+                                                echo("<button id='" . $event['event_id'] . "' class='btn btn-primary sub-event-btn'>un-subscribe</button>");
+                                                $flag = true;
+                                            }
+                                        }
+                                        if(!$flag)
+                                        {
+                                            echo("<button id='" . $event['event_id'] . "' class='btn btn-primary event-btn'>subscribe</button>");
+                                        }
+                                }
+                                else
+                                {
+                                        echo("<button id='" . $event['event_id'] . "' class='btn btn-primary event-btn'>subscribe</button>");
+                                }
+                            echo("</div></div><hr>");
+                }
+            }
+            echo("</div>");
+            echo("<div class='show-more-container'>");
+            echo('<button id="more-event-button" class="btn btn-primary more-btn mt-2">Show more</button>');
+            echo("</div>");
+            echo("</div>");
+
             echo("</div>");
 
             echo("</div>");

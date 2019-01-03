@@ -27,7 +27,6 @@ echo('
             }
          });
 
-
         $("#signup").submit(function(event){
             event.preventDefault();
 

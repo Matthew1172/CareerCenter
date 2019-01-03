@@ -56,15 +56,38 @@
     margin-top: 20px;
 }
 
+.dashboard-control
+{
+    grid-area: d;
+}
+
+.dashboard
+{
+    list-style-type: none;
+    padding: 0px;
+}
+
+.dashboard li
+{
+    display: inline;
+    padding-right: 50px;
+}
+
+.control-area
+{
+    grid-area: a;
+}
+
 .grid
 {
     display: grid;
-    grid-template-rows: auto 100px auto 100px auto;
+    grid-template-rows: auto 100px auto auto 100px auto;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-template-areas:
     "g g g g"
     ". . . ."
-    "el el el el"
+    "d d d d"
+    "a a a a"
     ". . . ."
     "jl jl jl jl";
 }
@@ -74,12 +97,13 @@
     .grid
     {
         display: grid;
-        grid-template-rows: auto 100px auto 100px auto;
+        grid-template-rows: auto 100px auto auto 100px auto;
         grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
         grid-template-areas:
         ". g g g g g g ."
         ". . . . . . . ."
-        ". el el el el el el ."
+        ". d d d d d d ."
+        ". a a a a a a ."
         ". . . . . . . ."
         ". jl jl jl jl jl jl .";
     }

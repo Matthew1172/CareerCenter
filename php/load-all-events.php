@@ -9,7 +9,10 @@ if (isset($_SESSION['user_uid']))
     $sql->execute([$_SESSION['user_uid']]);
     $result = $sql->fetch(PDO::FETCH_ASSOC);
 
-    $stm = $conn->prepare('SELECT * from events LIMIT' . $eventNewCount);
+    echo("<h2>All Workshops: </h2><hr>");
+    echo("<div id='event-list' class='container'>");
+
+    $stm = $conn->prepare('SELECT * from events');
     $stm->execute();
     while($event = $stm->fetch(PDO::FETCH_ASSOC))
     {
