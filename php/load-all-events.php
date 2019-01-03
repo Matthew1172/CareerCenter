@@ -19,9 +19,9 @@ if (isset($_SESSION['user_uid']))
                 echo(
                 "<div id='event" . $event['event_id'] . "' class='row event my-4 p-2'>" .
                 "<div class='col-xs-9 col-sm-9 col-md-10 col-lg-10'>" .
-                "<h3>"                   . $event['title'] . $event['event_id']        . "</h3>" .
-                "<b>Type: </b>"          . $event['type']         . "</p>" .
-                "<p>"                    . $event['description']  . "<br/><br/>" .
+                "<h3>"                   . $event['title']        . "</h3>" .
+                "<b>Type: </b>"          . $event['type']         . "<br/>" .
+                "<p>"                    . $event['description']  . "</p><br/><br/>" .
                 "<b>Location: </b>"      . $event['location']     . "<br/>" .
                 "<b>Date: </b>"          . $event['startTime']    . "<br/>" .
                 "<b>Date Posted: </b>"   . $event['dateStamp']    . "<br/>" .
