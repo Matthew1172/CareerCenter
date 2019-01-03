@@ -292,6 +292,7 @@ if (isset($_SESSION['user_uid']))
     }
     else
     {
+
             echo("<link href='styles/home-user.css' rel='stylesheet'>");
             echo("
             <script>
@@ -299,32 +300,42 @@ if (isset($_SESSION['user_uid']))
                 var allEventCount = 2;
                 var ownEventCount = 2;
                 $(document).on('click','.event-btn',function(){
-                    var ID = $(this).attr('id');
-                    $('#event'+ID).hide();
-                        $.ajax({
-                            type: 'POST',
-                            url: 'php/subscribe.php',
-                            data: {
-                                ID: ID
-                            },
-                            success: function(html){
-                                $('#event'+ID).remove();
-                            }
+                    var x = 'Are you sure you want to subscribe?'
+                    if(confirm(x))
+                    {
+                        var ID = $(this).attr('id');
+                        $('#event'+ID).hide();
+                            $.ajax({
+                                type: 'POST',
+                                url: 'php/subscribe.php',
+                                data: {
+                                    ID: ID
+                                },
+                                success: function(html){
+                                    $('#event'+ID).remove();
+                                    alert('Success.');
+                                }
                         });
+                    }
                 });
                 $(document).on('click','.sub-event-btn',function(){
-                    var ID = $(this).attr('id');
-                    $('#sub-event'+ID).hide();
-                        $.ajax({
-                            type: 'POST',
-                            url: 'php/unsubscribe.php',
-                            data: {
-                                ID: ID
-                            },
-                            success: function(html){
-                                $('#event'+ID).remove();
-                            }
+                    var x = 'Are you sure you want to un-subscribe?'
+                    if(confirm(x))
+                    {
+                        var ID = $(this).attr('id');
+                        $('#sub-event'+ID).hide();
+                            $.ajax({
+                                type: 'POST',
+                                url: 'php/unsubscribe.php',
+                                data: {
+                                    ID: ID
+                                },
+                                success: function(html){
+                                    $('#event'+ID).remove();
+                                    alert('Success.');
+                                }
                         });
+                    }
                 });
                 $(document).on('click','.all-btn',function(){
 
@@ -378,7 +389,6 @@ if (isset($_SESSION['user_uid']))
             echo("<div id='all-events-list' class='event-list'>");
             echo("<h2>All Workshops: </h2><hr>");
             echo("<div id='all-events-list-section' class='container'>");
-
             $stm = $conn->prepare('SELECT * from events LIMIT 2');
             $stm->execute();
             while($event = $stm->fetch(PDO::FETCH_ASSOC))
@@ -441,7 +451,7 @@ if (isset($_SESSION['user_uid']))
                         echo(
                         "<div id='event" . $event['event_id'] . "' class='row event my-4 p-2'>" .
                         "<div class='col-xs-9 col-sm-9 col-md-10 col-lg-10'>" .
-                        "<h3>"                   . $event['title'] . "</h3>" .
+                        "<h3>"                   . $event['title']        . "</h3>" .
                         "<b>Type: </b>"          . $event['type']         . "<br/>" .
                         "<p>"                    . $event['description']  . "</p><br/><br/>" .
                         "<b>Location: </b>"      . $event['location']     . "<br/>" .
