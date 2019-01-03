@@ -17,7 +17,6 @@
 		grid-area: contact;
 		padding-left: 50px;
 		padding-right: 20px;
-		/*text-align: center;*/
 }
 
 .contact ul
@@ -66,7 +65,8 @@
 
 .news button
 {
-		width: 100%;
+		width: 30%;
+        text-align: center;
 }
 
 .grid

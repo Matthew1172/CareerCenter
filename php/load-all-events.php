@@ -9,7 +9,7 @@ if (isset($_SESSION['user_uid']))
         $sql->execute([$_SESSION['user_uid']]);
         $result = $sql->fetch(PDO::FETCH_ASSOC);
 
-        $stm = $conn->prepare('SELECT * FROM events LIMIT ' . $allEventNewCount . ';');
+        $stm = $conn->prepare('SELECT * FROM events ORDER BY dateStamp DESC LIMIT ' . $allEventNewCount . ';');
         $stm->execute();
         while($event = $stm->fetch(PDO::FETCH_ASSOC))
         {

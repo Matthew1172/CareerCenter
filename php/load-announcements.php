@@ -4,7 +4,7 @@ if (isset($_SESSION['user_uid']))
 {
     include 'connect.php';
     $announcementNewCount = $_POST['announcementNewCount'];
-    $stm = $conn->prepare('SELECT * FROM announcements LIMIT ' . $announcementNewCount . ';');
+    $stm = $conn->prepare('SELECT * FROM announcements ORDER BY dateStamp DESC LIMIT ' . $announcementNewCount . ';');
     $stm->execute();
     while ($row = $stm->fetch(PDO::FETCH_ASSOC))
     {

@@ -313,7 +313,6 @@ if (isset($_SESSION['user_uid']))
                                 },
                                 success: function(html){
                                     $('#event'+ID).remove();
-                                    alert('Success.');
                                 }
                         });
                     }
@@ -332,7 +331,6 @@ if (isset($_SESSION['user_uid']))
                                 },
                                 success: function(html){
                                     $('#event'+ID).remove();
-                                    alert('Success.');
                                 }
                         });
                     }
@@ -389,7 +387,7 @@ if (isset($_SESSION['user_uid']))
             echo("<div id='all-events-list' class='event-list'>");
             echo("<h2>All Workshops: </h2><hr>");
             echo("<div id='all-events-list-section' class='container'>");
-            $stm = $conn->prepare('SELECT * from events LIMIT 2');
+            $stm = $conn->prepare('SELECT * from events ORDER BY dateStamp DESC LIMIT 2');
             $stm->execute();
             while($event = $stm->fetch(PDO::FETCH_ASSOC))
             {
@@ -444,7 +442,7 @@ if (isset($_SESSION['user_uid']))
             {
                 while($map_result = $stm->fetch(PDO::FETCH_ASSOC))
                 {
-                    $stm2 = $conn->prepare('SELECT * FROM events WHERE event_id = ?');
+                    $stm2 = $conn->prepare('SELECT * FROM events WHERE event_id = ? ORDER BY dateStamp DESC');
                     $stm2->execute([$map_result['event_id']]);
                     while($event = $stm2->fetch(PDO::FETCH_ASSOC))
                     {

@@ -15,7 +15,7 @@ if (isset($_SESSION['user_uid']))
         {
             while($map_result = $stm->fetch(PDO::FETCH_ASSOC))
             {
-                $stm2 = $conn->prepare('SELECT * FROM events WHERE event_id = ?');
+                $stm2 = $conn->prepare('SELECT * FROM events WHERE event_id = ? ORDER BY dateStamp DESC');
                 $stm2->execute([$map_result['event_id']]);
                 while($event = $stm2->fetch(PDO::FETCH_ASSOC))
                 {

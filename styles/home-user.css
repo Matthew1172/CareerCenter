@@ -16,22 +16,7 @@
     grid-area: el;
 
 /*All this shit is for text-wrapping*/
-    white-space: -moz-pre-wrap !important;  /* Mozilla, since 1999 */
-     white-space: -pre-wrap;      /* Opera 4-6 */
-     white-space: -o-pre-wrap;    /* Opera 7 */
-     white-space: pre-wrap;       /* css-3 */
-     word-wrap: break-word;       /* Internet Explorer 5.5+ */
-     white-space: -webkit-pre-wrap; /* Newer versions of Chrome/Safari*/
-     word-break: break-all;
-     white-space: normal;
-}
-
-.job-list
-{
-    grid-area: jl;
-
-/*All this shit is for text-wrapping*/
-    white-space: -moz-pre-wrap !important;  /* Mozilla, since 1999 */
+     white-space: -moz-pre-wrap !important;  /* Mozilla, since 1999 */
      white-space: -pre-wrap;      /* Opera 4-6 */
      white-space: -o-pre-wrap;    /* Opera 7 */
      white-space: pre-wrap;       /* css-3 */
@@ -43,7 +28,8 @@
 
 .more-btn
 {
-    width: 40%;
+    width: 30%;
+    text-align: center;
 }
 
 .show-more-container

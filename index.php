@@ -35,7 +35,7 @@ Welcome to the Rockland County Career Center.
 <div id="news">
 ');
 
-$stm = $conn->prepare('SELECT * FROM announcements LIMIT 2');
+$stm = $conn->prepare('SELECT * FROM announcements ORDER BY dateStamp DESC LIMIT 2');
 $stm->execute();
 
     while($row = $stm->fetch(PDO::FETCH_ASSOC))
@@ -71,7 +71,7 @@ echo('
     37 West Broad Street
     <br/>
     Haverstraw, NY 10927
-    </p></li>    
+    </p></li>
 </ul>
 </div>
 

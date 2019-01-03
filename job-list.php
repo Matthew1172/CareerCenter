@@ -46,7 +46,7 @@ echo('
     <tbody id="job-list">
 ');
 
-$sql = $conn->prepare('SELECT * FROM jobs LIMIT 2');
+$sql = $conn->prepare('SELECT * FROM jobs ORDER BY dateStamp DESC LIMIT 2');
 $sql->execute();
 while($jobResult = $sql->fetch(PDO::FETCH_ASSOC))
 {

@@ -4,7 +4,7 @@ session_start();
     include 'connect.php';
     $jobNewCount = $_POST['jobNewCount'];
 
-    $sql = $conn->prepare('SELECT * FROM jobs LIMIT ' . $jobNewCount . ';');
+    $sql = $conn->prepare('SELECT * FROM jobs ORDER BY dateStamp DESC LIMIT ' . $jobNewCount . ';');
     $sql->execute();
     while($jobResult = $sql->fetch(PDO::FETCH_ASSOC))
     {
