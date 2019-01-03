@@ -33,16 +33,15 @@ echo("
         var datePosted = 'Date posted: ' + event.dateStamp;
 
         var x = title + '\\n' + '\\n' + location + '\\n' + '\\n' + type + '\\n' + '\\n' + datePosted + '\\n' + '\\n' + '\\n' + '\\n' + 'press OK to learn more about this event.';
-
-        /*alert(x);*/
-
         if(confirm(x))
         {
             window.location.assign('event-page.php?event-btn-value=' + event.id);
         }
-
-    },
-
+        else
+        {
+            window.location.reload();
+        }
+    }
    });
   });
 </script>
