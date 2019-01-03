@@ -296,15 +296,8 @@ if (isset($_SESSION['user_uid']))
         echo("
         <script>
         $(document).ready(function() {
-            var eventCount = 2;
-            var subCount = 2;
-
-            $('#more-event-button').click(function(){
-                eventCount += 2;
-                $('#event-list').load('php/load-events.php', {
-                    eventNewCount: eventCount
-                });
-            });
+            var allEventCount = 2;
+            var ownEventCount = 2;
             $(document).on('click','.event-btn',function(){
                 var ID = $(this).attr('id');
                 $('#event'+ID).hide();
@@ -334,23 +327,32 @@ if (isset($_SESSION['user_uid']))
                     });
             });
             $(document).on('click','.all-btn',function(){
-                eventCount += 2;
 
-                $('#all-events-list').load('php/load-all-events.php', {
-                    eventNewCount: eventCount
+                $('#all-events-list-section').load('php/load-all-events.php', {
+                    allEventNewCount: allEventCount
                 });
-
                 $('#own-events-list').hide();
                 $('#all-events-list').show();
             });
             $(document).on('click','.own-btn',function(){
-                eventCount += 2;
 
-                $('#own-events-list').load('php/load-own-events.php', {
-                    eventNewCount: eventCount
+                $('#own-events-list-section').load('php/load-own-events.php', {
+                    ownEventNewCount: ownEventCount
                 });
                 $('#all-events-list').hide();
                 $('#own-events-list').show();
+            });
+            $('#more-all-events-button').click(function(){
+                allEventCount += 2;
+                $('#all-events-list-section').load('php/load-all-events.php', {
+                    allEventNewCount: allEventCount
+                });
+            });
+            $('#more-own-events-button').click(function(){
+                ownEventCount += 2;
+                $('#own-events-list-section').load('php/load-own-events.php', {
+                    ownEventNewCount: ownEventCount
+                });
             });
         });
 
@@ -377,7 +379,7 @@ if (isset($_SESSION['user_uid']))
 
             echo("<div id='all-events-list' class='event-list'>");
             echo("<h2>All Workshops: </h2><hr>");
-            echo("<div id='event-list' class='container'>");
+            echo("<div id='all-events-list-section' class='container'>");
 
             $stm = $conn->prepare('SELECT * from events LIMIT 2');
             $stm->execute();
@@ -422,15 +424,15 @@ if (isset($_SESSION['user_uid']))
             }
             echo("</div>");
             echo("<div class='show-more-container'>");
-            echo('<button id="more-event-button" class="btn btn-primary more-btn mt-2">Show more</button>');
+            echo('<button id="more-all-events-button" class="btn btn-primary more-btn mt-2">Show more</button>');
             echo("</div>");
             echo("</div>");
 
             echo("<div id='own-events-list' class='event-list' style='display:none;'>");
             echo("<h2>Your Workshops: </h2><hr>");
-            echo("<div id='event-list' class='container'>");
+            echo("<div id='own-events-list-section' class='container'>");
 
-            $stm2 = $conn->prepare('SELECT * from user_event WHERE user_id = ?');
+            $stm2 = $conn->prepare('SELECT * from user_event WHERE user_id = ? LIMIT 2');
             $stm2->execute([$result['user_id']]);
             while($map_result = $stm2->fetch(PDO::FETCH_ASSOC))
             {
@@ -478,7 +480,7 @@ if (isset($_SESSION['user_uid']))
             }
             echo("</div>");
             echo("<div class='show-more-container'>");
-            echo('<button id="more-event-button" class="btn btn-primary more-btn mt-2">Show more</button>');
+            echo('<button id="more-own-events-button" class="btn btn-primary more-btn mt-2">Show more</button>');
             echo("</div>");
             echo("</div>");
 
