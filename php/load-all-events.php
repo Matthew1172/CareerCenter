@@ -11,8 +11,10 @@ if (isset($_SESSION['user_uid']))
 
     $stm = $conn->prepare('SELECT * FROM events LIMIT ' . $allEventNewCount . ';');
     $stm->execute();
-    while($event = $stm->fetch(PDO::FETCH_ASSOC))
+    if($stm->rowCount > 0)
     {
+        while($event = $stm->fetch(PDO::FETCH_ASSOC))
+        {
                 echo(
                 "<div id='event" . $event['event_id'] . "' class='row event my-4 p-2'>" .
                 "<div class='col-xs-9 col-sm-9 col-md-10 col-lg-10'>" .
@@ -24,31 +26,35 @@ if (isset($_SESSION['user_uid']))
                 "<b>Date Posted: </b>"   . $event['dateStamp']    . "<br/>" .
                 "</div>");
                 echo("<div class='col-xs-3 col-sm-3 col-md-2 col-lg-2'>");
-
-                    $stm2 = $conn->prepare('SELECT event_id FROM user_event WHERE user_id = ?');
-                    $stm2->execute([$result['user_id']]);
-                    $map_result = $stm2->fetchAll(PDO::FETCH_ASSOC);
-                    if(!empty($map_result))
-                    {
-                        $flag = false;
-                            foreach($map_result as $a)
+                $stm2 = $conn->prepare('SELECT event_id FROM user_event WHERE user_id = ?');
+                $stm2->execute([$result['user_id']]);
+                $map_result = $stm2->fetchAll(PDO::FETCH_ASSOC);
+                if(!empty($map_result))
+                {
+                    $flag = false;
+                        foreach($map_result as $a)
+                        {
+                            if($a['event_id'] == $event['event_id'])
                             {
-                                if($a['event_id'] == $event['event_id'])
-                                {
-                                    echo("<button id='" . $event['event_id'] . "' class='btn btn-primary sub-event-btn'>un-subscribe</button>");
-                                    $flag = true;
-                                }
+                                echo("<button id='" . $event['event_id'] . "' class='btn btn-primary sub-event-btn'>un-subscribe</button>");
+                                $flag = true;
                             }
-                            if(!$flag)
-                            {
-                                echo("<button id='" . $event['event_id'] . "' class='btn btn-primary event-btn'>subscribe</button>");
-                            }
-                    }
-                    else
-                    {
+                        }
+                        if(!$flag)
+                        {
                             echo("<button id='" . $event['event_id'] . "' class='btn btn-primary event-btn'>subscribe</button>");
-                    }
+                        }
+                }
+                else
+                {
+                        echo("<button id='" . $event['event_id'] . "' class='btn btn-primary event-btn'>subscribe</button>");
+                }
                 echo("</div></div><hr>");
+        }
+    }
+    else
+    {
+        echo("<div class='row event my-4 p-2'><h3>There are no events.</h3></div>");
     }
 }
 ?>
