@@ -4,7 +4,6 @@ session_start();
 require 'header.php';
 
 echo('
-<head>
 <link href="styles/fullcalendar.min.css" rel="stylesheet" />
 <link href="styles/fullcalendar.print.min.css" rel="stylesheet" media="print" />
 <link href="styles/calendar.css" rel="stylesheet" />
@@ -14,9 +13,7 @@ echo('
 ');
 
 echo("
-
 <script>
-
   $(document).ready(function() {
    var calendar = $('#calendar').fullCalendar({
     editable:false,
@@ -42,10 +39,7 @@ echo("
 
    });
   });
-
 </script>
-
-</head>
 ");
 
 echo("

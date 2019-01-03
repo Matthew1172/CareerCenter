@@ -3,6 +3,7 @@
 		grid-area: m;
         background-color: #fafafa;
         text-align: center;
+		padding: 30px;
 }
 
 .main button
@@ -31,7 +32,19 @@
 		". m m .";
 }
 
-@media screen and (min-width: 800px)
+@media screen and (min-width: 500px)
+{
+		.grid
+		{
+				display: grid;
+				grid-template-columns: 1fr 1fr 1fr 1fr;
+				grid-template-rows: auto;
+				grid-template-areas:
+				". m m .";
+		}
+}
+
+@media screen and (min-width: 1000px)
 {
         .grid
         {

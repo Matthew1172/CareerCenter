@@ -19,53 +19,6 @@
 
 <title>Career Center</title>
 
-<script type='text/javascript'>
-    $(document).ready(function(){
-        $("#login").on('click', function(){
-            var uid = $("#signin-uid").val();
-            var pw = $("#signin-pw").val();
-            $("#signin-uid, #signin-pw").removeClass("input-error");
-            if(uid == "")
-            {
-                $("#signin-uid").addClass("input-error");
-            }
-            if(pw == "")
-            {
-                $("#signin-pw").addClass("input-error");
-            }
-            else
-            {
-                $.ajax(
-                    {
-                        url: 'php/sign-in.php',
-                        method: 'POST',
-                        data: {
-                            login: 1,
-                            uid: uid,
-                            pw: pw
-                        },
-                        success: function(response){
-                            if(response == 'failed')
-                            {
-                                alert("Invalid username or password.");
-                            }
-                            else if(response == 'success')
-                            {
-                                window.location.assign("home.php")
-                            }
-                            else
-                            {
-                                window.location.assign("index.php")
-                            }
-                        },
-                        dataType: 'text'
-                    }
-                );
-            }
-        });
-    });
-</script>
-
 </head>
 <body>
 <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light">

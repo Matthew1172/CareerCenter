@@ -8,6 +8,8 @@
 .cal
 {
     grid-area: c;
+	padding-left: 0px;
+	padding-right: 0px;
 }
 
 .intro
@@ -27,6 +29,15 @@
     "i i i i"
     ". . . ."
     "c c c c";
+}
+
+@media screen and (min-width: 420px)
+{
+	.cal
+	{
+		padding-left: 40px;
+		padding-right: 40px;
+	}
 }
 
 @media screen and (min-width: 1000px)
