@@ -28,13 +28,19 @@ echo("
     eventClick:function(event)
     {
         var title = 'Event name: ' + event.title;
-        var description = 'Event description: ' + event.description;
         var location = 'Event location: ' + event.location;
         var type = 'Type of event: ' + event.type;
+        var datePosted = 'Date posted: ' + event.dateStamp;
 
-        var x = title + '\\n' + '\\n' + description + '\\n' + '\\n' + location + '\\n' + '\\n' + type;
+        var x = title + '\\n' + '\\n' + location + '\\n' + '\\n' + type + '\\n' + '\\n' + datePosted + '\\n' + '\\n' + '\\n' + '\\n' + 'press OK to learn more about this event.';
 
-        alert(x);
+        /*alert(x);*/
+
+        if(confirm(x))
+        {
+            window.location.assign('event-page.php?event-btn-value=' + event.id);
+        }
+
     },
 
    });

@@ -1,0 +1,62 @@
+.hero1
+{
+	grid-column: 1/-1;
+	grid-row: 1;
+
+    background-color: #00aaff;
+}
+
+.intro
+{
+	grid-area: i;
+}
+
+.intro h1
+{
+	color: white;
+}
+
+.section
+{
+     background-color: #fafafa;
+     box-shadow: 2px 2px 5px grey;
+     white-space: -moz-pre-wrap !important;  /* Mozilla, since 1999 */
+     white-space: -pre-wrap;      /* Opera 4-6 */
+     white-space: -o-pre-wrap;    /* Opera 7 */
+     white-space: pre-wrap;       /* css-3 */
+     word-wrap: break-word;       /* Internet Explorer 5.5+ */
+     white-space: -webkit-pre-wrap; /* Newer versions of Chrome/Safari*/
+     word-break: normal;
+     white-space: normal;
+
+}
+
+.eventPosting
+{
+    grid-area: jp;
+}
+
+.grid
+{
+    display: grid;
+    grid-template-rows: auto 100px auto;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-areas:
+	"i i i i"
+    ". . . ."
+    "jp jp jp jp";
+}
+
+@media screen and (min-width: 1000px)
+{
+    .grid
+    {
+        display: grid;
+        grid-template-rows: auto 100px auto;
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+        grid-template-areas:
+		". i i i i i i ."
+        ". . . . . . . ."
+        ". jp jp jp jp jp jp .";
+    }
+}

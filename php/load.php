@@ -11,7 +11,7 @@ $result = $statement->fetchAll();
 foreach($result as $row)
 {
  $data[] = array(
-     'id'           => $row["id"],
+     'id'           => $row["event_id"],
      'title'        => $row["title"],
      'description'  => $row["description"],
      'location'     => $row["location"],

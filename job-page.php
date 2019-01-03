@@ -5,17 +5,18 @@ include 'php/connect.php';
 
 echo('<link href="styles/job-page.css" rel="stylesheet" />');
 
-echo('<div class="grid">');
-
-echo('<div class="hero1">');
-echo('</div>');
-
-echo('<div class="jobPosting container">');
-if(isset($_GET['job-btn-value']))
+$sql = $conn->prepare('SELECT * FROM jobs WHERE job_id = ?');
+$sql->execute([$_GET['job-btn-value']]);
+if($sql->rowCount() > 0)
 {
-        $sql = $conn->prepare('SELECT * FROM jobs WHERE job_id = ?');
-        $sql->execute([$_GET['job-btn-value']]);
         $jobListing = $sql->fetch();
+
+        echo('<div class="grid">');
+
+        echo('<div class="hero1">');
+        echo('</div>');
+
+        echo('<div class="jobPosting container">');
 
         $sql = $conn->prepare('SELECT * FROM employers WHERE employer_id = ?');
         $sql->execute([$jobListing['employer_id']]);
@@ -45,21 +46,27 @@ if(isset($_GET['job-btn-value']))
             echo('<p>This employer has not added a website</p>');
         }
         echo('</div>');
-
         echo('</div>');
 
         echo('<div class="intro px-3 py-5">');
         echo('<h1>'. $employerInfo['employer_company'] .'</h1>');
         echo('</div>');
 
-}
-else
-{
-        echo('<p>This job cannot be found</p>');
         echo('</div>');
+        }
+        else
+        {
+            echo('<div class="grid">');
 
-}
-echo('</div>');
+            echo('<div class="hero1">');
+            echo('</div>');
+
+            echo('<div class="intro px-3 py-5">');
+            echo('<h1>This job does not exist :(</h1>');
+            echo('</div>');
+
+            echo('</div>');
+        }
 
 
 require 'footer.php';
