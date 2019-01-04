@@ -202,7 +202,6 @@ if (isset($_SESSION['user_uid']))
 
             $stm = $conn->prepare('SELECT * from jobs WHERE employer_id = ?');
             $stm->execute([$employerResult['employer_id']]);
-
             if($stm->rowCount() > 0)
             {
                 while($event = $stm->fetch(PDO::FETCH_ASSOC))
@@ -375,11 +374,20 @@ if (isset($_SESSION['user_uid']))
             echo("</div>");
 
             echo("<div class='dashboard-control'>");
-            echo('<ul class="dashboard">');
-            echo('<li><button class="all-btn">All Workshops</button></li>');
-            echo('<li><button class="own-btn">Your Workshops</button></li>');
-            echo('<li><button>Change personal info</button></li>');
-            echo('</ul>');
+            echo('
+            <nav class="navbar navbar-expand-lg navbar-light bg-white py-3">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar2">
+                <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse justify-content-stretch" id="navbar2">
+                <ul class="navbar-nav ml-auto">
+                    <li class=""><button class="btn-outline-secondary btn nav-link all-btn">All Workshops</button></li>
+                    <li class=""><button class="btn-outline-secondary btn nav-link own-btn">Your Workshops</button></li>
+                    <li class=""><button class="btn-outline-secondary btn nav-link change-btn">Change info</button></li>
+                </ul>
+                </div>
+            </nav>
+            ');
             echo("</div>");
 
             echo("<div class='control-area'>");
@@ -407,7 +415,7 @@ if (isset($_SESSION['user_uid']))
                             $map_result = $stm2->fetchAll(PDO::FETCH_ASSOC);
                             if(!empty($map_result))
                             {
-                                $flag = false;
+                                    $flag = false;
                                     foreach($map_result as $a)
                                     {
                                         if($a['event_id'] == $event['event_id'])

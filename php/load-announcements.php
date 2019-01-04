@@ -8,8 +8,8 @@ if (isset($_SESSION['user_uid']))
     $stm->execute();
     while ($row = $stm->fetch(PDO::FETCH_ASSOC))
     {
-        echo"<div class='event my-2 p-2'>";
-        echo "<h3>" . $row["title"] . "</h3>";
+        echo"<div class='my-2 p-2'>";
+        echo "<h4>" . $row["title"] . "</h4>";
         echo "<p>" . $row["description"];
         echo"<br />";
         echo"<br />";

@@ -11,11 +11,8 @@
     padding-left: 20px;
 }
 
-.event-list
+.event-list h3
 {
-    grid-area: el;
-
-/*All this shit is for text-wrapping*/
      white-space: -moz-pre-wrap !important;  /* Mozilla, since 1999 */
      white-space: -pre-wrap;      /* Opera 4-6 */
      white-space: -o-pre-wrap;    /* Opera 7 */
@@ -25,6 +22,7 @@
      word-break: break-all;
      white-space: normal;
 }
+
 
 .more-btn
 {
@@ -47,35 +45,35 @@
     grid-area: d;
 }
 
-.dashboard
+.dashboard-control ul li
 {
-    list-style-type: none;
-    padding: 0px;
+    margin: 10px;
 }
 
-.dashboard li
+.dashboard-control ul li button
 {
-    display: inline;
-    padding-right: 50px;
+    width: 150px;
+    padding: 10px;
 }
 
 .control-area
 {
     grid-area: a;
+    background-color: white;
 }
 
 .grid
 {
+    background-color: #fafafa;
     display: grid;
-    grid-template-rows: auto 100px auto auto 100px auto;
+    grid-template-rows: auto 100px auto auto 100px;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-template-areas:
     "g g g g"
     ". . . ."
     "d d d d"
     "a a a a"
-    ". . . ."
-    "jl jl jl jl";
+    ". . . .";
 }
 
 @media screen and (min-width: 1000px)
@@ -83,14 +81,13 @@
     .grid
     {
         display: grid;
-        grid-template-rows: auto 100px auto auto 100px auto;
+        grid-template-rows: auto 100px auto auto 100px;
         grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
         grid-template-areas:
         ". g g g g g g ."
         ". . . . . . . ."
         ". d d d d d d ."
         ". a a a a a a ."
-        ". . . . . . . ."
-        ". jl jl jl jl jl jl .";
+        ". . . . . . . .";
     }
 }

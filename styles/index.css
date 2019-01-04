@@ -1,3 +1,16 @@
+.slider
+{
+        grid-area: s;
+}
+
+.map
+{
+        grid-area: m;
+		padding-left: 20px;
+		padding-right: 20px;
+        background-color: white;
+}
+
 .google-maps
 {
         position: relative;
@@ -14,9 +27,10 @@
 
 .contact
 {
-		grid-area: contact;
-		padding-left: 50px;
+		grid-area: c;
+		padding-left: 20px;
 		padding-right: 20px;
+        background-color: white;
 }
 
 .contact ul
@@ -37,30 +51,28 @@
 		padding-right: 20px;
 		padding-top: 50px;
 		padding-bottom: 50px;
-}
-
-.slider
-{
-		grid-area: s;
-}
-
-.map
-{
-		grid-area: m;
+        background-color: white;
 }
 
 .news
 {
-	grid-area: n;
-	/*All this shit is for text-wrapping*/
+	    grid-area: n;
+ 		padding-left: 20px;
+ 		padding-right: 20px;
+        background-color: white;
+}
+
+.news h4
+{
+	    /*All this shit is for text-wrapping*/
 	    white-space: -moz-pre-wrap !important;  /* Mozilla, since 1999 */
-	     white-space: -pre-wrap;      /* Opera 4-6 */
-	     white-space: -o-pre-wrap;    /* Opera 7 */
-	     white-space: pre-wrap;       /* css-3 */
-	     word-wrap: break-word;       /* Internet Explorer 5.5+ */
-	     white-space: -webkit-pre-wrap; /* Newer versions of Chrome/Safari*/
-	     word-break: break-all;
-	     white-space: normal;
+	    white-space: -pre-wrap;      /* Opera 4-6 */
+	    white-space: -o-pre-wrap;    /* Opera 7 */
+	    white-space: pre-wrap;       /* css-3 */
+	    word-wrap: normal;       /* Internet Explorer 5.5+ */
+	    white-space: -webkit-pre-wrap; /* Newer versions of Chrome/Safari*/
+	    word-break: break-all;
+	    white-space: normal;
 }
 
 .news button
@@ -71,18 +83,20 @@
 
 .grid
 {
+        background-color: #fafafa;
 		display: grid;
 		grid-template-columns: 1fr 1fr 1fr 1fr;
-		grid-template-rows: auto auto 100px auto 100px auto 100px auto;
+		grid-template-rows: auto auto 100px auto 100px auto 100px auto 100px;
 		grid-template-areas:
 		"intro intro intro intro"
 		"n n n n"
 		". . . ."
 		"m m m m"
 		". . . ."
-		"contact contact contact contact"
+		"c c c c"
 		". . . ."
-		"s s s s";
+		"s s s s"
+        ". . . .";
 }
 
 @media screen and (min-width: 500px)
@@ -91,14 +105,15 @@
 	{
 			display: grid;
 	    	grid-template-columns: 1fr 1fr 1fr 1fr;
-	    	grid-template-rows: auto auto 100px auto 100px auto;
+	    	grid-template-rows: auto auto 100px auto 100px auto 100px;
 			grid-template-areas:
 			"intro intro intro intro"
 			"n n n n"
 			". . . ."
-			"m m contact contact"
+			"m m c c"
 			". . . ."
-			"s s s s";
+			"s s s s"
+            ". . . .";
 	}
 }
 
@@ -108,14 +123,15 @@
         {
         	display: grid;
         	grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-        	grid-template-rows: auto auto 100px auto 100px auto;
+        	grid-template-rows: auto auto auto auto 100px auto 100px;
         	grid-template-areas:
 			". intro intro intro intro intro intro ."
+			". n n n c c c ."
+			". n n n m m m ."
 			". n n n . . . ."
 			". . . . . . . ."
-			". m m m contact contact contact ."
-			". . . . . . . ."
-			". s s s s s s .";
+			". s s s s s s ."
+            ". . . . . . . .";
         }
 
 		.intro p

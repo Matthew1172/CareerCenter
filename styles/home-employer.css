@@ -59,15 +59,17 @@
 
 .grid
 {
+    background-color: #fafafa;
     display: grid;
-    grid-template-rows: auto 100px auto 100px auto;
+    grid-template-rows: auto 100px auto 100px auto 100px;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-template-areas:
     "g g g g"
     ". . . ."
     "pj pj pj pj"
 	". . . ."
-	"jl jl jl jl";
+	"jl jl jl jl"
+	". . . .";
 }
 
 @media screen and (min-width: 1000px)
@@ -75,13 +77,14 @@
     .grid
     {
         display: grid;
-        grid-template-rows: auto 100px auto 100px auto;
+        grid-template-rows: auto 100px auto 100px auto 100px;
         grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
         grid-template-areas:
         ". g g g g g g ."
         ". . . . . . . ."
         ". pj pj pj pj pj pj ."
 		". . . . . . . ."
-		". jl jl jl jl jl jl .";
+		". jl jl jl jl jl jl ."
+		". . . . . . . .";
     }
 }

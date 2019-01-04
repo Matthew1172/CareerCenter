@@ -7,9 +7,9 @@ echo("<link href='styles/carousel.css' rel='stylesheet'/>");
 echo("
 <script>
 $(document).ready(function() {
-    var announcementCount = 2;
+    var announcementCount = 1;
     $('button').click(function(){
-        announcementCount = announcementCount + 2;
+        announcementCount = announcementCount + 1;
         $('#news').load('php/load-announcements.php', {
             announcementNewCount: announcementCount
         });
@@ -35,13 +35,13 @@ Welcome to the Rockland County Career Center.
 <div id="news">
 ');
 
-$stm = $conn->prepare('SELECT * FROM announcements ORDER BY dateStamp DESC LIMIT 2');
+$stm = $conn->prepare('SELECT * FROM announcements ORDER BY dateStamp DESC LIMIT 1');
 $stm->execute();
 
     while($row = $stm->fetch(PDO::FETCH_ASSOC))
     {
-        echo("<div class='event my-2 p-2'>");
-        echo("<h3>" . $row["title"] . "</h3>");
+        echo("<div class='my-2 p-2'>");
+        echo("<h4>" . $row["title"] . "</h4>");
         echo("<p>" . $row["description"]);
         echo("<br />");
         echo("<br />");
@@ -53,8 +53,8 @@ echo('</div><button id="button" class="btn btn-primary">Show more</button></div>
 echo('
 <div class="contact">
 <ul>
-    <li><h4>Contact:</h4></li>
-
+    <li><h2>Contact:</h2></li>
+    <hr/>
     <li><p><b>Phone: </b>(845)845-8545</p></li>
     <li><p><b>Hours: </b>Monday – Friday, 8:30 AM – 4:30 PM</p></li>
 

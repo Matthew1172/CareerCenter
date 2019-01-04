@@ -18,10 +18,9 @@
 
 .section
 {
-    background-color: #fafafa;
-    box-shadow: 2px 2px 5px grey;
+	background-color: white;
 
-    white-space: -moz-pre-wrap !important;  /* Mozilla, since 1999 */
+     white-space: -moz-pre-wrap !important;  /* Mozilla, since 1999 */
      white-space: -pre-wrap;      /* Opera 4-6 */
      white-space: -o-pre-wrap;    /* Opera 7 */
      white-space: pre-wrap;       /* css-3 */
@@ -29,7 +28,6 @@
      white-space: -webkit-pre-wrap; /* Newer versions of Chrome/Safari*/
      word-break: normal;
      white-space: normal;
-
 }
 
 .jobPosting
@@ -39,13 +37,15 @@
 
 .grid
 {
+	background-color: #fafafa;
     display: grid;
-    grid-template-rows: auto 100px auto;
+    grid-template-rows: auto 100px auto 100px;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-template-areas:
 	"i i i i"
     ". . . ."
-    "jp jp jp jp";
+    "jp jp jp jp"
+	". . . .";
 }
 
 @media screen and (min-width: 1000px)
@@ -53,11 +53,12 @@
     .grid
     {
         display: grid;
-        grid-template-rows: auto 100px auto;
+        grid-template-rows: auto 100px auto 100px;
         grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
         grid-template-areas:
 		". i i i i i i ."
         ". . . . . . . ."
-        ". jp jp jp jp jp jp .";
+        ". jp jp jp jp jp jp ."
+		". . . . . . . .";
     }
 }

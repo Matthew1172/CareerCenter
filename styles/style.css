@@ -14,18 +14,13 @@ footer
 {
 	text-align:center;
 	background-color: #dcdcdc;
-	margin-top: 130px;
+	margin-top: 0px;
 }
 
 h1, h2, h3, h4, h6
 {
-    	font-family: 'Muli', sans-serif;
-		color: #00aaff;
-}
-
-.event
-{
-	background-color: white;
+    font-family: 'Muli', sans-serif;
+	color: #00aaff;
 }
 
 .form-error

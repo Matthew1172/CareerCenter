@@ -23,10 +23,10 @@
 <body>
 <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="index.php"><img src="pics/ny.jpg" height="60px" width="100px"/></a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar7">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar1">
     <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="navbar-collapse collapse justify-content-stretch" id="navbar7">
+    <div class="navbar-collapse collapse justify-content-stretch" id="navbar1">
     <ul class="navbar-nav ml-auto">
         <?php
 
