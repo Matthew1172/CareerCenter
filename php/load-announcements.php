@@ -1,7 +1,5 @@
 <?php
-session_start();
-if (isset($_SESSION['user_uid']))
-{
+    session_start();
     include 'connect.php';
     $announcementNewCount = $_POST['announcementNewCount'];
     $stm = $conn->prepare('SELECT * FROM announcements ORDER BY dateStamp DESC LIMIT ' . $announcementNewCount . ';');
@@ -16,5 +14,4 @@ if (isset($_SESSION['user_uid']))
         echo "<b>Date posted: </b>" . $row["dateStamp"];
         echo"</p></div><hr>";
     }
-}
 ?>
