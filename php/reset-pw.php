@@ -9,23 +9,29 @@ if(isset($_POST['submit']))
 
     $errorEmpty = false;
     $errorPwMatch = false;
+    $errorPw = false;
 
     if(empty($reset_pw) || empty($reset_pw2))
     {
-        echo("<span class='form-error'>Fill in all fields</span>");
+        echo("<span class='form-error'>please fill in all fields.</span>");
         $errorEmpty = true;
     }
     else if($reset_pw != $reset_pw2)
     {
-        echo("<span class='form-error'>Passwords do not match</span>");
+        echo("<span class='form-error'>passwords do not match.</span>");
         $errorPwMatch = true;
+    }
+    else if(!preg_match("/^[a-zA-Z0-9!?@$*&%]*$/", $reset_pw) || strlen($reset_pw) < 8)
+    {
+        echo("<span class='form-error'>please put a valid password.</span>");
+        $errorPw = true;
     }
     else
     {
             $hashPwd = password_hash($reset_pw, PASSWORD_DEFAULT);
             $sql2 = $conn->prepare('UPDATE users SET user_pw = ? WHERE user_uid = ?');
             $sql2->execute([$hashPwd, $_SESSION['user_uid']]);
-            echo("<span class='form-success'>Successfully changed password.</span>");
+            echo("<span class='form-success'>successfully changed password.</span>");
     }
 }
 else
@@ -39,6 +45,7 @@ else
 
     var errorEmpty = "<?php echo $errorEmpty ?>";
     var errorPwMatch = "<?php echo $errorPwMatch ?>";
+    var errorPw = "<?php echo $errorPw ?>";
 
     if(errorEmpty == true)
     {
@@ -48,7 +55,11 @@ else
     {
         $("#change-pw-input, #change-pw2-input").addClass("input-error");
     }
-    if(errorEmpty == false && errorPwMatch == false)
+    if(errorPw == true)
+    {
+        $("#change-pw-input, #change-pw2-input").addClass("input-error");
+    }
+    if(errorEmpty == false && errorPwMatch == false && errorPw == false)
     {
         $("#change-pw-input, #change-pw2-input").val("");
     }

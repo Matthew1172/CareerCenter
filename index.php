@@ -55,7 +55,7 @@ echo('
 <ul>
     <li><h2>Contact:</h2></li>
     <hr/>
-    <li><p><b>Phone: </b>(845)845-8545</p></li>
+    <li><p><b>Phone: </b>(845)-845-8545</p></li>
     <li><p><b>Hours: </b>Monday – Friday, 8:30 AM – 4:30 PM</p></li>
 
     <li><p><b>Rockland County Career Center locations: </b></p></li>

@@ -20,16 +20,18 @@
 
 .main ul li
 {
-	padding-top: 10px;
+	padding-top: 40px;
 }
 
 .grid
 {
 		display: grid;
 		grid-template-columns: 1fr 1fr 1fr 1fr;
-		grid-template-rows: auto;
+		grid-template-rows: 100px auto 100px;
 		grid-template-areas:
-		". m m .";
+		". . . ."
+		"m m m m"
+		". . . .";
 }
 
 @media screen and (min-width: 500px)
@@ -38,9 +40,11 @@
 		{
 				display: grid;
 				grid-template-columns: 1fr 1fr 1fr 1fr;
-				grid-template-rows: auto;
+				grid-template-rows: 100px auto 100px;
 				grid-template-areas:
-				". m m .";
+				". . . ."
+				". m m ."
+				". . . .";
 		}
 }
 
@@ -50,8 +54,10 @@
         {
         	display: grid;
         	grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-        	grid-template-rows: auto;
+        	grid-template-rows: 100px auto 100px;
         	grid-template-areas:
-            ". . . m m . . .";
+			". . . . . . . ."
+            ". . . m m . . ."
+			". . . . . . . .";
         }
 }

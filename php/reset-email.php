@@ -14,17 +14,17 @@ if(isset($_POST['submit']))
 
     if(empty($reset_email) || empty($reset_email2))
     {
-        echo("<span class='form-error'>Fill in all fields</span>");
+        echo("<span class='form-error'>please fill in all fields.</span>");
         $errorEmpty = true;
     }
     else if($reset_email != $reset_email2)
     {
-        echo("<span class='form-error'>Emails do not match</span>");
+        echo("<span class='form-error'>emails do not match.</span>");
         $errorEmailMatch = true;
     }
     else if(!filter_var($reset_email, FILTER_VALIDATE_EMAIL))
     {
-        echo("<span class='form-error'>write a valid email</span>");
+        echo("<span class='form-error'>please put a valid email.</span>");
         $errorEmailValid = true;
     }
     else
@@ -33,14 +33,14 @@ if(isset($_POST['submit']))
             $sql->execute([$reset_email]);
             if($sql->rowCount() > 0)
             {
-                echo("<span class='form-error'>This email address already has an account.</span>");
+                echo("<span class='form-error'>this email address already has an account.</span>");
                 $errorEmailTaken = true;
             }
             else
             {
                 $sql2 = $conn->prepare('UPDATE users SET user_email = ? WHERE user_uid = ?');
                 $sql2->execute([$reset_email, $_SESSION['user_uid']]);
-                echo("<span class='form-success'>Successfully changed email address.</span>");
+                echo("<span class='form-success'>successfully changed email address.</span>");
             }
     }
 }

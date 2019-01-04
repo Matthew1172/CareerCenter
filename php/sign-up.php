@@ -7,7 +7,7 @@ if(isset($_POST['submit']))
 	$user_first = $_POST['fName'];
 	$user_last = $_POST['lName'];
 	$user_email = $_POST['email'];
-	$user_phone = $_POST['phone'];
+	$user_phone = preg_replace("/[^0-9]/", "", $_POST['phone']);
 	$user_uid = $_POST['uid'];
 	$user_pw = $_POST['pw'];
 	$user_pw2 = $_POST['pw2'];
@@ -23,175 +23,221 @@ if(isset($_POST['submit']))
     $type = $_POST['type'];
 
     $errorEmpty = false;
+    $errorName = false;
     $errorEmail = false;
     $errorPhone = false;
     $errorUid = false;
     $errorPw = false;
 
-    if($type == 'employer')
+    if (!preg_match("/^[a-zA-Z]*$/", $user_first) || !preg_match("/^[a-zA-Z]*$/", $user_last) || strlen($user_first) < 2 || strlen($user_last) < 2)
     {
-        $employer_company = $_POST['company'];
-        $employer_web = $_POST['web'];
-        $employer_tax = $_POST['tax'];
-        $employer_employ = $_POST['unemployNum'];
-
-        $errorTax = false;
-        $errorEmploy = false;
-        $errorWeb = false;
-
-        if(empty($user_first) || empty($user_last) || empty($user_email) || empty($user_phone) || empty($user_uid) || empty($user_pw) || empty($user_pw2) || empty($employer_company) || empty($employer_web) || empty($employer_tax) || empty($employer_employ))
-    	{
-    		echo("<span class='form-error'>Fill in all fields</span>");
-    		$errorEmpty = true;
-    	}
-    	else if(!filter_var($user_email, FILTER_VALIDATE_EMAIL))
-    	{
-    		echo("<span class='form-error'>write a valid email</span>");
-    		$errorEmail = true;
-    	}
-    	else if(!preg_match("/^[a-zA-Z0-9]*$/", $user_uid))
-    	{
-    		echo("<span class='form-error'>write a valid username</span>");
-    		$errorUid = true;
-    	}
-        else if(strlen($employer_tax) < 10)
-        {
-            echo("<span class='form-error'>please write a valid tax number</span>");
-            $errorTax = true;
-        }
-        else if(strlen($employer_employ) < 10)
-        {
-            echo("<span class='form-error'>please write a valid unemployment number</span>");
-            $errorEmploy = true;
-        }
-    	else
-    	{
-    		$sql = $conn->prepare('SELECT user_email FROM users WHERE user_email=?');
-    		$sql->execute([$user_email]);
-    		$result = $sql->fetch();
-
-    		if(!$result)
-    		{
-    			$sql = $conn->prepare('SELECT user_uid FROM users WHERE user_uid=?');
-    			$sql->execute([$user_uid]);
-    			$result = $sql->fetch();
-
-    			if(!$result)
-    			{
-    				if($user_pw == $user_pw2)
-    				{
-    					$hashPwd = password_hash($user_pw, PASSWORD_DEFAULT);
-
-    					$stm = $conn->prepare('INSERT INTO users(user_first, user_last, user_email, user_phone, user_uid, user_pw, user_type) VALUES (?, ?, ?, ?, ?, ?, ?)');
-    					$stm->execute([$user_first, $user_last, $user_email, $user_phone, $user_uid, $hashPwd, 'employer']);
-
-                        $stm = $conn->prepare('SELECT user_id FROM users WHERE user_uid = ?');
-    					$stm->execute([$user_uid]);
-    					$result = $stm->fetch();
-
-                        $stm = $conn->prepare('INSERT INTO employers(user_id, employer_company, employer_tax, employer_unemployNum, employer_web) VALUES (?, ?, ?, ?, ?)');
-                        $stm->execute([$result['user_id'], $employer_company, $employer_tax, $employer_employ, $employer_web]);
-
-                        $stm = $conn->prepare('INSERT INTO occupations(user_id, medical, IT, business, foodservice, healthcare, hospitality, culinary) VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
-        				$stm->execute([$result['user_id'], $user_med, $user_it, $user_bus, $user_food, $user_health, $user_hosp, $user_cul]);
-
-    					echo("<span class='form-success'>Success~!</span>");
-    				}
-    				else
-    				{
-    					echo("<span class='form-error'>Passwords do not match!</span>");
-    					$errorPw = true;
-    				}
-    			}
-    			else
-    			{
-    				echo("<span class='form-error'>username taken!</span>");
-    				$errorUid = true;
-    			}
-    		}
-    		else
-    		{
-    			echo("<span class='form-error'>email taken!</span>");
-    			$errorEmail = true;
-    		}
-    	}
+        echo("<span class='form-error'>this name is not valid.</span>");
+        $errorName = true;
+    }
+    else if(!filter_var($user_email, FILTER_VALIDATE_EMAIL))
+    {
+        echo("<span class='form-error'>please put a valid email.</span>");
+        $errorEmail = true;
+    }
+    else if(strlen($user_phone) != 11)
+    {
+        echo("<span class='form-error'>please put a valid phone number.</span>");
+        $errorPhone = true;
+    }
+    else if(!preg_match("/^[a-zA-Z0-9]*$/", $user_uid) || strlen($user_uid) < 6)
+    {
+        echo("<span class='form-error'>please put a valid username.</span>");
+        $errorUid = true;
+    }
+    else if(!preg_match("/^[a-zA-Z0-9!?@$*&%]*$/", $user_pw) || strlen($user_pw) < 8)
+    {
+        echo("<span class='form-error'>please put a valid password.</span>");
+        $errorPw = true;
     }
     else
     {
-        $seeker_stateNum = $_POST['stateNum'];
-        $errorStateNum = false;
-
-        if(empty($user_first) || empty($user_last) || empty($user_email) || empty($user_phone) || empty($user_uid) || empty($user_pw) || empty($user_pw2) || empty($seeker_stateNum))
-    	{
-    		echo("<span class='form-error'>Fill in all fields</span>");
-    		$errorEmpty = true;
-    	}
-    	else if(!filter_var($user_email, FILTER_VALIDATE_EMAIL))
-    	{
-    		echo("<span class='form-error'>write a valid email</span>");
-    		$errorEmail = true;
-    	}
-    	else if(!preg_match("/^[a-zA-Z0-9]*$/", $user_uid))
-    	{
-    		echo("<span class='form-error'>write a valid username</span>");
-    		$errorUid = true;
-    	}
-        else if($seeker_stateNum < 10)
+        if($type == 'employer')
         {
-            echo("<span class='form-error'>write a state number!</span>");
-            $errorStateNum = true;
+            $employer_company = $_POST['company'];
+            $employer_web = $_POST['web'];
+            $employer_tax = $_POST['tax'];
+            $employer_employ = $_POST['unemployNum'];
+
+            $errorCompanyName = false;
+            $errorTax = false;
+            $errorEmploy = false;
+            $errorWeb = false;
+
+            if(empty($user_first) || empty($user_last) || empty($user_email) || empty($user_phone) || empty($user_uid) || empty($user_pw) || empty($user_pw2) || empty($employer_company) || empty($employer_tax) || empty($employer_employ))
+        	{
+        		echo("<span class='form-error'>please fill in all fields.</span>");
+        		$errorEmpty = true;
+        	}
+            else if(!preg_match("/^[a-zA-Z0-9]*$/", $employer_company))
+            {
+                echo("<span class='form-error'>this is not a valid company name.</span>");
+                $errorCompanyName = true;
+            }
+            else if(strlen($employer_tax) != 10 || !preg_match("/^[0-9]*$/", $employer_tax))
+            {
+                echo("<span class='form-error'>please put a valid tax number.</span>");
+                $errorTax = true;
+            }
+            else if(strlen($employer_employ) != 10 || !preg_match("/^[0-9]*$/", $employer_employ))
+            {
+                echo("<span class='form-error'>please put a valid unemployment number.</span>");
+                $errorEmploy = true;
+            }
+        	else
+        	{
+        		$sql = $conn->prepare('SELECT user_email FROM users WHERE user_email=?');
+        		$sql->execute([$user_email]);
+        		$result = $sql->fetch();
+
+        		if(!$result)
+        		{
+        			$sql = $conn->prepare('SELECT user_uid FROM users WHERE user_uid=?');
+        			$sql->execute([$user_uid]);
+        			$result = $sql->fetch();
+
+        			if(!$result)
+        			{
+        				if($user_pw == $user_pw2)
+        				{
+
+                            if(empty($employer_web))
+                            {
+                                $hashPwd = password_hash($user_pw, PASSWORD_DEFAULT);
+
+            					$stm = $conn->prepare('INSERT INTO users(user_first, user_last, user_email, user_phone, user_uid, user_pw, user_type) VALUES (?, ?, ?, ?, ?, ?, ?)');
+            					$stm->execute([$user_first, $user_last, $user_email, $user_phone, $user_uid, $hashPwd, 'employer']);
+
+                                $stm = $conn->prepare('SELECT user_id FROM users WHERE user_uid = ?');
+            					$stm->execute([$user_uid]);
+            					$result = $stm->fetch();
+
+                                $stm = $conn->prepare('INSERT INTO occupations(user_id, medical, IT, business, foodservice, healthcare, hospitality, culinary) VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
+                				$stm->execute([$result['user_id'], $user_med, $user_it, $user_bus, $user_food, $user_health, $user_hosp, $user_cul]);
+
+                                $stm = $conn->prepare('INSERT INTO employers(user_id, employer_company, employer_tax, employer_unemployNum, employer_web) VALUES (?, ?, ?, ?, ?)');
+                                $stm->execute([$result['user_id'], $employer_company, $employer_tax, $employer_employ, "This employer has not shared a website."]);
+
+                                echo("<span class='form-success'>Success~!</span>");
+                            }
+                            else
+                            {
+                                if (!filter_var($employer_web, FILTER_VALIDATE_URL))
+                                {
+                                    echo("<span class='form-error'>please put a valid URL.</span>");
+                                    $errorWeb = true;
+                                }
+                                else
+                                {
+                                    $hashPwd = password_hash($user_pw, PASSWORD_DEFAULT);
+
+                					$stm = $conn->prepare('INSERT INTO users(user_first, user_last, user_email, user_phone, user_uid, user_pw, user_type) VALUES (?, ?, ?, ?, ?, ?, ?)');
+                					$stm->execute([$user_first, $user_last, $user_email, $user_phone, $user_uid, $hashPwd, 'employer']);
+
+                                    $stm = $conn->prepare('SELECT user_id FROM users WHERE user_uid = ?');
+                					$stm->execute([$user_uid]);
+                					$result = $stm->fetch();
+
+                                    $stm = $conn->prepare('INSERT INTO occupations(user_id, medical, IT, business, foodservice, healthcare, hospitality, culinary) VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
+                    				$stm->execute([$result['user_id'], $user_med, $user_it, $user_bus, $user_food, $user_health, $user_hosp, $user_cul]);
+
+                                    $stm = $conn->prepare('INSERT INTO employers(user_id, employer_company, employer_tax, employer_unemployNum, employer_web) VALUES (?, ?, ?, ?, ?)');
+                                    $stm->execute([$result['user_id'], $employer_company, $employer_tax, $employer_employ, $employer_web]);
+
+                                    echo("<span class='form-success'>success!</span>");
+                                }
+                            }
+        				}
+        				else
+        				{
+        					echo("<span class='form-error'>passwords do not match.</span>");
+        					$errorPw = true;
+        				}
+        			}
+        			else
+        			{
+        				echo("<span class='form-error'>username taken.</span>");
+        				$errorUid = true;
+        			}
+        		}
+        		else
+        		{
+        			echo("<span class='form-error'>email taken.</span>");
+        			$errorEmail = true;
+        		}
+        	}
         }
-    	else
-    	{
-    		$sql = $conn->prepare('SELECT user_email FROM users WHERE user_email=?');
-    		$sql->execute([$user_email]);
-    		$result = $sql->fetch();
+        else
+        {
+            $seeker_stateNum = $_POST['stateNum'];
+            $errorStateNum = false;
 
-    		if(!$result)
-    		{
-    			$sql = $conn->prepare('SELECT user_uid FROM users WHERE user_uid=?');
-    			$sql->execute([$user_uid]);
-    			$result = $sql->fetch();
+            if(empty($user_first) || empty($user_last) || empty($user_email) || empty($user_phone) || empty($user_uid) || empty($user_pw) || empty($user_pw2) || empty($seeker_stateNum))
+        	{
+        		echo("<span class='form-error'>please Fill in all fields.</span>");
+        		$errorEmpty = true;
+        	}
+            else if(strlen($seeker_stateNum) != 10 || !preg_match("/^[0-9]*$/", $seeker_stateNum))
+            {
+                echo("<span class='form-error'>please write a state number.</span>");
+                $errorStateNum = true;
+            }
+        	else
+        	{
+        		$sql = $conn->prepare('SELECT user_email FROM users WHERE user_email=?');
+        		$sql->execute([$user_email]);
+        		$result = $sql->fetch();
 
-    			if(!$result)
-    			{
-    				if($user_pw == $user_pw2)
-    				{
-    					$hashPwd = password_hash($user_pw, PASSWORD_DEFAULT);
+        		if(!$result)
+        		{
+        			$sql = $conn->prepare('SELECT user_uid FROM users WHERE user_uid=?');
+        			$sql->execute([$user_uid]);
+        			$result = $sql->fetch();
 
-    					$stm = $conn->prepare('INSERT INTO users(user_first, user_last, user_email, user_phone, user_uid, user_pw, user_type) VALUES (?, ?, ?, ?, ?, ?, ?)');
-    					$stm->execute([$user_first, $user_last, $user_email, $user_phone, $user_uid, $hashPwd, 'user']);
+        			if(!$result)
+        			{
+        				if($user_pw == $user_pw2)
+        				{
+        					$hashPwd = password_hash($user_pw, PASSWORD_DEFAULT);
 
-                        $stm = $conn->prepare('SELECT user_id FROM users WHERE user_uid = ?');
-    					$stm->execute([$user_uid]);
-    					$result = $stm->fetch();
+        					$stm = $conn->prepare('INSERT INTO users(user_first, user_last, user_email, user_phone, user_uid, user_pw, user_type) VALUES (?, ?, ?, ?, ?, ?, ?)');
+        					$stm->execute([$user_first, $user_last, $user_email, $user_phone, $user_uid, $hashPwd, 'user']);
 
-                        $stm = $conn->prepare('INSERT INTO seekers(user_id, user_stateNum) VALUES (?, ?)');
-                        $stm->execute([$result['user_id'], $seeker_stateNum]);
+                            $stm = $conn->prepare('SELECT user_id FROM users WHERE user_uid = ?');
+        					$stm->execute([$user_uid]);
+        					$result = $stm->fetch();
 
-                        $stm = $conn->prepare('INSERT INTO occupations(user_id, medical, IT, business, foodservice, healthcare, hospitality, culinary) VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
-        				$stm->execute([$result['user_id'], $user_med, $user_it, $user_bus, $user_food, $user_health, $user_hosp, $user_cul]);
+                            $stm = $conn->prepare('INSERT INTO seekers(user_id, user_stateNum) VALUES (?, ?)');
+                            $stm->execute([$result['user_id'], $seeker_stateNum]);
 
-    					echo("<span class='form-success'>Success~!</span>");
-    				}
-    				else
-    				{
-    					echo("<span class='form-error'>Passwords do not match!</span>");
-    					$errorPw = true;
-    				}
-    			}
-    			else
-    			{
-    				echo("<span class='form-error'>username taken!</span>");
-    				$errorUid = true;
-    			}
-    		}
-    		else
-    		{
-    			echo("<span class='form-error'>email taken!</span>");
-    			$errorEmail = true;
-    		}
-    	}
+                            $stm = $conn->prepare('INSERT INTO occupations(user_id, medical, IT, business, foodservice, healthcare, hospitality, culinary) VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
+            				$stm->execute([$result['user_id'], $user_med, $user_it, $user_bus, $user_food, $user_health, $user_hosp, $user_cul]);
+
+                            echo("<span class='form-success'>Success~!</span>");
+        				}
+        				else
+        				{
+        					echo("<span class='form-error'>passwords do not match.</span>");
+        					$errorPw = true;
+        				}
+        			}
+        			else
+        			{
+        				echo("<span class='form-error'>username taken.</span>");
+        				$errorUid = true;
+        			}
+        		}
+        		else
+        		{
+        			echo("<span class='form-error'>email taken.</span>");
+        			$errorEmail = true;
+        		}
+        	}
+        }
     }
 }
 else
@@ -204,27 +250,38 @@ else
 	$("#employer-fName, #employer-lName, #employer-email, #employer-phone, #employer-uid, #employer-pw, #employer-pw2, #employer-company, #employer-tax, #employer-web, #employer-unemployNum").removeClass("input-error");
 
 	var errorEmpty = "<?php echo $errorEmpty; ?>";
+	var errorName = "<?php echo $errorName; ?>";
 	var errorEmail = "<?php echo $errorEmail; ?>";
 	var errorPhone = "<?php echo $errorPhone; ?>";
 	var errorUid = "<?php echo $errorUid; ?>";
 	var errorPw = "<?php echo $errorPw; ?>";
 
+    var errorStateNum = "<?php echo $errorStateNum; ?>";
+
     var errorTax = "<?php echo $errorTax; ?>";
     var errorEmploy = "<?php echo $errorEmploy; ?>";
     var errorWeb = "<?php echo $errorWeb; ?>";
-
-    var errorStateNum = "<?php echo $errorStateNum; ?>";
+    var errorCompanyName = "<?php echo $errorCompanyName; ?>";
 
     if(errorEmpty == true)
 	{
         $("#signup-fName, #signup-lName, #signup-email, #signup-phone, #signup-stateNum, #signup-uid, #signup-pw, #signup-pw2").addClass("input-error");
-        $("#employer-fName, #employer-lName, #employer-email, #employer-phone, #employer-uid, #employer-pw, #employer-pw2, #employer-company, #employer-tax, #employer-web, #employer-unemployNum").addClass("input-error");
+        $("#employer-fName, #employer-lName, #employer-email, #employer-phone, #employer-uid, #employer-pw, #employer-pw2, #employer-company, #employer-tax, #employer-unemployNum").addClass("input-error");
 	}
+    if(errorName == true)
+    {
+        $("#signup-fName, #signup-lName").addClass("input-error");
+        $("#employer-fName, #employer-lName").addClass("input-error");
+    }
 	if(errorEmail == true)
 	{
 		$("#signup-email").addClass("input-error");
 		$("#employer-email").addClass("input-error");
 	}
+    if(errorPhone == true)
+    {
+        $("#signup-phone").addClass("input-error");
+    }
 	if(errorUid == true)
 	{
 		$("#signup-uid").addClass("input-error");
@@ -235,12 +292,39 @@ else
 		$("#signup-pw, #signup-pw2").addClass("input-error");
 		$("#employer-pw, #employer-pw2").addClass("input-error");
 	}
-	if(errorEmpty == false && errorEmail == false && errorUid == false && errorPw == false && errorStateNum == false && errorWeb == false && errorEmploy == false && errorTax == false)
+    if(errorStateNum == true)
+    {
+        $("#signup-stateNum").addClass("input-error");
+    }
+    if(errorTax == true)
+    {
+        $("#employer-tax").addClass("input-error");
+    }
+    if(errorEmploy == true)
+    {
+        $("#employer-unemployNum").addClass("input-error");
+    }
+    if(errorWeb == true)
+    {
+        $("#employer-web").addClass("input-error");
+    }
+    if(errorCompanyName == true)
+    {
+        $("#employer-company").addClass("input-error");
+    }
+	if(errorEmpty == false && errorName == false && errorEmail == false && errorPhone == false && errorUid == false && errorPw == false && errorStateNum == false && errorTax == false && errorEmploy == false && errorWeb == false && errorCompanyName == false)
 	{
-		$("#signup-fName, #signup-lName, #signup-email, #signup-phone, #signup-stateNum, #signup-uid, #signup-pw, #signup-pw2").val("");
+		$("#signup-fName, #signup-lName, #signup-email, #signup-stateNum, #signup-uid, #signup-pw, #signup-pw2").val("");
+        $("#signup-phone").val("+1");
         $("#employer-fName, #employer-lName, #employer-email, #employer-phone, #employer-uid, #employer-pw, #employer-pw2, #employer-company, #employer-tax, #employer-web, #employer-unemployNum").val("");
 
         $("#signup-med, #signup-it, #signup-food, #signup-health, #signup-hosp, #signup-cul, #signup-bus").prop("checked", false);
         $("#employer-med, #employer-it, #employer-food, #employer-health, #employer-hosp, #employer-cul, #employer-bus").prop("checked", false);
+
+        var x = "Thank you for creating an account with the Rockland County Career Center!"
+        if(confirm(x))
+        {
+            window.location.assign('index.php');
+        }
     }
 </script>

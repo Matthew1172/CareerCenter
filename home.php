@@ -291,8 +291,8 @@ if (isset($_SESSION['user_uid']))
     }
     else
     {
-
             echo("<link href='styles/home-user.css' rel='stylesheet'>");
+            echo("<link href='formhelper/css/bootstrap-formhelpers.css' rel='stylesheet'/>");
             echo("
             <script>
             $(document).ready(function() {
@@ -569,8 +569,8 @@ if (isset($_SESSION['user_uid']))
             <form id='change-pw-form'>
                 <p class='form-message'></p>
                 <ul class='reset-list'>
-                    <li><input id='change-pw-input' type='text' placeholder='New password' class='form-control' aria-label='small'></li>
-                    <li><input id='change-pw2-input' type='text' placeholder='Re-type new password' class='form-control' aria-label='small'></li>
+                    <li><input id='change-pw-input' type='text' placeholder='New password' class='form-control' aria-label='small' data-toggle='tooltip' title='Enter your new password (must be 8 characters long, ! ? @ $ % & * allowed)'></li>
+                    <li><input id='change-pw2-input' type='text' placeholder='Re-type new password' class='form-control' aria-label='small' data-toggle='tooltip' title='Re-type your new password (must be 8 characters long, ! ? @ $ % & * allowed)'></li>
                 </ul>
                 <button id='change-pw-submit' type='submit' class='reset-btn btn btn-danger main-btn'>Reset password</button>
             </form>
@@ -580,8 +580,8 @@ if (isset($_SESSION['user_uid']))
             <form id='change-phone-form'>
                 <p class='form-message'></p>
                 <ul class='reset-list'>
-                    <li><input id='change-phone-input' type='text' placeholder='New phone' class='form-control' aria-label='small'></li>
-                    <li><input id='change-phone2-input' type='text' placeholder='Re-type new phone' class='form-control' aria-label='small'></li>
+                    <li><input id='change-phone-input' type='text' class='input-small form-control bfh-phone' data-country='US' aria-label='small' data-toggle='tooltip' title='Enter your new phone number (only digits)'></li>
+                    <li><input id='change-phone2-input' type='text' class='input-small form-control bfh-phone' data-country='US' aria-label='small' data-toggle='tooltip' title='Re-type your new phone number (only digits)'></li>
                 </ul>
                 <button id='change-phone-submit' type='submit' class='reset-btn btn btn-danger main-btn'>Reset phone</button>
             </form>
@@ -591,8 +591,8 @@ if (isset($_SESSION['user_uid']))
             <form id='change-email-form'>
                 <p class='form-message'></p>
                 <ul class='reset-list'>
-                    <li><input id='change-email-input' type='text' placeholder='New email' class='form-control' aria-label='small'></li>
-                    <li><input id='change-email2-input' type='text' placeholder='Re-type new email' class='form-control' aria-label='small'></li>
+                    <li><input id='change-email-input' type='text' placeholder='New email' class='form-control' aria-label='small' data-toggle='tooltip' title='Enter your new email'></li>
+                    <li><input id='change-email2-input' type='text' placeholder='Re-type new email' class='form-control' aria-label='small' data-toggle='tooltip' title='Re-type your new email'></li>
                 </ul>
                 <button id='change-email-submit' type='submit' class='reset-btn btn btn-danger main-btn'>Reset email</button>
             </form>
@@ -607,6 +607,8 @@ if (isset($_SESSION['user_uid']))
             echo("</div>");
 
             echo("</div>");
+            echo("<script src='formhelper/js/bootstrap-formhelpers-phone.js'></script>");
+            echo("<script src='formhelper/js/bootstrap-formhelpers.js'></script>");
     }
     require 'footer.php';
 }
