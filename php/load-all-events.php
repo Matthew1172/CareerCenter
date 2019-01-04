@@ -14,7 +14,7 @@ if (isset($_SESSION['user_uid']))
         while($event = $stm->fetch(PDO::FETCH_ASSOC))
         {
                 echo(
-                "<div id='event" . $event['event_id'] . "' class='row event my-4 p-2'>" .
+                "<div id='event" . $event['event_id'] . "' class='row event my-4'>" .
                 "<div class='col-xs-9 col-sm-9 col-md-10 col-lg-10'>" .
                 "<h3>"                   . $event['title']        . "</h3>" .
                 "<b>Type: </b>"          . $event['type']         . "<br/>" .

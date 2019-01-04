@@ -20,7 +20,7 @@ if (isset($_SESSION['user_uid']))
                 while($event = $stm2->fetch(PDO::FETCH_ASSOC))
                 {
                     echo(
-                    "<div id='event" . $event['event_id'] . "' class='row event my-4 p-2'>" .
+                    "<div id='event" . $event['event_id'] . "' class='row event my-4'>" .
                     "<div class='col-xs-9 col-sm-9 col-md-10 col-lg-10'>" .
                     "<h3>"                   . $event['title']        . "</h3>" .
                     "<b>Type: </b>"          . $event['type']         . "<br/>" .
@@ -37,7 +37,7 @@ if (isset($_SESSION['user_uid']))
         }
         else
         {
-            echo("<div class='row event my-4 p-2'><h3>You have no events.</h3></div>");
+            echo("<div class='my-4'><h3>You are not subscribed to any Workshops yet!</h3></div>");
         }
 }
 ?>

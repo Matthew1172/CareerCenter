@@ -40,6 +40,12 @@
     margin-top: 20px;
 }
 
+.dash-header
+{
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
 .dashboard-control
 {
     grid-area: d;
@@ -47,13 +53,14 @@
 
 .dashboard-control ul li
 {
-    margin: 10px;
+    margin-left: 0px;
 }
 
 .dashboard-control ul li button
 {
     width: 150px;
-    padding: 10px;
+    padding: 7px;
+    margin-right: 20px;
 }
 
 .control-area

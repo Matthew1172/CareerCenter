@@ -39,7 +39,7 @@ if (isset($_SESSION['user_uid']))
 
             echo("<div class='hero1'></div>");
             echo("<div class='greet py-5'>");
-            echo("<h1 style='color: white' id='demo'>Welcome, " . $_SESSION['user_uid'] . "<br/>" . "You logged in as an: " . $result['user_type'] . "</h1>");
+            echo("<h1 style='color: white' id='demo'>Welcome, " . $_SESSION['user_uid'] . "</h1>");
             echo("</div>");
 
             echo("<div class='btn-control-group'>");
@@ -185,7 +185,7 @@ if (isset($_SESSION['user_uid']))
 
             echo("<div class='hero1'></div>");
             echo("<div class='greet py-5'>");
-            echo("<h1 style='color: white' id='demo'>Welcome, " . $_SESSION['user_uid'] . "<br/>" . "You logged in as an: " . $result['user_type'] . "</h1>");
+            echo("<h1 style='color: white' id='demo'>Welcome, " . $_SESSION['user_uid'] . "</h1>");
             echo("</div>");
 
             echo("<div class='postJob'>");
@@ -370,7 +370,7 @@ if (isset($_SESSION['user_uid']))
             echo("<div class='hero1'></div>");
 
             echo("<div class='greet py-5'>");
-            echo("<h1 style='color: white' id='demo'>Welcome, " . $_SESSION['user_uid'] . "<br/>" . "You logged in as an: " . $result['user_type']  . "</h1>");
+            echo("<h1 style='color: white' id='demo'>Welcome, " . $_SESSION['user_uid'] . "</h1>");
             echo("</div>");
 
             echo("<div class='dashboard-control'>");
@@ -381,9 +381,9 @@ if (isset($_SESSION['user_uid']))
                 </button>
                 <div class="navbar-collapse collapse justify-content-stretch" id="navbar2">
                 <ul class="navbar-nav ml-auto">
-                    <li class=""><button class="btn-outline-secondary btn nav-link all-btn">All Workshops</button></li>
-                    <li class=""><button class="btn-outline-secondary btn nav-link own-btn">Your Workshops</button></li>
-                    <li class=""><button class="btn-outline-secondary btn nav-link change-btn">Change info</button></li>
+                    <li class="mt-3 mb-3"><button class="btn-outline-secondary btn nav-link all-btn">All Workshops</button></li>
+                    <li class="mt-3 mb-3"><button class="btn-outline-secondary btn nav-link own-btn">Your Workshops</button></li>
+                    <li class="mt-3 mb-3"><button class="btn-outline-secondary btn nav-link change-btn">Change info</button></li>
                 </ul>
                 </div>
             </nav>
@@ -392,15 +392,15 @@ if (isset($_SESSION['user_uid']))
 
             echo("<div class='control-area'>");
 
-            echo("<div id='all-events-list' class='event-list'>");
-            echo("<h2>All Workshops: </h2><hr>");
+            echo("<div id='all-events-list' class='event-list p-2'>");
+            echo("<h2 class='dash-header'>All Workshops: </h2><hr>");
             echo("<div id='all-events-list-section' class='container'>");
             $stm = $conn->prepare('SELECT * from events ORDER BY dateStamp DESC LIMIT 2');
             $stm->execute();
             while($event = $stm->fetch(PDO::FETCH_ASSOC))
             {
                             echo(
-                            "<div id='event" . $event['event_id'] . "' class='row event my-4 p-2'>" .
+                            "<div id='event" . $event['event_id'] . "' class='row event my-4'>" .
                             "<div class='col-xs-9 col-sm-9 col-md-10 col-lg-10'>" .
                             "<h3>"                   . $event['title']        . "</h3>" .
                             "<b>Type: </b>"          . $event['type']         . "<br/>" .
@@ -441,8 +441,8 @@ if (isset($_SESSION['user_uid']))
             echo("</div>");
             echo("</div>");
 
-            echo("<div id='own-events-list' class='event-list' style='display:none;'>");
-            echo("<h2>Your Workshops: </h2><hr>");
+            echo("<div id='own-events-list' class='event-list p-2' style='display:none;'>");
+            echo("<h2 class='dash-header'>Your Workshops: </h2><hr>");
             echo("<div id='own-events-list-section' class='container'>");
             $stm = $conn->prepare('SELECT * FROM user_event WHERE user_id = ? LIMIT 2');
             $stm->execute([$result['user_id']]);
@@ -455,7 +455,7 @@ if (isset($_SESSION['user_uid']))
                     while($event = $stm2->fetch(PDO::FETCH_ASSOC))
                     {
                         echo(
-                        "<div id='event" . $event['event_id'] . "' class='row event my-4 p-2'>" .
+                        "<div id='event" . $event['event_id'] . "' class='row event my-4'>" .
                         "<div class='col-xs-9 col-sm-9 col-md-10 col-lg-10'>" .
                         "<h3>"                   . $event['title']        . "</h3>" .
                         "<b>Type: </b>"          . $event['type']         . "<br/>" .
@@ -472,7 +472,7 @@ if (isset($_SESSION['user_uid']))
             }
             else
             {
-                echo("<div class='row event my-4 p-2'><h3>You have no events.</h3></div>");
+                echo("<div class='my-4'><h3>You are not subscribed to any Workshops yet!</h3></div>");
             }
             echo("</div>");
             echo("<div class='show-more-container'>");

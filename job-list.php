@@ -33,7 +33,7 @@ echo('
 <div class="jobList">
 
 <div class="container">
-  <h4 class="pb-5">Job Postings</h4>
+  <h2 class="pb-5">Job Postings</h2>
   <table class="table table-hover">
     <thead>
       <tr>

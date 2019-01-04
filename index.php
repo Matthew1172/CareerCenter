@@ -9,7 +9,7 @@ echo("
 $(document).ready(function() {
     var announcementCount = 1;
     $('button').click(function(){
-        announcementCount = announcementCount + 1;
+        announcementCount += 1;
         $('#news').load('php/load-announcements.php', {
             announcementNewCount: announcementCount
         });
@@ -22,11 +22,11 @@ echo('
 
 <div class="grid">
 
-<div class="intro">
-<h1>
-Welcome to the Rockland County Career Center.
-</h1>
-<hr width="50px">
+<div class="hero1">
+</div>
+
+<div class="intro py-5">
+<h1>Welcome to the Rockland County Career Center.</h1>
 </div>
 
 <div class="news">

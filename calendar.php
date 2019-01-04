@@ -54,7 +54,7 @@ echo("
 </div>
 
 <div class='intro py-5'>
-<h1 style='color: white'>Here is a calendar of events being hosted. Click on the event bubble to find out more information.</h1>
+<h1 style='color: white'>Here is a calendar of events being hosted.</h1>
 </div>
 
 <div class='cal'>

@@ -1,3 +1,10 @@
+.hero1
+{
+	   grid-column: 1/-1;
+	   grid-row: 1;
+       background-color: #00aaff;
+}
+
 .slider
 {
         grid-area: s;
@@ -14,7 +21,7 @@
 .google-maps
 {
         position: relative;
-		padding-bottom: 50%; // This is the aspect ratio
+		padding-bottom: 100%; // This is the aspect ratio
 }
 
 .google-maps iframe
@@ -45,13 +52,14 @@
 
 .intro
 {
-		grid-area: intro;
-		text-align: center;
+		grid-area: i;
 		padding-left: 20px;
 		padding-right: 20px;
-		padding-top: 50px;
-		padding-bottom: 50px;
-        background-color: white;
+}
+
+.intro h1
+{
+        color: white;
 }
 
 .news
@@ -86,9 +94,10 @@
         background-color: #fafafa;
 		display: grid;
 		grid-template-columns: 1fr 1fr 1fr 1fr;
-		grid-template-rows: auto auto 100px auto 100px auto 100px auto 100px;
+		grid-template-rows: auto 100px auto 100px auto 100px auto 100px auto 100px;
 		grid-template-areas:
-		"intro intro intro intro"
+		"i i i i"
+        ". . . ."
 		"n n n n"
 		". . . ."
 		"m m m m"
@@ -105,9 +114,10 @@
 	{
 			display: grid;
 	    	grid-template-columns: 1fr 1fr 1fr 1fr;
-	    	grid-template-rows: auto auto 100px auto 100px auto 100px;
+	    	grid-template-rows: auto 100px auto 100px auto 100px auto 100px;
 			grid-template-areas:
-			"intro intro intro intro"
+			"i i i i"
+            ". . . ."
 			"n n n n"
 			". . . ."
 			"m m c c"
@@ -123,9 +133,10 @@
         {
         	display: grid;
         	grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-        	grid-template-rows: auto auto auto auto 100px auto 100px;
+        	grid-template-rows: auto 100px auto auto auto 100px auto 100px;
         	grid-template-areas:
-			". intro intro intro intro intro intro ."
+			". i i i i i i ."
+            ". . . . . . . ."
 			". n n n c c c ."
 			". n n n m m m ."
 			". n n n . . . ."
