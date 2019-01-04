@@ -24,7 +24,7 @@ if (isset($_SESSION['user_uid']))
 
                         var submit = $("#submit").val();
 
-                            $(".form-message").load("php/reset-pw.php", {
+                            $(".form-message").load("php/reset-pw-admin.php", {
                                 reset_email: reset_email,
                                 reset_pw: reset_pw,
                                 reset_pw2: reset_pw2,
@@ -296,8 +296,6 @@ if (isset($_SESSION['user_uid']))
             echo("
             <script>
             $(document).ready(function() {
-                var allEventCount = 2;
-                var ownEventCount = 2;
                 $(document).on('click','.event-btn',function(){
                     var x = 'Are you sure you want to subscribe?'
                     if(confirm(x))
@@ -335,32 +333,105 @@ if (isset($_SESSION['user_uid']))
                     }
                 });
                 $(document).on('click','.all-btn',function(){
-
                     $('#all-events-list-section').load('php/load-all-events.php', {
                         allEventNewCount: allEventCount
                     });
                     $('#own-events-list').hide();
+                    $('#change-info').hide();
                     $('#all-events-list').show();
                 });
-                $(document).on('click','.own-btn',function(){
-
-                    $('#own-events-list-section').load('php/load-own-events.php', {
-                        ownEventNewCount: ownEventCount
-                    });
-                    $('#all-events-list').hide();
-                    $('#own-events-list').show();
-                });
+                var allEventCount = 2;
                 $('#more-all-events-button').click(function(){
                     allEventCount += 2;
                     $('#all-events-list-section').load('php/load-all-events.php', {
                         allEventNewCount: allEventCount
                     });
                 });
+                $(document).on('click','.own-btn',function(){
+                    $('#own-events-list-section').load('php/load-own-events.php', {
+                        ownEventNewCount: ownEventCount
+                    });
+                    $('#all-events-list').hide();
+                    $('#change-info').hide();
+                    $('#own-events-list').show();
+                });
+                var ownEventCount = 2;
                 $('#more-own-events-button').click(function(){
                     ownEventCount += 2;
                     $('#own-events-list-section').load('php/load-own-events.php', {
                         ownEventNewCount: ownEventCount
                     });
+                });
+                $(document).on('click','.change-btn',function(){
+                    $('#all-events-list').hide();
+                    $('#own-events-list').hide();
+                    $('#change-info').show();
+                });
+                $(document).on('click','.change-pw-btn',function(){
+                    $('#change-phone').hide();
+                    $('#change-email').hide();
+                    $('#change-pw').show();
+                });
+                $(document).on('click','.change-phone-btn',function(){
+                    $('#change-email').hide();
+                    $('#change-pw').hide();
+                    $('#change-phone').show();
+                });
+                $(document).on('click','.change-email-btn',function(){
+                    $('#change-phone').hide();
+                    $('#change-pw').hide();
+                    $('#change-email').show();
+                });
+                $('#change-pw-form').submit(function(event){
+                    var x = 'Are you sure you want to change your password?'
+                    if(confirm(x))
+                    {
+                        event.preventDefault();
+                        var change_pw = $('#change-pw-input').val();
+                        var change_pw2 = $('#change-pw2-input').val();
+
+                        var submit = $('#change-pw-submit').val();
+
+                            $('.form-message').load('php/reset-pw.php', {
+                                change_pw: change_pw,
+                                change_pw2: change_pw2,
+                                submit: submit
+                            });
+                    }
+                });
+                $('#change-phone-form').submit(function(event){
+                    var x = 'Are you sure you want to change your phone number?'
+                    if(confirm(x))
+                    {
+                        event.preventDefault();
+                        var change_phone = $('#change-phone-input').val();
+                        var change_phone2 = $('#change-phone2-input').val();
+
+                        var submit = $('#change-phone-submit').val();
+
+                            $('.form-message').load('php/reset-phone.php', {
+                                change_phone: change_phone,
+                                change_phone2: change_phone2,
+                                submit: submit
+                            });
+                    }
+                });
+                $('#change-email-form').submit(function(event){
+                    var x = 'Are you sure you want to change your email?'
+                    if(confirm(x))
+                    {
+                        event.preventDefault();
+                        var change_email = $('#change-email-input').val();
+                        var change_email2 = $('#change-email2-input').val();
+
+                        var submit = $('#change-email-submit').val();
+
+                            $('.form-message').load('php/reset-email.php', {
+                                change_email: change_email,
+                                change_email2: change_email2,
+                                submit: submit
+                            });
+                    }
                 });
             });
             </script>
@@ -381,9 +452,9 @@ if (isset($_SESSION['user_uid']))
                 </button>
                 <div class="navbar-collapse collapse justify-content-stretch" id="navbar2">
                 <ul class="navbar-nav ml-auto">
-                    <li class="mt-3 mb-3"><button class="btn-outline-secondary btn nav-link all-btn">All Workshops</button></li>
-                    <li class="mt-3 mb-3"><button class="btn-outline-secondary btn nav-link own-btn">Your Workshops</button></li>
-                    <li class="mt-3 mb-3"><button class="btn-outline-secondary btn nav-link change-btn">Change info</button></li>
+                    <li class=""><button class="btn-outline-secondary btn nav-link all-btn">All Workshops</button></li>
+                    <li class=""><button class="btn-outline-secondary btn nav-link own-btn">Your Workshops</button></li>
+                    <li class=""><button class="btn-outline-secondary btn nav-link change-btn">Update account</button></li>
                 </ul>
                 </div>
             </nav>
@@ -477,6 +548,59 @@ if (isset($_SESSION['user_uid']))
             echo("</div>");
             echo("<div class='show-more-container'>");
             echo('<button id="more-own-events-button" class="btn btn-primary more-btn mt-2">Show more</button>');
+            echo("</div>");
+            echo("</div>");
+
+            echo("<div id='change-info' class='p-2' style='display:none;'>");
+            echo("<h2 class='dash-header'>Update your personal information: </h2><hr>");
+            echo("<div id='change-section' class='container'>");
+            echo("
+            <div class='row'>
+            <div class='col-xs-5 col-sm-5 col-md-5 col-lg-4'>
+            <ul class='change-list'>
+            <li><button class='btn-outline-primary btn nav-link change-pw-btn'>Change password</button></li>
+            <li><button class='btn-outline-primary btn nav-link change-phone-btn'>Change phone number</button></li>
+            <li><button class='btn-outline-primary btn nav-link change-email-btn'>Change email</button></li>
+            <li></li>
+            </ul>
+            </div>
+            <div class='change-section col-xs-7 col-sm-7 col-md-7 col-lg-8'>
+            <div class='change-pw' id='change-pw' style='display:none;'>
+            <form id='change-pw-form'>
+                <p class='form-message'></p>
+                <ul class='reset-list'>
+                    <li><input id='change-pw-input' type='text' placeholder='New password' class='form-control' aria-label='small'></li>
+                    <li><input id='change-pw2-input' type='text' placeholder='Re-type new password' class='form-control' aria-label='small'></li>
+                </ul>
+                <button id='change-pw-submit' type='submit' class='reset-btn btn btn-danger main-btn'>Reset password</button>
+            </form>
+            </div>
+
+            <div class='change-phone' id='change-phone' style='display:none;'>
+            <form id='change-phone-form'>
+                <p class='form-message'></p>
+                <ul class='reset-list'>
+                    <li><input id='change-phone-input' type='text' placeholder='New phone' class='form-control' aria-label='small'></li>
+                    <li><input id='change-phone2-input' type='text' placeholder='Re-type new phone' class='form-control' aria-label='small'></li>
+                </ul>
+                <button id='change-phone-submit' type='submit' class='reset-btn btn btn-danger main-btn'>Reset phone</button>
+            </form>
+            </div>
+
+            <div class='change-email' id='change-email' style='display:none;'>
+            <form id='change-email-form'>
+                <p class='form-message'></p>
+                <ul class='reset-list'>
+                    <li><input id='change-email-input' type='text' placeholder='New email' class='form-control' aria-label='small'></li>
+                    <li><input id='change-email2-input' type='text' placeholder='Re-type new email' class='form-control' aria-label='small'></li>
+                </ul>
+                <button id='change-email-submit' type='submit' class='reset-btn btn btn-danger main-btn'>Reset email</button>
+            </form>
+            </div>
+
+            </div>
+            </div>
+            ");
             echo("</div>");
             echo("</div>");
 

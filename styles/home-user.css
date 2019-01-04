@@ -13,20 +13,37 @@
 
 .event-list h3
 {
-     white-space: -moz-pre-wrap !important;  /* Mozilla, since 1999 */
-     white-space: -pre-wrap;      /* Opera 4-6 */
-     white-space: -o-pre-wrap;    /* Opera 7 */
-     white-space: pre-wrap;       /* css-3 */
-     word-wrap: break-word;       /* Internet Explorer 5.5+ */
-     white-space: -webkit-pre-wrap; /* Newer versions of Chrome/Safari*/
-     word-break: break-all;
-     white-space: normal;
+    white-space: -moz-pre-wrap !important;  /* Mozilla, since 1999 */
+    white-space: -pre-wrap;      /* Opera 4-6 */
+    white-space: -o-pre-wrap;    /* Opera 7 */
+    white-space: pre-wrap;       /* css-3 */
+    word-wrap: break-word;       /* Internet Explorer 5.5+ */
+    white-space: -webkit-pre-wrap; /* Newer versions of Chrome/Safari*/
+    word-break: break-all;
+    white-space: normal;
 }
 
+.reset-list
+{
+    list-style-type: none;
+    padding: 0px;
+}
+
+.reset-list li
+{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
 
 .more-btn
 {
     width: 30%;
+    text-align: center;
+}
+
+.reset-btn
+{
+    width: 50%;
     text-align: center;
 }
 
@@ -61,6 +78,27 @@
     width: 150px;
     padding: 7px;
     margin-right: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.change-list
+{
+    list-style-type: none;
+    padding-left: 0px;
+}
+
+.change-list li button
+{
+    width: 100%;
+    padding: 7px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.change-section
+{
+    background-color: #fafafa;
 }
 
 .control-area
