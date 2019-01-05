@@ -95,32 +95,32 @@ if (isset($_SESSION['user_uid']))
 
             echo("</div>");
 
-                        //MODAL FOR RESET USER PASSWORD
-                        echo('
-                                <div class="modal fade" id="reset" tabindex="-1" role="dialog" aria-labelledby="resetLabel">
-                                  <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                      <div class="modal-header">
-                                        <h4 class="modal-title" id="resetLabel">Reset user password</h4>
-                                      </div>
-                                      <div class="modal-body">
-                                          <form id="reset-form">
-                                          <p class="form-message"></p>
-                                              <ul>
-                                                  <li><input id="reset-email" type="text" placeholder="User email" class="form-control" aria-label="small"></li>
-                                                  <li><input id="reset-pw" type="text" placeholder="New user password" class="form-control" aria-label="small"></li>
-                                                  <li><input id="reset-pw2" type="text" placeholder="Re-type new user password" class="form-control" aria-label="small"></li>
-                                              </ul>
-                                              <button id="submit" type="submit" class="btn btn-primary main-btn"><b>Reset Password</b></button>
-                                          </form>
-                                      </div>
-                                      <div class="modal-footer">
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                                ');
+            //MODAL FOR RESET USER PASSWORD
+            echo('
+                    <div class="modal fade" id="reset" tabindex="-1" role="dialog" aria-labelledby="resetLabel">
+                      <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h4 class="modal-title" id="resetLabel">Reset user password</h4>
+                          </div>
+                          <div class="modal-body">
+                              <form id="reset-form">
+                              <p class="form-message"></p>
+                                  <ul>
+                                      <li><input id="reset-email" type="text" placeholder="User email" class="form-control" aria-label="small"></li>
+                                      <li><input id="reset-pw" type="text" placeholder="New user password" class="form-control" aria-label="small"></li>
+                                      <li><input id="reset-pw2" type="text" placeholder="Re-type new user password" class="form-control" aria-label="small"></li>
+                                  </ul>
+                                  <button id="submit" type="submit" class="btn btn-primary main-btn"><b>Reset Password</b></button>
+                              </form>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    ');
     }
     elseif ($result['user_type'] == "employer")
     {
@@ -209,15 +209,15 @@ if (isset($_SESSION['user_uid']))
                         {
                             var ID = $(this).attr('id');
                             $('#sub-event'+ID).hide();
-                                $.ajax({
-                                    type: 'POST',
-                                    url: 'php/unsubscribe.php',
-                                    data: {
-                                        ID: ID
-                                    },
-                                    success: function(html){
-                                        $('#event'+ID).remove();
-                                    }
+                            $.ajax({
+                                type: 'POST',
+                                url: 'php/unsubscribe.php',
+                                data: {
+                                    ID: ID
+                                },
+                                success: function(html){
+                                    $('#event'+ID).remove();
+                                }
                             });
                         }
                     });
@@ -308,14 +308,12 @@ if (isset($_SESSION['user_uid']))
                             event.preventDefault();
                             var change_pw = $('#change-pw-input').val();
                             var change_pw2 = $('#change-pw2-input').val();
-
                             var submit = $('#change-pw-submit').val();
-
-                                $('.form-message').load('php/reset-pw.php', {
-                                    change_pw: change_pw,
-                                    change_pw2: change_pw2,
-                                    submit: submit
-                                });
+                            $('.form-message').load('php/reset-pw.php', {
+                                change_pw: change_pw,
+                                change_pw2: change_pw2,
+                                submit: submit
+                            });
                         }
                     });
                     $('#change-phone-form').submit(function(event){
@@ -325,14 +323,12 @@ if (isset($_SESSION['user_uid']))
                             event.preventDefault();
                             var change_phone = $('#change-phone-input').val();
                             var change_phone2 = $('#change-phone2-input').val();
-
                             var submit = $('#change-phone-submit').val();
-
-                                $('.form-message').load('php/reset-phone.php', {
-                                    change_phone: change_phone,
-                                    change_phone2: change_phone2,
-                                    submit: submit
-                                });
+                            $('.form-message').load('php/reset-phone.php', {
+                                change_phone: change_phone,
+                                change_phone2: change_phone2,
+                                submit: submit
+                            });
                         }
                     });
                     $('#change-email-form').submit(function(event){
@@ -342,14 +338,12 @@ if (isset($_SESSION['user_uid']))
                             event.preventDefault();
                             var change_email = $('#change-email-input').val();
                             var change_email2 = $('#change-email2-input').val();
-
                             var submit = $('#change-email-submit').val();
-
-                                $('.form-message').load('php/reset-email.php', {
-                                    change_email: change_email,
-                                    change_email2: change_email2,
-                                    submit: submit
-                                });
+                            $('.form-message').load('php/reset-email.php', {
+                                change_email: change_email,
+                                change_email2: change_email2,
+                                submit: submit
+                            });
                         }
                     });
                 });
@@ -431,7 +425,7 @@ if (isset($_SESSION['user_uid']))
             }
             echo("</div>");
             echo("<div class='show-more-container'>");
-            echo('<button id="more-all-events-button" class="btn btn-primary more-btn mt-2">Show more</button>');
+            echo('<button id="more-all-events-button" class="btn btn-primary more-btn">Show more</button>');
             echo("</div>");
             echo("</div>");
 
@@ -470,7 +464,7 @@ if (isset($_SESSION['user_uid']))
             }
             echo("</div>");
             echo("<div class='show-more-container'>");
-            echo('<button id="more-own-events-button" class="btn btn-primary more-btn mt-2">Show more</button>');
+            echo('<button id="more-own-events-button" class="btn btn-primary more-btn">Show more</button>');
             echo("</div>");
             echo("</div>");
 
@@ -506,7 +500,7 @@ if (isset($_SESSION['user_uid']))
             }
             echo("</div>");
             echo("<div class='show-more-container'>");
-            echo('<button id="more-own-jobs-button" class="btn btn-primary more-btn mt-2">Show more</button>');
+            echo('<button id="more-own-jobs-button" class="btn btn-primary more-btn">Show more</button>');
             echo("</div>");
             echo("</div>");
 
@@ -610,105 +604,6 @@ if (isset($_SESSION['user_uid']))
             echo("</div>");
 
             echo("</div>");
-
-
-/*
-            echo("<div class='postJob'>");
-            echo('<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#postJob">Post Job</button>');
-            echo("</div>");
-
-            echo("<div class='jobList'>");
-            echo("<h2>My jobs: </h2><hr>");
-            echo("<div id='job-list' class='container'>");
-
-            $stm = $conn->prepare('SELECT * FROM employers WHERE user_id = ?');
-            $stm->execute([$result['user_id']]);
-            $employerResult = $stm->fetch();
-
-            $stm = $conn->prepare('SELECT * from jobs WHERE employer_id = ?');
-            $stm->execute([$employerResult['employer_id']]);
-            if($stm->rowCount() > 0)
-            {
-                while($event = $stm->fetch(PDO::FETCH_ASSOC))
-                {
-                            echo (
-                            "<div id='job" . $event['job_id'] . "' class='row event my-4 p-2'>" .
-                            "<div class='col-xs-9 col-sm-9 col-md-10 col-lg-10'>" .
-                            "<h3>"                   . htmlspecialchars($event['job_title'])        . "</h3>" .
-                            "<b>Position: </b>"      . htmlspecialchars($event['job_position'])         . "</p>" .
-                            "<p>"                    . htmlspecialchars($event['job_description'])  . "<br/><br/>" .
-                            "<b>Location: </b>"      . htmlspecialchars($event['job_location'])     . "<br/>" .
-                            "<b>Contact: </b>"       . htmlspecialchars($result['user_email'])     . "<br/>" .
-                            "</div>");
-                            echo("<div class='col-xs-3 col-sm-3 col-md-2 col-lg-2'>");
-                                echo("<button id='" . $event['job_id'] . "' class='btn btn-primary rem-btn'>Remove</button>");
-                            echo("</div></div><hr>");
-                }
-            }
-            else
-            {
-                echo("<div class='row event my-4 p-2'>");
-                echo("<div class='col-xs-12 col-sm-12 col-md-12 col-lg-12'>");
-                echo("<p>You don't have any job postings </p>");
-                echo("</div></div><hr>");
-
-            }
-            echo("</div>");
-            echo("</div>");
-
-            echo('
-                    <div class="modal fade" id="postJob" tabindex="-1" role="dialog" aria-labelledby="postJobLabel">
-                      <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <h4 class="modal-title" id="postJobLabel">Post job</h4>
-                          </div>
-                          <div class="modal-body">
-                              <form id="postJob-form">
-                              <p class="form-message"></p>
-                                  <ul>
-                                      <li><input id="postJob-title" type="text" placeholder="Job title" class="form-control" aria-label="small"></li>
-                                      <li><input id="postJob-position" type="text" placeholder="Job position" class="form-control" aria-label="small"></li>
-                                      <li><input id="postJob-location" type="text" placeholder="Job location" class="form-control" aria-label="small"></li>
-                                      <li><textarea id="postJob-description" type="text" placeholder="Job description" class="form-control" aria-label="small" rows="3"></textarea></li>
-
-                                      <li><h6>What sections is your job involved with? <br/>(check all that apply)</h6></li>
-                                      <li>
-                                          <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="TRUE" id="postJob-med">
-                                            <label class="form-check-label" for="postJob-medical">Medical</label>
-                                        <br/>
-                                            <input class="form-check-input" type="checkbox" value="TRUE" id="postJob-it">
-                                            <label class="form-check-label" for="postJob-it">IT</label>
-                                        <br/>
-                                            <input class="form-check-input" type="checkbox" value="TRUE" id="postJob-bus">
-                                            <label class="form-check-label" for="postJob-business">Business</label>
-                                        <br/>
-                                            <input class="form-check-input" type="checkbox" value="TRUE" id="postJob-health">
-                                            <label class="form-check-label" for="postJob-health">Health care</label>
-                                        <br/>
-                                            <input class="form-check-input" type="checkbox" value="TRUE" id="postJob-food">
-                                            <label class="form-check-label" for="postJob-food">Food service</label>
-                                        <br/>
-                                            <input class="form-check-input" type="checkbox" value="TRUE" id="postJob-hosp">
-                                            <label class="form-check-label" for="postJob-hosp">Hospitality</label>
-                                        <br/>
-                                            <input class="form-check-input" type="checkbox" value="TRUE" id="postJob-cul">
-                                            <label class="form-check-label" for="postJob-cul">Culinary</label>
-                                          </div>
-                                      </li>
-                                  </ul>
-                                  <button id="submit" type="submit" class="btn btn-primary main-btn"><b>Post job</b></button>
-                              </form>
-                          </div>
-                          <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    ');
-*/
             echo("<script src='formhelper/js/bootstrap-formhelpers-phone.js'></script>");
             echo("<script src='formhelper/js/bootstrap-formhelpers.js'></script>");
     }
@@ -931,7 +826,7 @@ if (isset($_SESSION['user_uid']))
             }
             echo("</div>");
             echo("<div class='show-more-container'>");
-            echo('<button id="more-all-events-button" class="btn btn-primary more-btn mt-2">Show more</button>');
+            echo('<button id="more-all-events-button" class="btn btn-primary more-btn">Show more</button>');
             echo("</div>");
             echo("</div>");
 
@@ -970,7 +865,7 @@ if (isset($_SESSION['user_uid']))
             }
             echo("</div>");
             echo("<div class='show-more-container'>");
-            echo('<button id="more-own-events-button" class="btn btn-primary more-btn mt-2">Show more</button>');
+            echo('<button id="more-own-events-button" class="btn btn-primary more-btn">Show more</button>');
             echo("</div>");
             echo("</div>");
 

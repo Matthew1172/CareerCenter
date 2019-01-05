@@ -35,20 +35,9 @@
     margin-bottom: 10px;
 }
 
-.more-btn
-{
-    width: 30%;
-    text-align: center;
-}
-
 .reset-btn
 {
     width: 50%;
-    text-align: center;
-}
-
-.show-more-container
-{
     text-align: center;
 }
 
@@ -106,12 +95,13 @@
 {
     background-color: #fafafa;
     display: grid;
-    grid-template-rows: auto 100px auto auto 100px;
+    grid-template-rows: auto 100px auto 100px auto 100px;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-template-areas:
     "g g g g"
     ". . . ."
     "d d d d"
+    ". . . ."
     "a a a a"
     ". . . .";
 }
@@ -121,12 +111,13 @@
     .grid
     {
         display: grid;
-        grid-template-rows: auto 100px auto auto 100px;
+        grid-template-rows: auto 100px auto 100px auto 100px;
         grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
         grid-template-areas:
         ". g g g g g g ."
         ". . . . . . . ."
         ". d d d d d d ."
+        ". . . . . . . ."
         ". a a a a a a ."
         ". . . . . . . .";
     }

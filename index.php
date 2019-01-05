@@ -49,12 +49,18 @@ $stm->execute();
         echo("</p></div><hr>");
     }
 
-echo('</div><button id="button" class="btn btn-primary">Show more</button></div>');
+echo('
+</div>
+<div class="show-more-container">
+<button id="button" class="btn btn-primary more-btn">Show more</button>
+</div>
+</div>');
+
 echo('
 <div class="contact">
+<h2>Contact:</h2>
+<hr/>
 <ul>
-    <li><h2>Contact:</h2></li>
-    <hr/>
     <li><p><b>Phone: </b>(845)-845-8545</p></li>
     <li><p><b>Hours: </b>Monday – Friday, 8:30 AM – 4:30 PM</p></li>
 
@@ -132,7 +138,7 @@ echo('
 
 <div class="map">
 <div class="google-maps">
-    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3005.093607088136!2d-74.0874289099301!3d41.13248246790525!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c2dd84d07f2229%3A0x4ef2ba305022bbf0!2sDaniel+T.+Brucker+Hall!5e0!3m2!1sen!2sus!4v1543271137679" frameborder="0px" style="none"></iframe>
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3005.093607088136!2d-74.0874289099301!3d41.13248246790525!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c2dd84d07f2229%3A0x4ef2ba305022bbf0!2sDaniel+T.+Brucker+Hall!5e0!3m2!1sen!2sus!4v1543271137679"></iframe>
 </div>
 </div>
 

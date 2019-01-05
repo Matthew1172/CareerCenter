@@ -37,10 +37,6 @@ echo("
         {
             window.location.assign('event-page.php?event-btn-value=' + event.id);
         }
-        else
-        {
-            window.location.reload();
-        }
     }
    });
   });

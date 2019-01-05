@@ -10,9 +10,9 @@ session_start();
     {
         echo('<tr>');
         echo('
-        <td>'. $jobResult['job_position'] .'</td>
-        <td>'. $jobResult['job_title'] .'</td>
-        <td>'. $jobResult['job_location'] .'</td>
+        <td><p>'. $jobResult['job_position']     .'</p></td>
+        <td><p>'. $jobResult['job_title']        .'</p></td>
+        <td><p>'. $jobResult['job_location']     .'</p></td>
         ');
         if(isset($_SESSION['user_uid']))
         {
@@ -20,7 +20,7 @@ session_start();
         }
         else
         {
-            echo('<td>Login to view this job</td>');
+            echo('<td><p>Login to view this job</p></td>');
         }
         echo('</tr>');
     }

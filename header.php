@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -19,10 +19,30 @@
 
 <title>Career Center</title>
 
+<script>
+$(document).ready(function(){
+    $('#logout-form').submit(function(event){
+        event.preventDefault();
+        var x = "Do you really want to logout?"
+        if(confirm(x))
+        {
+            $.ajax({
+                type: 'POST',
+                url: 'php/sign-out.php',
+                success: function(html){
+                    window.location.assign("index.php");
+                }
+            });
+        }
+
+    });
+});
+</script>
+
 </head>
 <body>
 <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="index.php"><img src="pics/ny.jpg" height="60px" width="100px"/></a>
+    <a class="navbar-brand" href="index.php"><img src="pics/ny.jpg" height="60" width="100" alt="Rockland County career center logo"/></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar1">
     <span class="navbar-toggler-icon"></span>
     </button>
@@ -39,12 +59,13 @@
                         <li class="nav-item"><a class="nav-link" href="job-list.php">Job board</a></li>
 
                         <li class="nav-item"><a class="nav-link" href="home.php">Profile</a></li>
-
-                        <form action="php/sign-out.php" method="POST">
+                        <li>
+                        <form id="logout-form" action="php/sign-out.php" method="POST">
                         <ul class="navbar-nav ml-auto">
-                        <li><button type="submit" name="logout" class="btn btn-outline-secondary" type="button">Log out</button></li>
+                        <li><button id="logout-btn" type="submit" name="logout" class="btn btn-outline-secondary">Log out</button></li>
                         </ul>
                         </form>
+                        </li>
                 ';
         }
         else

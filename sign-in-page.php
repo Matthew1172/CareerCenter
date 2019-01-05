@@ -6,7 +6,7 @@ include 'php/connect.php';
 echo('<link href="styles/sign-in-page.css" rel="stylesheet" />');
 
 echo('
-<script type="text/javascript">
+<script>
     $(document).ready(function(){
         $("#login").on("click", function(){
             var uid = $("#signin-uid").val();
@@ -65,7 +65,7 @@ echo('
         <li><input id="signin-pw" type="password" placeholder="Password" class="form-control" aria-label="small"/></li>
         <li><button id="login" class="btn btn-outline-primary" type="button">Log In</button></li>
     </ul>
-    <span><p class="pt-3"><a href="sign-up-page.php">Don\'t have an account?</a></p></span>
+    <span><a href="sign-up-page.php">Don\'t have an account?</a></span>
 </form>
 ');
 echo('</div>');

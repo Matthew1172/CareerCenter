@@ -205,7 +205,7 @@ echo('
 
             </ul>
         </form>
-        <span><p class="pt-4"><a href="sign-in-page.php">Already have an account?</a></p></span>
+        <span><a href="sign-in-page.php">Already have an account?</a></span>
     </div>
 
 </div>

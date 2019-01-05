@@ -23,6 +23,19 @@ h1, h2, h3, h4, h6
 	color: #00aaff;
 }
 
+.show-more-container
+{
+    text-align: center;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.more-btn
+{
+    width: 50%;
+    text-align: center;
+}
+
 .form-error
 {
 	color: red;

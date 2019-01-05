@@ -13,8 +13,7 @@
 .map
 {
         grid-area: m;
-		padding-left: 20px;
-		padding-right: 20px;
+		padding: 20px;
         background-color: white;
 }
 
@@ -35,8 +34,7 @@
 .contact
 {
 		grid-area: c;
-		padding-left: 20px;
-		padding-right: 20px;
+		padding: 20px;
         background-color: white;
 }
 
@@ -65,8 +63,7 @@
 .news
 {
 	    grid-area: n;
- 		padding-left: 20px;
- 		padding-right: 20px;
+		padding: 20px;
         background-color: white;
 }
 
@@ -81,12 +78,6 @@
 	    white-space: -webkit-pre-wrap; /* Newer versions of Chrome/Safari*/
 	    word-break: break-all;
 	    white-space: normal;
-}
-
-.news button
-{
-		width: 50%;
-        text-align: center;
 }
 
 .grid

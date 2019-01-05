@@ -12,7 +12,7 @@ $(document).ready(function() {
 
     $('#more-job-button').click(function(){
         jobCount += 2;
-        $('#job-list').load('php/load-jobs.php', {
+        $('#job-listing').load('php/load-jobs.php', {
             jobNewCount: jobCount
         });
     });
@@ -30,10 +30,11 @@ echo('
 <h1>Welcome to our job board.</h1>
 </div>
 
-<div class="jobList">
+<div class="jobListing">
 
 <div class="container">
-  <h2 class="pb-5">Job Postings</h2>
+  <h2>Job Postings</h2>
+  <p class="pb-5 pt-3 text-muted">*For the best user experience, view on desktop.</p>
   <table class="table table-hover">
     <thead>
       <tr>
@@ -43,7 +44,7 @@ echo('
         <th>Contact</th>
       </tr>
     </thead>
-    <tbody id="job-list">
+    <tbody id="job-listing">
 ');
 
 $sql = $conn->prepare('SELECT * FROM jobs ORDER BY dateStamp DESC LIMIT 2');
@@ -52,9 +53,9 @@ while($jobResult = $sql->fetch(PDO::FETCH_ASSOC))
 {
     echo('<tr>');
     echo('
-    <td>'. $jobResult['job_position'] .'</td>
-    <td>'. $jobResult['job_title'] .'</td>
-    <td>'. $jobResult['job_location'] .'</td>
+    <td><p>'. $jobResult['job_position']   .'</p></td>
+    <td><p>'. $jobResult['job_title']      .'</p></td>
+    <td><p>'. $jobResult['job_location']   .'</p></td>
     ');
     if(isset($_SESSION['user_uid']))
     {
@@ -67,20 +68,19 @@ while($jobResult = $sql->fetch(PDO::FETCH_ASSOC))
     echo('</tr>');
 }
 
-echo('
+echo("
     </tbody>
   </table>
-</div>
-');
-echo("<div class='show-more-container'>");
-echo("<button id='more-job-button' class='btn btn-primary more-btn mt-2'>Show more</button>");
-echo("</div>");
 
-echo('
+<div class='show-more-container'>
+<button id='more-job-button' class='btn btn-primary more-btn mt-2'>Show more</button>
+</div>
 </div>
 
 </div>
-');
+
+</div>
+");
 
 require 'footer.php';
 ?>

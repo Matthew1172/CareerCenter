@@ -1,7 +1,3 @@
-.contact-float
-{
-}
-
 .hero1
 {
 	grid-column: 1/-1;
@@ -21,23 +17,22 @@
 	color: white;
 }
 
-.jobList
+.jobListing
 {
     grid-area: jl;
 	font-size: 12px;
 }
 
-.jobList table tbody
+.jobListing table tbody td p
 {
 	white-space: -moz-pre-wrap !important;  /* Mozilla, since 1999 */
-	 white-space: -pre-wrap;      /* Opera 4-6 */
-	 white-space: -o-pre-wrap;    /* Opera 7 */
-	 white-space: pre-wrap;       /* css-3 */
-	 white-space: -webkit-pre-wrap; /* Newer versions of Chrome/Safari*/
-
-	 word-wrap: normal;       /* Internet Explorer 5.5+ */
-	 word-break: normal;
-	 white-space: normal;
+    white-space: -pre-wrap;      /* Opera 4-6 */
+    white-space: -o-pre-wrap;    /* Opera 7 */
+    white-space: pre-wrap;       /* css-3 */
+    word-wrap: break-word;       /* Internet Explorer 5.5+ */
+    white-space: -webkit-pre-wrap; /* Newer versions of Chrome/Safari*/
+    word-break: break-all;
+    white-space: normal;
 }
 
 .grid
@@ -67,7 +62,7 @@
 		". . . . . . . .";
     }
 
-	.jobList
+	.jobListing
 	{
 	    grid-area: jl;
 		font-size: 1em;

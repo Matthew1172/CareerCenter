@@ -33,7 +33,7 @@ while($careerResult = $sql->fetch(PDO::FETCH_ASSOC))
     <ul>
     <li><b>Name: </b>'. $careerResult['contact_name'] .'</li>
     <li><b>Position: </b>'. $careerResult['contact_position'] .'</li>
-    <li><b>Email: </b><a href="mailto: '. $careerResult['contact_email'] .'">'. $careerResult['contact_email'] .'</a></li>
+    <li><b>Email: </b><a href="mailto:'. $careerResult['contact_email'] .'">'. $careerResult['contact_email'] .'</a></li>
     <li><b>Phone: </b>'. $careerResult['contact_phone'] .'</li>
     <li><b>Extension: </b>'. $careerResult['contact_ext'] .'</li>
     </ul>
@@ -51,7 +51,7 @@ while($laborResult = $sql->fetch(PDO::FETCH_ASSOC))
     <ul>
     <li><b>Name: </b>'. $laborResult['labor_name'] .'</li>
     <li><b>Position: </b>'. $laborResult['labor_position'] .'</li>
-    <li><b>Email: </b><a href="mailto: '. $laborResult['labor_email'] .'">'. $laborResult['labor_email'] .'</a></li>
+    <li><b>Email: </b><a href="mailto:'. $laborResult['labor_email'] .'">'. $laborResult['labor_email'] .'</a></li>
     <li><b>Phone: </b>'. $laborResult['labor_phone'] .'</li>
     <li><b>Extension: </b>'. $laborResult['labor_ext'] .'</li>
     </ul>
@@ -69,7 +69,7 @@ while($bocesResult = $sql->fetch(PDO::FETCH_ASSOC))
     <ul>
     <li><b>Name: </b>'. $bocesResult['boces_name'] .'</li>
     <li><b>Position: </b>'. $bocesResult['boces_position'] .'</li>
-    <li><b>Email: </b><a href="mailto: '. $bocesResult['boces_email'] .'">'. $bocesResult['boces_email'] .'</a></li>
+    <li><b>Email: </b><a href="mailto:'. $bocesResult['boces_email'] .'">'. $bocesResult['boces_email'] .'</a></li>
     <li><b>Phone: </b>'. $bocesResult['boces_phone'] .'</li>
     <li><b>Extension: </b>'. $bocesResult['boces_ext'] .'</li>
     </ul>
