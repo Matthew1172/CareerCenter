@@ -80,7 +80,7 @@ if(isset($_SESSION['user_uid']))
                 echo('<h1>'. $eventListing['title'] .'</h1>');
                 echo('</div>');
 
-                echo('<div class="eventPosting container">');
+                echo('<div class="eventPosting">');
 
                 echo('<div class="section p-3">');
                 echo('<p>'. $eventListing['description'] .'</p>');

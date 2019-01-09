@@ -553,6 +553,15 @@ if (isset($_SESSION['user_uid']))
             echo("<div id='change-section' class='container'>");
             echo("
             <div class='row'>
+            <ul class='current-info'>
+            <li><b>First name: </b>". $result['user_first'] ."</li>
+            <li><b>Last name: </b>". $result['user_last'] ."</li>
+            <li><b>Email: </b>". $result['user_email'] ."</li>
+            <li><b>Phone number: </b>". $result['user_phone'] ."</li>
+            <li><b>User name: </b>". $result['user_uid'] ."</li>
+            </ul>
+            </div>
+            <div class='row'>
             <div class='col-xs-5 col-sm-5 col-md-5 col-lg-4'>
             <ul class='change-list'>
             <li><button class='btn-outline-primary btn nav-link change-pw-btn'>Change password</button></li>
@@ -873,6 +882,15 @@ if (isset($_SESSION['user_uid']))
             echo("<h2 class='dash-header'>Update your personal information: </h2><hr>");
             echo("<div id='change-section' class='container'>");
             echo("
+            <div class='row'>
+            <ul class='current-info'>
+            <li><b>First name: </b>". $result['user_first'] ."</li>
+            <li><b>Last name: </b>". $result['user_last'] ."</li>
+            <li><b>Email: </b>". $result['user_email'] ."</li>
+            <li><b>Phone number: </b>". $result['user_phone'] ."</li>
+            <li><b>User name: </b>". $result['user_uid'] ."</li>
+            </ul>
+            </div>
             <div class='row'>
             <div class='col-xs-5 col-sm-5 col-md-5 col-lg-4'>
             <ul class='change-list'>

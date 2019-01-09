@@ -56,10 +56,21 @@ h1, h2, h3, h4, h6
 	align-items: baseline;
 }
 
+.nav-item
+{
+    padding-top: 20px;
+    padding-right: 20px;
+}
+
 @media screen and (min-width: 1000px)
 {
 	.navbar-nav ul li
 	{
 		padding: 10px;
 	}
+
+    .nav-item
+    {
+        padding-top: 0px;
+    }
 }

@@ -107,6 +107,12 @@
     white-space: normal;
 }
 
+.current-info
+{
+    padding: 20px;
+    list-style-type: none;
+}
+
 .grid
 {
 	background-color: #fafafa;

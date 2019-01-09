@@ -91,17 +91,22 @@
     background-color: white;
 }
 
+.current-info
+{
+    padding: 20px;
+    list-style-type: none;
+}
+
 .grid
 {
     background-color: #fafafa;
     display: grid;
-    grid-template-rows: auto 100px auto 100px auto 100px;
+    grid-template-rows: auto 100px auto auto 100px;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-template-areas:
     "g g g g"
     ". . . ."
     "d d d d"
-    ". . . ."
     "a a a a"
     ". . . .";
 }
@@ -111,13 +116,12 @@
     .grid
     {
         display: grid;
-        grid-template-rows: auto 100px auto 100px auto 100px;
+        grid-template-rows: auto 100px auto auto 100px;
         grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
         grid-template-areas:
         ". g g g g g g ."
         ". . . . . . . ."
         ". d d d d d d ."
-        ". . . . . . . ."
         ". a a a a a a ."
         ". . . . . . . .";
     }

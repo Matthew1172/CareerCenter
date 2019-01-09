@@ -15,14 +15,14 @@
 .member-section
 {
         background-color: #fafafa;
-        padding: 20px;
-        margin-top: 10px;
+		width: 100%;
+		font-size: 12px;
 }
 
 .member-section ul
 {
-        list-style-type: none;
-        padding: 0px;
+        padding: 20px;
+		list-style-type: none;
 }
 
 .content
@@ -113,6 +113,12 @@
 			"b b b b"
             ". . . .";
 	}
+
+	.member-section
+	{
+			width: 50%;
+	}
+
 }
 
 @media screen and (min-width: 1000px)
@@ -136,5 +142,10 @@
 		.intro p
 		{
 			text-align: left;
+		}
+
+		.member-section
+		{
+			width: 50%;
 		}
 }

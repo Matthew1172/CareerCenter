@@ -16,7 +16,7 @@ if($sql->rowCount() > 0)
         echo('<div class="hero1">');
         echo('</div>');
 
-        echo('<div class="jobPosting container">');
+        echo('<div class="jobPosting">');
 
         $sql = $conn->prepare('SELECT * FROM employers WHERE employer_id = ?');
         $sql->execute([$jobListing['employer_id']]);
@@ -27,7 +27,7 @@ if($sql->rowCount() > 0)
         $userInfo = $sql->fetch();
 
 
-        echo('<div class="section py-3 px-5">');
+        echo('<div class="section py-3 px-3">');
         echo('<h3>'. $jobListing['job_title'] .'</h3>');
         echo('<p>'. $jobListing['job_position'] .'</p>');
         echo('</div>');
