@@ -39,7 +39,7 @@ if (isset($_SESSION['user_uid']))
 
             echo("<div class='hero1'></div>");
             echo("<div class='greet py-5'>");
-            echo("<h1 style='color: white' id='demo'>Welcome, " . $_SESSION['user_uid'] . "</h1>");
+            echo("<h1 style='color: white' id='demo'>Welcome, " . $result['user_first'] . "</h1>");
             echo("</div>");
 
             echo("<div class='btn-control-group'>");
@@ -356,7 +356,7 @@ if (isset($_SESSION['user_uid']))
             echo("<div class='hero1'></div>");
 
             echo("<div class='greet py-5'>");
-            echo("<h1 style='color: white' id='demo'>Welcome, " . $_SESSION['user_uid'] . "</h1>");
+            echo("<h1 style='color: white' id='demo'>Welcome, " . $result['user_first'] . "</h1>");
             echo("</div>");
 
             echo("<div class='dashboard-control'>");
@@ -759,7 +759,7 @@ if (isset($_SESSION['user_uid']))
             echo("<div class='hero1'></div>");
 
             echo("<div class='greet py-5'>");
-            echo("<h1 style='color: white' id='demo'>Welcome, " . $_SESSION['user_uid'] . "</h1>");
+            echo("<h1 style='color: white' id='demo'>Welcome, " . $result['user_first'] . "</h1>");
             echo("</div>");
 
             echo("<div class='dashboard-control'>");
