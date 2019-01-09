@@ -48,15 +48,14 @@ $(document).ready(function(){
     </button>
     <div class="navbar-collapse collapse justify-content-stretch" id="navbar1">
     <ul class="navbar-nav ml-auto">
+        <li class="nav-item"><a class="nav-link" href="calendar.php">Calendar</a></li>
+        <li class="nav-item"><a class="nav-link" href="contact.php">Contact</a></li>
+        <li class="nav-item"><a class="nav-link" href="job-list.php">Job board</a></li>
+        <li class="nav-item"><a class="nav-link" href="wdb-page.php">WDB</a></li>
         <?php
-
         if(isset($_SESSION['user_uid']))
         {
             echo'
-                        <li class="nav-item"><a class="nav-link" href="calendar.php">Calendar</a></li>
-                        <li class="nav-item"><a class="nav-link" href="contact.php">Contact</a></li>
-                        <li class="nav-item"><a class="nav-link" href="index.php">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="job-list.php">Job board</a></li>
 
                         <li class="nav-item"><a class="nav-link" href="home.php">Profile</a></li>
                         <li>
@@ -71,10 +70,6 @@ $(document).ready(function(){
         else
         {
             echo'
-                        <li class="nav-item"><a class="nav-link" href="calendar.php">Calendar</a></li>
-                        <li class="nav-item"><a class="nav-link" href="contact.php">Contact</a></li>
-                        <li class="nav-item"><a class="nav-link" href="index.php">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="job-list.php">Job board</a></li>
 
                         <li class="nav-item"><a class="nav-link" href="sign-in-page.php">Sign up or sign in</a></li>
                 ';

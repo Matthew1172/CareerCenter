@@ -1,0 +1,140 @@
+.hero1
+{
+	    grid-column: 1/-1;
+	    grid-row: 1;
+        background-color: #00aaff;
+}
+
+.wdb-board
+{
+        grid-area: b;
+        padding: 20px;
+        background-color: white;
+}
+
+.member-section
+{
+        background-color: #fafafa;
+        padding: 20px;
+        margin-top: 10px;
+}
+
+.member-section ul
+{
+        list-style-type: none;
+        padding: 0px;
+}
+
+.content
+{
+		grid-area: c;
+        padding: 20px;
+        background-color: white;
+}
+
+.content ul
+{
+        padding: 15px;
+}
+
+.intro
+{
+		grid-area: i;
+		padding: 20px;
+}
+
+.intro h1
+{
+        color: white;
+}
+
+.news
+{
+	    grid-area: n;
+		padding: 20px;
+        background-color: white;
+}
+
+.news h4
+{
+	    /*All this shit is for text-wrapping*/
+	    white-space: -moz-pre-wrap !important;  /* Mozilla, since 1999 */
+	    white-space: -pre-wrap;      /* Opera 4-6 */
+	    white-space: -o-pre-wrap;    /* Opera 7 */
+	    white-space: pre-wrap;       /* css-3 */
+	    word-wrap: normal;       /* Internet Explorer 5.5+ */
+	    white-space: -webkit-pre-wrap; /* Newer versions of Chrome/Safari*/
+	    word-break: break-all;
+	    white-space: normal;
+}
+
+.download
+{
+        grid-area: d;
+        padding: 20px;
+        background-color: white;
+}
+
+.grid
+{
+        background-color: #fafafa;
+		display: grid;
+		grid-template-columns: 1fr 1fr 1fr 1fr;
+		grid-template-rows: auto 100px auto 100px auto 100px auto 100px auto 100px;
+		grid-template-areas:
+		"i i i i"
+        ". . . ."
+		"c c c c"
+		". . . ."
+        "d d d d"
+		". . . ."
+		"n n n n"
+		". . . ."
+		"b b b b"
+        ". . . .";
+}
+
+@media screen and (min-width: 500px)
+{
+	.grid
+	{
+			display: grid;
+	    	grid-template-columns: 1fr 1fr 1fr 1fr;
+	    	grid-template-rows: auto 100px auto 100px auto 100px auto 100px auto 100px;
+			grid-template-areas:
+			"i i i i"
+            ". . . ."
+			"c c c c"
+			". . . ."
+            "d d d d"
+            ". . . ."
+			"n n n n"
+			". . . ."
+			"b b b b"
+            ". . . .";
+	}
+}
+
+@media screen and (min-width: 1000px)
+{
+        .grid
+        {
+        	display: grid;
+        	grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+        	grid-template-rows: auto 100px auto 100px auto 100px auto 100px;
+        	grid-template-areas:
+			". i i i i i i ."
+            ". . . . . . . ."
+			". c c c c c c ."
+			". . . . . . . ."
+            ". n n n d d d ."
+			". . . . . . . ."
+			". b b b b b b ."
+            ". . . . . . . .";
+        }
+
+		.intro p
+		{
+			text-align: left;
+		}
+}
