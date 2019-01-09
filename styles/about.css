@@ -36,13 +36,13 @@
 .hero-head
 {
     color: white;
+	padding-left: 10px;
+	padding-right: 10px;
 }
 
 .intro
 {
 		grid-area: i;
-		padding-left: 20px;
-		padding-right: 20px;
 }
 
 .customers
@@ -68,26 +68,36 @@
 .intro-section
 {
 		grid-area: is;
+		background-color: white;
+		padding: 20px;
 }
 
 .customers-section
 {
         grid-area: us;
+		background-color: white;
+		padding: 20px;
 }
 
 .service-section
 {
         grid-area: ss;
+		background-color: white;
+		padding: 20px;
 }
 
 .employers-section
 {
         grid-area: es;
+		background-color: white;
+		padding: 20px;
 }
 
 .youth-section
 {
         grid-area: ys;
+		background-color: white;
+		padding: 20px;
 }
 
 .grid

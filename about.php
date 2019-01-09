@@ -61,14 +61,13 @@ echo('
 <p class="text-muted pt-5">*<i>Requires training</i></p>
 </div>
 
-<div class="service py-5">
+<div class="service hero-head py-5">
 <h1 class="hero-head">Priority of service.</h1>
 </div>
 
 <div class="service-section">
-<ol>
-<li>
-<p>Customer’s will be served in the following order of priority according to their county/state of residence and state of unemployment insurance collection:</p>
+
+<p>1. Customer’s will be served in the following order of priority according to their county/state of residence and state of unemployment insurance collection:</p>
     <ol>
         <li>Rockland County residents collecting.</li>
         <li>NY state residents collecting in NY</li>
@@ -76,9 +75,8 @@ echo('
         <li>NJ state residents collecting in NY</li>
         <li>NJ state residents collecting in NJ</li>
     </ol>
-</li>
-<li class="pt-5">
-<p>Customers will be served in the following order of priority according to their level of education: </p>
+
+<p class="pt-5">2. Customers will be served in the following order of priority according to their level of education: </p>
     <ol>
         <li>Customer without a high school diploma</li>
         <li>Customer with a high school diploma</li>
@@ -87,8 +85,7 @@ echo('
         <li>Customer with a master’s degree</li>
         <li>Customer with a doctoral degree</li>
     </ol>
-</li>
-</ol>
+
 <p class="text-muted pt-5">*<i>First order of priority will be given to veterans and/or low-income adults, adults, and then Dislocated Workers as deemed by WIOA.</i></p>
 <p class="text-muted">*<i>Determinations for funding will be assessed on an Individual basis following the Priority of Service listed above. Submission of all documentation does not guarantee approval of training.</i></p>
 </div>
