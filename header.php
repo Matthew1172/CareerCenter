@@ -48,6 +48,7 @@ $(document).ready(function(){
     </button>
     <div class="navbar-collapse collapse justify-content-stretch" id="navbar1">
     <ul class="navbar-nav ml-auto">
+        <li class="nav-item"><a class="nav-link" href="about.php">About us</a></li>
         <li class="nav-item"><a class="nav-link" href="calendar.php">Calendar</a></li>
         <li class="nav-item"><a class="nav-link" href="contact.php">Contact</a></li>
         <li class="nav-item"><a class="nav-link" href="job-list.php">Job board</a></li>

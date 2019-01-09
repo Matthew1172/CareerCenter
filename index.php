@@ -81,6 +81,12 @@ echo('
 </ul>
 </div>
 
+<div class="description">
+<p>The Rockland County Career Center supports the adult, dislocated, and youth population in Rockland County in their transition to obtaining employment by providing job search assistance, innovative training programs, workshops and other services. All services are free of charge!</p>
+<p>Representatives of the New York Department of Labor provide services at the Rockland County Career Center in our Haverstraw location.</p>
+
+</div>
+
 <div class="slider">
 <div id="myCarousel" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">

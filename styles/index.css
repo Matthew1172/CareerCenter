@@ -67,6 +67,13 @@
         background-color: white;
 }
 
+.description
+{
+		grid-area: d;
+		padding: 20px;
+		background-color: white;
+}
+
 .news h4
 {
 	    /*All this shit is for text-wrapping*/
@@ -85,7 +92,7 @@
         background-color: #fafafa;
 		display: grid;
 		grid-template-columns: 1fr 1fr 1fr 1fr;
-		grid-template-rows: auto 100px auto 100px auto 100px auto 100px auto 100px;
+		grid-template-rows: auto 100px auto 100px auto 100px auto 100px auto 100px auto 100px;
 		grid-template-areas:
 		"i i i i"
         ". . . ."
@@ -94,6 +101,8 @@
 		"m m m m"
 		". . . ."
 		"c c c c"
+		". . . ."
+		"d d d d"
 		". . . ."
 		"s s s s"
         ". . . .";
@@ -105,13 +114,15 @@
 	{
 			display: grid;
 	    	grid-template-columns: 1fr 1fr 1fr 1fr;
-	    	grid-template-rows: auto 100px auto 100px auto 100px auto 100px;
+	    	grid-template-rows: auto 100px auto 100px auto 100px auto 100px auto 100px;
 			grid-template-areas:
 			"i i i i"
             ". . . ."
 			"n n n n"
 			". . . ."
 			"m m c c"
+			". . . ."
+			"d d d d"
 			". . . ."
 			"s s s s"
             ". . . .";
@@ -124,13 +135,15 @@
         {
         	display: grid;
         	grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-        	grid-template-rows: auto 100px auto auto auto 100px auto 100px;
+        	grid-template-rows: auto 100px auto auto auto 100px auto 100px auto 100px;
         	grid-template-areas:
 			". i i i i i i ."
             ". . . . . . . ."
 			". n n n c c c ."
 			". n n n m m m ."
 			". n n n . . . ."
+			". . . . . . . ."
+			". d d d d d d ."
 			". . . . . . . ."
 			". s s s s s s ."
             ". . . . . . . .";

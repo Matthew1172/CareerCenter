@@ -1,0 +1,187 @@
+.hero1
+{
+	   grid-column: 1/-1;
+	   grid-row: 1;
+       background-color: #00aaff;
+}
+
+.hero2
+{
+	   grid-column: 1/-1;
+	   grid-row: 5;
+       background-color: #00aaff;
+}
+
+.hero3
+{
+	   grid-column: 1/-1;
+	   grid-row: 9;
+       background-color: #00aaff;
+}
+
+.hero4
+{
+	   grid-column: 1/-1;
+	   grid-row: 13;
+       background-color: #00aaff;
+}
+
+.hero5
+{
+	   grid-column: 1/-1;
+	   grid-row: 17;
+       background-color: #00aaff;
+}
+
+.hero-head
+{
+    color: white;
+}
+
+.intro
+{
+		grid-area: i;
+		padding-left: 20px;
+		padding-right: 20px;
+}
+
+.customers
+{
+        grid-area: u;
+}
+
+.service
+{
+        grid-area: s;
+}
+
+.employers
+{
+        grid-area: e;
+}
+
+.youth
+{
+        grid-area: y;
+}
+
+.intro-section
+{
+		grid-area: is;
+}
+
+.customers-section
+{
+        grid-area: us;
+}
+
+.service-section
+{
+        grid-area: ss;
+}
+
+.employers-section
+{
+        grid-area: es;
+}
+
+.youth-section
+{
+        grid-area: ys;
+}
+
+.grid
+{
+        background-color: #fafafa;
+		display: grid;
+		grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-template-rows: auto 100px auto 100px auto 100px auto 100px auto 100px auto 100px auto 100px auto 100px auto 100px auto 100px;
+		grid-template-areas:
+		"i i i i"
+        ". . . ."
+		"is is is is"
+        ". . . ."
+        "u u u u"
+        ". . . ."
+        "us us us us"
+        ". . . ."
+        "s s s s"
+        ". . . ."
+        "ss ss ss ss"
+        ". . . ."
+        "e e e e"
+        ". . . ."
+        "es es es es"
+        ". . . ."
+        "y y y y"
+        ". . . ."
+        "ys ys ys ys"
+        ". . . .";
+}
+
+@media screen and (min-width: 500px)
+{
+	.grid
+	{
+			display: grid;
+	    	grid-template-columns: 1fr 1fr 1fr 1fr;
+            grid-template-rows: auto 100px auto 100px auto 100px auto 100px auto 100px auto 100px auto 100px auto 100px auto 100px auto 100px;
+    		grid-template-areas:
+    		"i i i i"
+            ". . . ."
+    		"is is is is"
+            ". . . ."
+            "u u u u"
+            ". . . ."
+            "us us us us"
+            ". . . ."
+            "s s s s"
+            ". . . ."
+            "ss ss ss ss"
+            ". . . ."
+            "e e e e"
+            ". . . ."
+            "es es es es"
+            ". . . ."
+            "y y y y"
+            ". . . ."
+            "ys ys ys ys"
+            ". . . .";
+	}
+}
+
+@media screen and (min-width: 1000px)
+{
+        .grid
+        {
+        	display: grid;
+        	grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+            grid-template-rows: auto 100px auto 100px auto 100px auto 100px auto 100px auto 100px auto 100px auto 100px auto 100px auto 100px;
+    		grid-template-areas:
+    		". i i i i i i ."
+            ". . . . . . . ."
+    		". is is is is is is ."
+            ". . . . . . . ."
+            ". u u u u u u ."
+            ". . . . . . . ."
+            ". us us us us us us ."
+            ". . . . . . . ."
+            ". s s s s s s ."
+            ". . . . . . . ."
+            ". ss ss ss ss ss ss ."
+            ". . . . . . . ."
+            ". e e e e e e ."
+            ". . . . . . . ."
+            ". es es es es es es ."
+            ". . . . . . . ."
+            ". y y y y y y ."
+            ". . . . . . . ."
+            ". ys ys ys ys ys ys ."
+            ". . . . . . . .";
+        }
+
+		.intro p
+		{
+			text-align: left;
+		}
+}
