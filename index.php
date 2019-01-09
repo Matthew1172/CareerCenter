@@ -87,43 +87,11 @@ echo('
           <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
           <li data-target="#myCarousel" data-slide-to="1"></li>
           <li data-target="#myCarousel" data-slide-to="2"></li>
-          <li data-target="#myCarousel" data-slide-to="3"></li>
-          <li data-target="#myCarousel" data-slide-to="4"></li>
-          <li data-target="#myCarousel" data-slide-to="5"></li>
-          <li data-target="#myCarousel" data-slide-to="6"></li>
-          <li data-target="#myCarousel" data-slide-to="7"></li>
-          <li data-target="#myCarousel" data-slide-to="8"></li>
         </ol>
         <div class="carousel-inner">
-
-          <div class="carousel-item active">
-            <img class="first-slide" src="pics/business.jpg" alt="First slide">
-          </div>
-<div class="carousel-item">
-            <img class="second-slide" src="pics/chart.jpg" alt="Second slide">
-          </div>
-<div class="carousel-item">
-            <img class="third-slide" src="pics/dollar.jpg" alt="Third slide">
-          </div>
-<div class="carousel-item">
-            <img class="fourth-slide" src="pics/job.jpg" alt="Fourth slide">
-          </div>
-<div class="carousel-item">
-            <img class="fifth-slide" src="pics/milli.jpg" alt="Fifth slide">
-          </div>
-<div class="carousel-item">
-            <img class="sixith-slide" src="pics/rocket.jpg" alt="Sixth slide">
-          </div>
-<div class="carousel-item">
-            <img class="seventh-slide" src="pics/sales.jpg" alt="Seventh slide">
-          </div>
-<div class="carousel-item">
-            <img class="eighth-slide" src="pics/smile.jpg" alt="Eighth slide">
-          </div>
-<div class="carousel-item">
-            <img class="ninth-slide" src="pics/tape.jpg" alt="Ninth slide">
-          </div>
-
+<div class="carousel-item active"><img class="first-slide" src="https://d13dcw7qo4xgly.cloudfront.net/wp-content/uploads/2015/07/twitter-bootstrap-carousel.png" alt="First slide"></div>
+<div class="carousel-item"><img class="second-slide" src="https://d13dcw7qo4xgly.cloudfront.net/wp-content/uploads/2015/07/twitter-bootstrap-carousel.png" alt="Second slide"></div>
+<div class="carousel-item"><img class="third-slide" src="https://d13dcw7qo4xgly.cloudfront.net/wp-content/uploads/2015/07/twitter-bootstrap-carousel.png" alt="Third slide"></div>
         </div>
         <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
           <span class="carousel-control-prev-icon" aria-hidden="true"></span>

@@ -41,8 +41,8 @@ $(document).ready(function(){
 
 </head>
 <body>
-<nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="index.php"><img src="pics/ny.jpg" height="60" width="100" alt="Rockland County career center logo"/></a>
+    <a class="navbar-brand" href="index.php"><img src="pics/career-center-rockland-logo.png" height="100%" width="100%" alt="Rockland County career center logo"/></a>
+<nav class="navbar sticky-top navbar-expand-lg navbar-light bg-white">
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar1">
     <span class="navbar-toggler-icon"></span>
     </button>
