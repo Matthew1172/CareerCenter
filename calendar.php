@@ -54,7 +54,7 @@ echo("
 </div>
 
 <div class='cal'>
-<div id='calendar'></div>
+<div id='calendar' style='color: black;'></div>
 </div>
 
 </div>

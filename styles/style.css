@@ -12,15 +12,14 @@ nav
 
 footer
 {
-	text-align:center;
-	background-color: #dcdcdc;
-	margin-top: 0px;
+	background-color: #e4ecdf;
+    font-size: 12px;
 }
 
 h1, h2, h3, h4, h6
 {
     font-family: 'Muli', sans-serif;
-	color: #00aaff;
+    color: #016ba9;
 }
 
 .show-more-container
@@ -62,8 +61,80 @@ h1, h2, h3, h4, h6
     padding-right: 20px;
 }
 
+.footer-head
+{
+    color: black;
+    padding-bottom: 20px;
+}
+
+.footerOne
+{
+    grid-area: one;
+    padding: 20px;
+}
+
+.footerOne ul
+{
+    padding: 0px;
+    list-style-type: none;
+}
+
+.footerTwo
+{
+    grid-area: two;
+    padding: 20px;
+}
+
+.footerTwo ul
+{
+    padding: 0px;
+    list-style-type: none;
+}
+
+.footerTwo ul li
+{
+    padding-bottom: 10px;
+}
+
+.footerThree
+{
+    grid-area: three;
+    padding: 20px;
+}
+
+.footerCopy
+{
+    grid-area: c;
+    text-align: center;
+}
+
+.footer-grid
+{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 100px auto auto auto 100px;
+    grid-template-areas:
+    ". . . ."
+    "one one one one"
+    "two two two two"
+    "three three three three"
+    "c c c c";
+}
+
 @media screen and (min-width: 1000px)
 {
+    .footer-grid
+    {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+        grid-template-rows: 100px auto 100px;
+        grid-template-areas:
+        ". . . . . . . ."
+        ". one one two three three three ."
+        ". . . . . . . ."
+        "c c c c c c c c";
+    }
+
 	.navbar-nav ul li
 	{
 		padding: 10px;
@@ -71,6 +142,6 @@ h1, h2, h3, h4, h6
 
     .nav-item
     {
-        padding-top: 0px;
+        padding: 10px;
     }
 }

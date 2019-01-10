@@ -5,8 +5,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS      -->
+    <!-- Bootstrap CSS
 	<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+-->
+    <link href="bootstrap/css/cosmo.min.css" rel="stylesheet">
 
 	<!--	CUSTOM	STYLE	-->
 	<link href="styles/style.css" rel="stylesheet">
@@ -41,10 +43,8 @@ $(document).ready(function(){
 
 </head>
 <body>
-<nav class="navbar sticky-top navbar-expand-lg navbar-light bg-white">
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar1">
-    <span class="navbar-toggler-icon"></span>
-    </button>
+<nav class="navbar sticky-top navbar-expand-lg navbar-light bg-white" id="nav1">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar1"><span class="navbar-toggler-icon"></span></button>
     <div class="navbar-collapse collapse justify-content-stretch" id="navbar1">
     <ul class="navbar-nav ml-auto">
         <li class="nav-item"><a class="nav-link" href="about.php">About us</a></li>
@@ -79,4 +79,4 @@ $(document).ready(function(){
     </ul>
     </div>
 </nav>
-<a class="navbar-brand px-3" href="index.php"><img src="pics/career-center-rockland-logo.png" height="100%" width="100%" alt="Rockland County career center logo"/></a>
+<a class="navbar-brand p-3" href="index.php"><img src="pics/career-center-rockland-logo.png" height="60%" width="60%" alt="Rockland County career center logo"/></a>

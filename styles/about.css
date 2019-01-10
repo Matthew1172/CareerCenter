@@ -2,35 +2,35 @@
 {
 	   grid-column: 1/-1;
 	   grid-row: 1;
-       background-color: #00aaff;
+	   background-color: #016ba9;
 }
 
 .hero2
 {
 	   grid-column: 1/-1;
 	   grid-row: 5;
-       background-color: #00aaff;
+	   background-color: #016ba9;
 }
 
 .hero3
 {
 	   grid-column: 1/-1;
 	   grid-row: 9;
-       background-color: #00aaff;
+	   background-color: #016ba9;
 }
 
 .hero4
 {
 	   grid-column: 1/-1;
 	   grid-row: 13;
-       background-color: #00aaff;
+	   background-color: #016ba9;
 }
 
 .hero5
 {
 	   grid-column: 1/-1;
 	   grid-row: 17;
-       background-color: #00aaff;
+	   background-color: #016ba9;
 }
 
 .hero-head

@@ -2,7 +2,7 @@
 {
 	   grid-column: 1/-1;
 	   grid-row: 1;
-       background-color: #00aaff;
+       background-color: #016ba9;
 }
 
 .slider
@@ -20,7 +20,7 @@
 .google-maps
 {
         position: relative;
-		padding-bottom: 100%; // This is the aspect ratio
+		padding-bottom: 50%; // This is the aspect ratio
 }
 
 .google-maps iframe

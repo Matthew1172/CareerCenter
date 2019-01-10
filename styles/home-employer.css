@@ -1,3 +1,10 @@
+.hero1
+{
+	grid-column: 1/-1;
+	grid-row: 1;
+	background-color: #016ba9;
+}
+
 .main-btn
 {
 	width: 100%;
@@ -12,13 +19,6 @@
 #postJob-form ul li
 {
 	padding: 10px;
-}
-
-.hero1
-{
-    grid-column: 1/-1;
-    grid-row: 1;
-    background-color: #00aaff;
 }
 
 .greet
