@@ -11,7 +11,7 @@ nav
 
 footer
 {
-	background-color: #e4ecdf;
+	background-color: #ededed;
     font-size: 12px;
 }
 
@@ -115,6 +115,7 @@ h1, h2, h3, h4, h6
 {
     grid-area: c;
     text-align: center;
+    margin-top: 30px;
 }
 
 .footer-grid
