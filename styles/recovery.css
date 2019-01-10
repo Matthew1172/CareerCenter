@@ -1,0 +1,118 @@
+.hero1
+{
+	grid-column: 1/-1;
+	grid-row: 1;
+	background-color: #016ba9;
+}
+
+.main
+{
+		grid-area: m;
+        background-color: white;
+        text-align: center;
+		padding: 30px;
+}
+
+.main button
+{
+        width: 50%;
+        margin-top: 40px;
+}
+
+.main ul
+{
+	padding: 0px;
+	list-style-type: none;
+}
+
+.main ul li
+{
+	padding-top: 40px;
+}
+
+.intro
+{
+    grid-area: i;
+    color: white;
+	padding-left: 20px;
+	padding-right: 20px;
+}
+
+.question
+{
+    grid-area: q;
+    background-color: white;
+    text-align: center;
+    padding: 30px;
+}
+
+.question p
+{
+    text-align: left;
+}
+
+.question button
+{
+        width: 50%;
+        margin-top: 40px;
+}
+
+.question ul
+{
+	padding: 0px;
+	list-style-type: none;
+}
+
+.question ul li
+{
+	padding-top: 40px;
+}
+
+.grid
+{
+        background-color: #fafafa;
+		display: grid;
+		grid-template-columns: 1fr 1fr 1fr 1fr;
+		grid-template-rows: auto 100px auto 100px auto 100px;
+		grid-template-areas:
+        "i i i i"
+		". . . ."
+		"m m m m"
+		". . . ."
+        "q q q q"
+        ". . . .";
+}
+
+@media screen and (min-width: 500px)
+{
+		.grid
+		{
+				display: grid;
+				grid-template-columns: 1fr 1fr 1fr 1fr;
+				grid-template-rows: auto 100px auto 100px auto 100px;
+				grid-template-areas:
+                "i i i i"
+				". . . ."
+				". m m ."
+				". . . ."
+                "q q q q"
+                ". . . .";
+		}
+}
+
+@media screen and (min-width: 1000px)
+{
+        .grid
+        {
+        	display: grid;
+        	grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+        	grid-template-rows: auto 100px auto 100px auto 100px;
+        	grid-template-areas:
+            ". i i i i i i ."
+			". . . . . . . ."
+            ". . . m m . . ."
+			". . . . . . . ."
+            ". . . q q . . ."
+            ". . . . . . . .";
+        }
+}

@@ -1,7 +1,7 @@
 .main
 {
 		grid-area: m;
-        background-color: #fafafa;
+        background-color: white;
         text-align: center;
 		padding: 30px;
 }
@@ -25,6 +25,7 @@
 
 .grid
 {
+		background-color: #fafafa;
 		display: grid;
 		grid-template-columns: 1fr 1fr 1fr 1fr;
 		grid-template-rows: 100px auto 100px;

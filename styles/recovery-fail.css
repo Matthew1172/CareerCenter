@@ -1,0 +1,49 @@
+.hero1
+{
+	grid-column: 1/-1;
+	grid-row: 1;
+	background-color: #016ba9;
+}
+
+.main
+{
+    grid-area: m;
+    background-color: white;
+    padding: 20px;
+}
+
+.intro
+{
+    grid-area: i;
+    color: white;
+	padding-left: 20px;
+	padding-right: 20px;
+}
+
+.grid
+{
+    background-color: #fafafa;
+    display: grid;
+    grid-template-rows: auto 100px auto 100px;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-areas:
+    "i i i i"
+    ". . . ."
+    "m m m m"
+	". . . .";
+}
+
+@media screen and (min-width: 1000px)
+{
+    .grid
+    {
+        display: grid;
+        grid-template-rows: auto 100px auto 100px;
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+        grid-template-areas:
+        ". i i i i i i ."
+        ". . . . . . . ."
+        ". m m m m m m ."
+		". . . . . . . .";
+    }
+}

@@ -37,79 +37,99 @@ echo('
             var uid = $("#signup-uid").val();
             var pw = $("#signup-pw").val();
             var pw2 = $("#signup-pw2").val();
+
+            var q1 = $("#signup-q1").val();
+            var a1 = $("#signup-a1").val();
+            var q2 = $("#signup-q2").val();
+            var a2 = $("#signup-a2").val();
+            var q3 = $("#signup-q3").val();
+            var a3 = $("#signup-a3").val();
+
             var submit = $("#submit").val();
             var type = $("#selector").val();
 
-            if(type == "seeker")
-            {
-                var stateNum = $("#signup-stateNum").val();
+                if(type == "seeker")
+                {
+                    var stateNum = $("#signup-stateNum").val();
 
-                var med = $("#signup-med");
-                var it = $("#signup-it");
-                var bus = $("#signup-bus");
-                var health = $("#signup-health");
-                var food = $("#signup-food");
-                var hosp = $("#signup-hosp");
-                var cul = $("#signup-cul");
+                    var med = $("#signup-med");
+                    var it = $("#signup-it");
+                    var bus = $("#signup-bus");
+                    var health = $("#signup-health");
+                    var food = $("#signup-food");
+                    var hosp = $("#signup-hosp");
+                    var cul = $("#signup-cul");
 
-                $(".form-message").load("php/sign-up.php", {
-                    fName: fName,
-                    lName: lName,
-                    email: email,
-                    phone: phone,
-                    uid: uid,
-                    pw: pw,
-                    pw2: pw2,
-                    stateNum: stateNum,
-                    med: med.prop("checked"),
-                    it: it.prop("checked"),
-                    bus: bus.prop("checked"),
-                    health: health.prop("checked"),
-                    food: food.prop("checked"),
-                    hosp: hosp.prop("checked"),
-                    cul: cul.prop("checked"),
-                    type: type,
-                    submit: submit
-                });
-            }
-            else
-            {
-                var company = $("#employer-company").val();
-                var web = $("#employer-web").val();
-                var tax = $("#employer-tax").val();
-                var unemployNum = $("#employer-unemployNum").val();
+                    $(".form-message").load("php/sign-up.php", {
+                        fName: fName,
+                        lName: lName,
+                        email: email,
+                        phone: phone,
+                        uid: uid,
+                        pw: pw,
+                        pw2: pw2,
+                        q1: q1,
+                        a1: a1,
+                        q2: q2,
+                        a2: a2,
+                        q3: q3,
+                        a3: a3,
+                        stateNum: stateNum,
+                        med: med.prop("checked"),
+                        it: it.prop("checked"),
+                        bus: bus.prop("checked"),
+                        health: health.prop("checked"),
+                        food: food.prop("checked"),
+                        hosp: hosp.prop("checked"),
+                        cul: cul.prop("checked"),
+                        type: type,
+                        submit: submit
+                    });
+                }
+                else
+                {
+                    var company = $("#employer-company").val();
+                    var web = $("#employer-web").val();
+                    var tax = $("#employer-tax").val();
+                    var unemployNum = $("#employer-unemployNum").val();
 
-                var med = $("#employer-med");
-                var it = $("#employer-it");
-                var bus = $("#employer-bus");
-                var health = $("#employer-health");
-                var food = $("#employer-food");
-                var hosp = $("#employer-hosp");
-                var cul = $("#employer-cul");
+                    var med = $("#employer-med");
+                    var it = $("#employer-it");
+                    var bus = $("#employer-bus");
+                    var health = $("#employer-health");
+                    var food = $("#employer-food");
+                    var hosp = $("#employer-hosp");
+                    var cul = $("#employer-cul");
 
-                $(".form-message").load("php/sign-up.php", {
-                    fName: fName,
-                    lName: lName,
-                    email: email,
-                    phone: phone,
-                    uid: uid,
-                    pw: pw,
-                    pw2: pw2,
-                    med: med.prop("checked"),
-                    it: it.prop("checked"),
-                    bus: bus.prop("checked"),
-                    health: health.prop("checked"),
-                    food: food.prop("checked"),
-                    hosp: hosp.prop("checked"),
-                    cul: cul.prop("checked"),
-                    company: company,
-                    web: web,
-                    tax: tax,
-                    unemployNum: unemployNum,
-                    type: type,
-                    submit: submit
-                });
-            }
+                    $(".form-message").load("php/sign-up.php", {
+                        fName: fName,
+                        lName: lName,
+                        email: email,
+                        phone: phone,
+                        uid: uid,
+                        pw: pw,
+                        pw2: pw2,
+                        q1: q1,
+                        a1: a1,
+                        q2: q2,
+                        a2: a2,
+                        q3: q3,
+                        a3: a3,
+                        med: med.prop("checked"),
+                        it: it.prop("checked"),
+                        bus: bus.prop("checked"),
+                        health: health.prop("checked"),
+                        food: food.prop("checked"),
+                        hosp: hosp.prop("checked"),
+                        cul: cul.prop("checked"),
+                        company: company,
+                        web: web,
+                        tax: tax,
+                        unemployNum: unemployNum,
+                        type: type,
+                        submit: submit
+                    });
+                }
         });
 
     });
@@ -131,6 +151,13 @@ echo('
                 <li><input id="signup-uid" type="text" name="user_uid" placeholder="Username" class="form-control" aria-label="small" data-toggle="tooltip" title="Enter a user name with more than 8 characters"></li>
                 <li><input id="signup-pw" type="password" name="user_pw" placeholder="Password" class="form-control" aria-label="small" data-toggle="tooltip" title="Enter a password that has atleast 8 characters, and no special characters"></li>
                 <li><input id="signup-pw2" type="password" name="user_pw2" placeholder="Retype-Password" class="form-control" aria-label="small" data-toggle="tooltip" title="Re-type the password"></li>
+
+                <li><input id="signup-q1" type="text" placeholder="Security question 1" class="form-control" aria-label="small" data-toggle="tooltip" title="Put a question only you will know the answer to. (only alphanumeric and spaces allowed)"></li>
+                <li><input id="signup-a1" type="text" placeholder="Security answer 1" class="form-control" aria-label="small" data-toggle="tooltip" title="Put answer for security question 1. (only alphanumeric and spaces allowed)"></li>
+                <li><input id="signup-q2" type="text" placeholder="Security question 2" class="form-control" aria-label="small" data-toggle="tooltip" title="Put a question only you will know the answer to. (only alphanumeric and spaces allowed)"></li>
+                <li><input id="signup-a2" type="text" placeholder="Security answer 2" class="form-control" aria-label="small" data-toggle="tooltip" title="Put answer for security question 2. (only alphanumeric and spaces allowed)"></li>
+                <li><input id="signup-q3" type="text" placeholder="Security question 3" class="form-control" aria-label="small" data-toggle="tooltip" title="Put a question only you will know the answer to. (only alphanumeric and spaces allowed)"></li>
+                <li><input id="signup-a3" type="text" placeholder="Security answer 3" class="form-control" aria-label="small" data-toggle="tooltip" title="Put answer for security question 3. (only alphanumeric and spaces allowed)"></li>
 
                 <li>
                     <select class="mb-5 form-control" id="selector" name="selector">

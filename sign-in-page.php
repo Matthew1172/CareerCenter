@@ -65,8 +65,11 @@ echo('
         <li><input id="signin-pw" type="password" placeholder="Password" class="form-control" aria-label="small"/></li>
         <li><button id="login" class="btn btn-outline-primary" type="button">Log In</button></li>
     </ul>
-    <span><a href="sign-up-page.php">Don\'t have an account?</a></span>
 </form>
+    <span><a href="sign-up-page.php">Don\'t have an account?</a></span>
+    <br/>
+    <br/>
+    <span><a href="recovery.php">Forgot your password?</a></span>
 ');
 echo('</div>');
 

@@ -12,6 +12,13 @@ if(isset($_POST['submit']))
 	$user_pw = $_POST['pw'];
 	$user_pw2 = $_POST['pw2'];
 
+    $q1 = $_POST['q1'];
+    $a1 = $_POST['a1'];
+    $q2 = $_POST['q2'];
+    $a2 = $_POST['a2'];
+    $q3 = $_POST['q3'];
+    $a3 = $_POST['a3'];
+
     $user_med = $_POST['med'];
     $user_it = $_POST['it'];
     $user_bus = $_POST['bus'];
@@ -28,11 +35,29 @@ if(isset($_POST['submit']))
     $errorPhone = false;
     $errorUid = false;
     $errorPw = false;
+    $errorSec = false;
+    $errorSecMatch = false;
+    $errorSecMatchAns = false;
 
     if (!preg_match("/^[a-zA-Z]*$/", $user_first) || !preg_match("/^[a-zA-Z]*$/", $user_last) || strlen($user_first) < 2 || strlen($user_last) < 2)
     {
         echo("<span class='form-error'>this name is not valid.</span>");
         $errorName = true;
+    }
+    else if(!preg_match("/^[a-zA-Z0-9_]+( [a-zA-Z0-9_]+)*$/", $q1) || !preg_match("/^[a-zA-Z0-9_]+( [a-zA-Z0-9_]+)*$/", $a1) || !preg_match("/^[a-zA-Z0-9_]+( [a-zA-Z0-9_]+)*$/", $q2) || !preg_match("/^[a-zA-Z0-9_]+( [a-zA-Z0-9_]+)*$/", $a2) || !preg_match("/^[a-zA-Z0-9_]+( [a-zA-Z0-9_]+)*$/", $q3) || !preg_match("/^[a-zA-Z0-9_]+( [a-zA-Z0-9_]+)*$/", $a3))
+    {
+        echo("<span class='form-error'>only characters a-z 0-9 and spaces are allowed.</span>");
+        $errorSec = true;
+    }
+    else if($q1 == $q2 || $q1 == $q3 || $q2 == $q3)
+    {
+        echo("<span class='form-error'>you cannot repeat the same question.</span>");
+        $errorSecMatch = true;
+    }
+    else if($a1 == $a2 || $a1 == $a3 || $a2 == $a3)
+    {
+        echo("<span class='form-error'>you cannot repeat the same answer.</span>");
+        $errorSecMatchAns = true;
     }
     else if(!filter_var($user_email, FILTER_VALIDATE_EMAIL))
     {
@@ -68,7 +93,7 @@ if(isset($_POST['submit']))
             $errorEmploy = false;
             $errorWeb = false;
 
-            if(empty($user_first) || empty($user_last) || empty($user_email) || empty($user_phone) || empty($user_uid) || empty($user_pw) || empty($user_pw2) || empty($employer_company) || empty($employer_tax) || empty($employer_employ))
+            if(empty($user_first) || empty($user_last) || empty($user_email) || empty($user_phone) || empty($user_uid) || empty($user_pw) || empty($user_pw2) || empty($employer_company) || empty($employer_tax) || empty($employer_employ) || empty($q1) || empty($a1) || empty($q2) || empty($a2) || empty($q3) || empty($a3))
         	{
         		echo("<span class='form-error'>please fill in all fields.</span>");
         		$errorEmpty = true;
@@ -109,8 +134,8 @@ if(isset($_POST['submit']))
                             {
                                 $hashPwd = password_hash($user_pw, PASSWORD_DEFAULT);
 
-            					$stm = $conn->prepare('INSERT INTO users(user_first, user_last, user_email, user_phone, user_uid, user_pw, user_type) VALUES (?, ?, ?, ?, ?, ?, ?)');
-            					$stm->execute([$user_first, $user_last, $user_email, $user_phone, $user_uid, $hashPwd, 'employer']);
+            					$stm = $conn->prepare('INSERT INTO users(user_first, user_last, user_email, user_phone, user_uid, user_pw, user_type, user_q1, user_a1, user_q2, user_a2, user_q3, user_a3) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
+            					$stm->execute([$user_first, $user_last, $user_email, $user_phone, $user_uid, $hashPwd, 'employer', $q1, $a1, $q2, $a2, $q3, $a3]);
 
                                 $stm = $conn->prepare('SELECT user_id FROM users WHERE user_uid = ?');
             					$stm->execute([$user_uid]);
@@ -135,8 +160,8 @@ if(isset($_POST['submit']))
                                 {
                                     $hashPwd = password_hash($user_pw, PASSWORD_DEFAULT);
 
-                					$stm = $conn->prepare('INSERT INTO users(user_first, user_last, user_email, user_phone, user_uid, user_pw, user_type) VALUES (?, ?, ?, ?, ?, ?, ?)');
-                					$stm->execute([$user_first, $user_last, $user_email, $user_phone, $user_uid, $hashPwd, 'employer']);
+                                    $stm = $conn->prepare('INSERT INTO users(user_first, user_last, user_email, user_phone, user_uid, user_pw, user_type, user_q1, user_a1, user_q2, user_a2, user_q3, user_a3) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
+                					$stm->execute([$user_first, $user_last, $user_email, $user_phone, $user_uid, $hashPwd, 'employer', $q1, $a1, $q2, $a2, $q3, $a3]);
 
                                     $stm = $conn->prepare('SELECT user_id FROM users WHERE user_uid = ?');
                 					$stm->execute([$user_uid]);
@@ -176,7 +201,7 @@ if(isset($_POST['submit']))
             $seeker_stateNum = $_POST['stateNum'];
             $errorStateNum = false;
 
-            if(empty($user_first) || empty($user_last) || empty($user_email) || empty($user_phone) || empty($user_uid) || empty($user_pw) || empty($user_pw2) || empty($seeker_stateNum))
+            if(empty($user_first) || empty($user_last) || empty($user_email) || empty($user_phone) || empty($user_uid) || empty($user_pw) || empty($user_pw2) || empty($seeker_stateNum) || empty($q1) || empty($a1) || empty($q2) || empty($a2) || empty($q3) || empty($a3))
         	{
         		echo("<span class='form-error'>please Fill in all fields.</span>");
         		$errorEmpty = true;
@@ -204,8 +229,8 @@ if(isset($_POST['submit']))
         				{
         					$hashPwd = password_hash($user_pw, PASSWORD_DEFAULT);
 
-        					$stm = $conn->prepare('INSERT INTO users(user_first, user_last, user_email, user_phone, user_uid, user_pw, user_type) VALUES (?, ?, ?, ?, ?, ?, ?)');
-        					$stm->execute([$user_first, $user_last, $user_email, $user_phone, $user_uid, $hashPwd, 'user']);
+        					$stm = $conn->prepare('INSERT INTO users(user_first, user_last, user_email, user_phone, user_uid, user_pw, user_type, user_q1, user_a1, user_q2, user_a2, user_q3, user_a3) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
+        					$stm->execute([$user_first, $user_last, $user_email, $user_phone, $user_uid, $hashPwd, 'user', $q1, $a1, $q2, $a2, $q3, $a3]);
 
                             $stm = $conn->prepare('SELECT user_id FROM users WHERE user_uid = ?');
         					$stm->execute([$user_uid]);
@@ -246,7 +271,7 @@ else
 }
 ?>
 <script>
-	$("#signup-fName, #signup-lName, #signup-email, #signup-phone, #signup-stateNum, #signup-uid, #signup-pw, #signup-pw2").removeClass("input-error");
+	$("#signup-fName, #signup-lName, #signup-email, #signup-phone, #signup-stateNum, #signup-uid, #signup-pw, #signup-pw2, #signup-q1, #signup-a1, #signup-q2, #signup-a2, #signup-q3, #signup-a3").removeClass("input-error");
 	$("#employer-fName, #employer-lName, #employer-email, #employer-phone, #employer-uid, #employer-pw, #employer-pw2, #employer-company, #employer-tax, #employer-web, #employer-unemployNum").removeClass("input-error");
 
 	var errorEmpty = "<?php echo $errorEmpty; ?>";
@@ -255,6 +280,9 @@ else
 	var errorPhone = "<?php echo $errorPhone; ?>";
 	var errorUid = "<?php echo $errorUid; ?>";
 	var errorPw = "<?php echo $errorPw; ?>";
+	var errorSec = "<?php echo $errorSec; ?>";
+	var errorSecMatch = "<?php echo $errorSecMatch; ?>";
+	var errorSecMatchAns = "<?php echo $errorSecMatchAns; ?>";
 
     var errorStateNum = "<?php echo $errorStateNum; ?>";
 
@@ -265,7 +293,7 @@ else
 
     if(errorEmpty == true)
 	{
-        $("#signup-fName, #signup-lName, #signup-email, #signup-phone, #signup-stateNum, #signup-uid, #signup-pw, #signup-pw2").addClass("input-error");
+        $("#signup-fName, #signup-lName, #signup-email, #signup-phone, #signup-stateNum, #signup-uid, #signup-pw, #signup-pw2, #signup-q1, #signup-a1, #signup-q2, #signup-a2, #signup-q3, #signup-a3").addClass("input-error");
         $("#employer-fName, #employer-lName, #employer-email, #employer-phone, #employer-uid, #employer-pw, #employer-pw2, #employer-company, #employer-tax, #employer-unemployNum").addClass("input-error");
 	}
     if(errorName == true)
@@ -312,9 +340,21 @@ else
     {
         $("#employer-company").addClass("input-error");
     }
-	if(errorEmpty == false && errorName == false && errorEmail == false && errorPhone == false && errorUid == false && errorPw == false && errorStateNum == false && errorTax == false && errorEmploy == false && errorWeb == false && errorCompanyName == false)
+    if(errorSec == true)
+    {
+        $("#signup-q1, #signup-a1, #signup-q2, #signup-a2, #signup-q3, #signup-a3").addClass("input-error");
+    }
+    if(errorSecMatch == true)
+    {
+        $("#signup-q1, #signup-q2, #signup-q3").addClass("input-error");
+    }
+    if(errorSecMatchAns == true)
+    {
+        $("#signup-a1, #signup-a2, #signup-a3").addClass("input-error");
+    }
+	if(errorEmpty == false && errorName == false && errorEmail == false && errorPhone == false && errorUid == false && errorPw == false && errorStateNum == false && errorTax == false && errorEmploy == false && errorWeb == false && errorCompanyName == false && errorSec == false && errorSecMatch == false && errorSecMatchAns == false)
 	{
-		$("#signup-fName, #signup-lName, #signup-email, #signup-stateNum, #signup-uid, #signup-pw, #signup-pw2").val("");
+		$("#signup-fName, #signup-lName, #signup-email, #signup-stateNum, #signup-uid, #signup-pw, #signup-pw2, #signup-q1, #signup-a1, #signup-q2, #signup-a2, #signup-q3, #signup-a3").val("");
         $("#signup-phone").val("+1");
         $("#employer-fName, #employer-lName, #employer-email, #employer-phone, #employer-uid, #employer-pw, #employer-pw2, #employer-company, #employer-tax, #employer-web, #employer-unemployNum").val("");
 
