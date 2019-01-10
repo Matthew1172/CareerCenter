@@ -19,17 +19,14 @@ if (isset($_SESSION['user_uid']))
             while($event = $stm->fetch(PDO::FETCH_ASSOC))
             {
                         echo (
-                        "<div id='job" . $event['job_id'] . "' class='row event my-4'>" .
-                        "<div class='col-xs-9 col-sm-9 col-md-10 col-lg-10'>" .
+                        "<div id='job" . $event['job_id'] . "' class='event my-4'>" .
                         "<h3>"                   . htmlspecialchars($event['job_title'])        . "</h3>" .
                         "<b>Position: </b>"      . htmlspecialchars($event['job_position'])         . "</p>" .
                         "<p>"                    . htmlspecialchars($event['job_description'])  . "<br/><br/>" .
                         "<b>Location: </b>"      . htmlspecialchars($event['job_location'])     . "<br/>" .
-                        "<b>Contact: </b>"       . htmlspecialchars($result['user_email'])     . "<br/>" .
-                        "</div>");
-                        echo("<div class='col-xs-3 col-sm-3 col-md-2 col-lg-2'>");
+                        "<b>Contact: </b>"       . htmlspecialchars($result['user_email'])     . "<br/>");
                         echo("<button id='" . $event['job_id'] . "' class='btn btn-primary rem-btn'>Remove</button>");
-                        echo("</div></div><hr>");
+                        echo("</div><hr>");
             }
         }
         else

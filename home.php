@@ -388,16 +388,13 @@ if (isset($_SESSION['user_uid']))
             while($event = $stm->fetch(PDO::FETCH_ASSOC))
             {
                             echo(
-                            "<div id='event" . $event['event_id'] . "' class='row event my-4'>" .
-                            "<div class='col-xs-9 col-sm-9 col-md-10 col-lg-10'>" .
+                            "<div id='event" . $event['event_id'] . "' class='event my-4'>" .
                             "<h3>"                   . $event['title']        . "</h3>" .
                             "<b>Type: </b>"          . $event['type']         . "<br/>" .
                             "<p>"                    . $event['description']  . "</p><br/><br/>" .
                             "<b>Location: </b>"      . $event['location']     . "<br/>" .
                             "<b>Date: </b>"          . $event['startTime']    . "<br/>" .
-                            "<b>Date Posted: </b>"   . $event['dateStamp']    . "<br/>" .
-                            "</div>");
-                            echo("<div class='col-xs-3 col-sm-3 col-md-2 col-lg-2'>");
+                            "<b>Date Posted: </b>"   . $event['dateStamp']    . "<br/>");
                             $stm2 = $conn->prepare('SELECT event_id from user_event WHERE user_id = ?');
                             $stm2->execute([$result['user_id']]);
                             $map_result = $stm2->fetchAll(PDO::FETCH_ASSOC);
@@ -421,7 +418,7 @@ if (isset($_SESSION['user_uid']))
                             {
                                     echo("<button id='" . $event['event_id'] . "' class='btn btn-primary event-btn'>subscribe</button>");
                             }
-                            echo("</div></div><hr>");
+                            echo("</div><hr>");
             }
             echo("</div>");
             echo("<div class='show-more-container'>");
@@ -443,18 +440,15 @@ if (isset($_SESSION['user_uid']))
                     while($event = $stm2->fetch(PDO::FETCH_ASSOC))
                     {
                         echo(
-                        "<div id='event" . $event['event_id'] . "' class='row event my-4'>" .
-                        "<div class='col-xs-9 col-sm-9 col-md-10 col-lg-10'>" .
+                        "<div id='event" . $event['event_id'] . "' class='event my-4'>" .
                         "<h3>"                   . $event['title']        . "</h3>" .
                         "<b>Type: </b>"          . $event['type']         . "<br/>" .
                         "<p>"                    . $event['description']  . "</p><br/><br/>" .
                         "<b>Location: </b>"      . $event['location']     . "<br/>" .
                         "<b>Date: </b>"          . $event['startTime']    . "<br/>" .
-                        "<b>Date Posted: </b>"   . $event['dateStamp']    . "<br/>" .
-                        "</div>");
-                        echo("<div class='col-xs-3 col-sm-3 col-md-2 col-lg-2'>");
+                        "<b>Date Posted: </b>"   . $event['dateStamp']    . "<br/>");
                         echo("<button id='" . $event['event_id'] . "' class='btn btn-primary sub-event-btn'>un-subscribe</button>");
-                        echo("</div></div><hr>");
+                        echo("</div><hr>");
                     }
                 }
             }
@@ -481,17 +475,14 @@ if (isset($_SESSION['user_uid']))
                 while($event = $stm->fetch(PDO::FETCH_ASSOC))
                 {
                             echo (
-                            "<div id='job" . $event['job_id'] . "' class='row event my-4'>" .
-                            "<div class='col-xs-9 col-sm-9 col-md-10 col-lg-10'>" .
+                            "<div id='job" . $event['job_id'] . "' class='event my-4'>" .
                             "<h3>"                   . htmlspecialchars($event['job_title'])        . "</h3>" .
                             "<b>Position: </b>"      . htmlspecialchars($event['job_position'])         . "</p>" .
                             "<p>"                    . htmlspecialchars($event['job_description'])  . "<br/><br/>" .
                             "<b>Location: </b>"      . htmlspecialchars($event['job_location'])     . "<br/>" .
-                            "<b>Contact: </b>"       . htmlspecialchars($result['user_email'])     . "<br/>" .
-                            "</div>");
-                            echo("<div class='col-xs-3 col-sm-3 col-md-2 col-lg-2'>");
+                            "<b>Contact: </b>"       . htmlspecialchars($result['user_email'])     . "<br/>");
                             echo("<button id='" . $event['job_id'] . "' class='btn btn-primary rem-btn'>Remove</button>");
-                            echo("</div></div><hr>");
+                            echo("</div><hr>");
                 }
             }
             else
@@ -798,16 +789,13 @@ if (isset($_SESSION['user_uid']))
             while($event = $stm->fetch(PDO::FETCH_ASSOC))
             {
                             echo(
-                            "<div id='event" . $event['event_id'] . "' class='row event my-4'>" .
-                            "<div class='col-xs-9 col-sm-9 col-md-10 col-lg-10'>" .
+                            "<div id='event" . $event['event_id'] . "' class='event my-4'>" .
                             "<h3>"                   . $event['title']        . "</h3>" .
                             "<b>Type: </b>"          . $event['type']         . "<br/>" .
                             "<p>"                    . $event['description']  . "</p><br/><br/>" .
                             "<b>Location: </b>"      . $event['location']     . "<br/>" .
                             "<b>Date: </b>"          . $event['startTime']    . "<br/>" .
-                            "<b>Date Posted: </b>"   . $event['dateStamp']    . "<br/>" .
-                            "</div>");
-                            echo("<div class='col-xs-3 col-sm-3 col-md-2 col-lg-2'>");
+                            "<b>Date Posted: </b>"   . $event['dateStamp']    . "<br/>");
                             $stm2 = $conn->prepare('SELECT event_id from user_event WHERE user_id = ?');
                             $stm2->execute([$result['user_id']]);
                             $map_result = $stm2->fetchAll(PDO::FETCH_ASSOC);
@@ -831,7 +819,7 @@ if (isset($_SESSION['user_uid']))
                             {
                                     echo("<button id='" . $event['event_id'] . "' class='btn btn-primary event-btn'>subscribe</button>");
                             }
-                            echo("</div></div><hr>");
+                            echo("</div><hr>");
             }
             echo("</div>");
             echo("<div class='show-more-container'>");
@@ -853,18 +841,15 @@ if (isset($_SESSION['user_uid']))
                     while($event = $stm2->fetch(PDO::FETCH_ASSOC))
                     {
                         echo(
-                        "<div id='event" . $event['event_id'] . "' class='row event my-4'>" .
-                        "<div class='col-xs-9 col-sm-9 col-md-10 col-lg-10'>" .
+                        "<div id='event" . $event['event_id'] . "' class='event my-4'>" .
                         "<h3>"                   . $event['title']        . "</h3>" .
                         "<b>Type: </b>"          . $event['type']         . "<br/>" .
                         "<p>"                    . $event['description']  . "</p><br/><br/>" .
                         "<b>Location: </b>"      . $event['location']     . "<br/>" .
                         "<b>Date: </b>"          . $event['startTime']    . "<br/>" .
-                        "<b>Date Posted: </b>"   . $event['dateStamp']    . "<br/>" .
-                        "</div>");
-                        echo("<div class='col-xs-3 col-sm-3 col-md-2 col-lg-2'>");
+                        "<b>Date Posted: </b>"   . $event['dateStamp']    . "<br/>");
                         echo("<button id='" . $event['event_id'] . "' class='btn btn-primary sub-event-btn'>un-subscribe</button>");
-                        echo("</div></div><hr>");
+                        echo("</div><hr>");
                     }
                 }
             }

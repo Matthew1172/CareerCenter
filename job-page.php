@@ -32,7 +32,7 @@ if($sql->rowCount() > 0)
         echo('<p>'. $jobListing['job_position'] .'</p>');
         echo('</div>');
 
-        echo('<div class="section mt-5 py-3 px-3">');
+        echo('<div class="section">');
         echo('<p class="">'. $jobListing['job_description'] .'</p>');
         echo('<p>Location: '. $jobListing['job_location'] .'</p>');
         echo('<p>Contact: '. $userInfo['user_email'] .'</p>');
