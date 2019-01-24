@@ -3,14 +3,13 @@ session_start();
 
 require 'header.php';
 
-echo('
-<link href="styles/recovery.css" rel="stylesheet" />
-');
+echo('<link href="styles/recovery.css" rel="stylesheet" />');
 
 echo("
 <script>
   $(document).ready(function() {
-      $('#recovery').click(function(){
+      $('#recovery-form').submit(function(event){
+          event.preventDefault();
           var recovery_email = $('#recovery-email').val();
           var submit = '1'
           if(recovery_email != '')
@@ -30,18 +29,16 @@ echo("
 </script>
 ");
 
-echo("
-<div class='grid'>
-
-<div class='hero1'>
-</div>
-
-<div class='intro py-5'>
-<h1 style='color: white'>Password Recovery.</h1>
-</div>
-");
-
 echo('
+<div class="grid">
+
+<div class="hero1">
+</div>
+
+<div class="intro py-5">
+<h1 style="color: white">Password Recovery.</h1>
+</div>
+
 <div class="main">
 <form id="recovery-form">
     <ul>
@@ -50,18 +47,14 @@ echo('
     </ul>
 </form>
 </div>
-');
 
-echo('
+
 <div class="question" style="display: none;">
 <div id="question-section">
 </div>
 </div>
+</div>
 ');
 
-echo('</div>');
-
-
 require 'footer.php';
-
 ?>

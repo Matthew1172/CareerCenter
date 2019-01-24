@@ -683,22 +683,32 @@ if (isset($_SESSION['user_uid']))
                 $(document).on('click','.change-btn',function(){
                     $('#all-events-list').hide();
                     $('#own-events-list').hide();
+                    $('#upload-section').hide();
                     $('#change-info').show();
                 });
                 $(document).on('click','.change-pw-btn',function(){
                     $('#change-phone').hide();
                     $('#change-email').hide();
+                    $('#upload-section').hide();
                     $('#change-pw').show();
                 });
                 $(document).on('click','.change-phone-btn',function(){
                     $('#change-email').hide();
                     $('#change-pw').hide();
+                    $('#upload-section').hide();
                     $('#change-phone').show();
                 });
                 $(document).on('click','.change-email-btn',function(){
                     $('#change-phone').hide();
                     $('#change-pw').hide();
+                    $('#upload-section').hide();
                     $('#change-email').show();
+                });
+                $(document).on('click','.upload-btn',function(){
+                    $('#change-phone').hide();
+                    $('#change-pw').hide();
+                    $('#change-email').hide();
+                    $('#upload-section').show();
                 });
                 $('#change-pw-form').submit(function(event){
                     var x = 'Are you sure you want to change your password?'
@@ -882,6 +892,9 @@ if (isset($_SESSION['user_uid']))
             <li><button class='btn-outline-primary btn nav-link change-pw-btn'>Change password</button></li>
             <li><button class='btn-outline-primary btn nav-link change-phone-btn'>Change phone number</button></li>
             <li><button class='btn-outline-primary btn nav-link change-email-btn'>Change email</button></li>
+
+            <li><button class='btn-outline-primary btn nav-link upload-btn'>Upload Resume</button></li>
+
             <li></li>
             </ul>
             </div>
@@ -916,6 +929,16 @@ if (isset($_SESSION['user_uid']))
                     <li><input id='change-email2-input' type='text' placeholder='Re-type new email' class='form-control' aria-label='small' data-toggle='tooltip' title='Re-type your new email'></li>
                 </ul>
                 <button id='change-email-submit' type='submit' class='reset-btn btn btn-danger main-btn'>Reset email</button>
+            </form>
+            </div>
+
+            <div class='upload-section' id='upload-section' style='display:none;'>
+            <form id='upload-form' enctype='multipart/form-data'>
+                <p class='form-message'></p>
+                <ul class='reset-list'>
+                    <li><input type='file' name='fileToUpload' id='fileToUpload'></li>
+                </ul>
+                <button id='upload-submit' type='submit' class='reset-btn btn btn-danger main-btn'>Upload</button>
             </form>
             </div>
 
