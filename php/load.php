@@ -1,10 +1,10 @@
 <?php
-$connect = new PDO('mysql:host=localhost;dbname=foo', 'eddy', '123');
+require 'connect.php';
 
 $data = array();
 
 $query = "SELECT * FROM events ORDER BY event_id";
-$statement = $connect->prepare($query);
+$statement = $conn->prepare($query);
 $statement->execute();
 $result = $statement->fetchAll();
 
