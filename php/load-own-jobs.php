@@ -12,7 +12,7 @@ if (isset($_SESSION['user_uid']))
         $stm = $conn->prepare('SELECT * FROM employers WHERE user_id = ?');
         $stm->execute([$result['user_id']]);
         $employerResult = $stm->fetch();
-        $stm = $conn->prepare('SELECT * from jobs WHERE employer_id = ? ORDER BY dateStamp DESC LIMIT ' . $jobNewCount . ';');
+        $stm = $conn->prepare('SELECT * FROM jobs WHERE employer_id = ? ORDER BY dateStamp DESC LIMIT ' . $jobNewCount . ';');
         $stm->execute([$employerResult['employer_id']]);
         if($stm->rowCount() > 0)
         {

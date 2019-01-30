@@ -37,6 +37,13 @@ if(isset($_POST['submit']))
             $sql = $conn->prepare('INSERT INTO jobs(employer_id, job_title, job_description, job_position, job_location, isMedical, isIT, isHealthcare, isBusiness, isFoodservice, isHospitality, isCulinary) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
             $sql->execute([$resultEmployer['employer_id'], $job_title, $job_description, $job_position, $job_location, $job_med, $job_it, $job_health, $job_bus, $job_food, $job_hosp, $job_cul]);
 
+            $sql = $conn->prepare("SELECT * FROM jobs WHERE employer_id=?");
+            $sql->execute([$resultEmployer['employer_id']]);
+            $resultJob = $sql->fetch();
+
+            $stm = $conn->prepare('INSERT INTO job_occupations(job_id, medical, IT, business, foodservice, healthcare, hospitality, culinary) VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
+            $stm->execute([$resultJob['job_id'], $job_med, $job_it, $job_bus, $job_food, $job_health, $job_hosp, $job_cul]);
+
             echo("<span class='form-success'>Success~!</span>");
         }
 }

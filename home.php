@@ -650,65 +650,115 @@ if (isset($_SESSION['user_uid']))
                         });
                     }
                 });
+                var allEventCount = 2;
+                $('#more-all-events-button').click(function(){
+                  allEventCount += 2;
+                  $('#all-events-list-section').load('php/load-all-events.php', {
+                    allEventNewCount: allEventCount
+                  });
+                });
+                var ownEventCount = 2;
+                $('#more-own-events-button').click(function(){
+                  ownEventCount += 2;
+                  $('#own-events-list-section').load('php/load-own-events.php', {
+                    ownEventNewCount: ownEventCount
+                  });
+                });
+                var workRecCount = 2;
+                $('#more-work-rec-button').click(function(){
+                  workRecCount += 2;
+                  $('#work-rec-list-section').load('php/load-work-rec-events.php', {
+                    workRecNewCount: workRecCount
+                  });
+                });
+                var jobRecCount = 2;
+                $('#more-job-rec-button').click(function(){
+                  jobRecCount += 2;
+                  $('#job-rec-list-section').load('php/load-job-rec-events.php', {
+                    jobRecNewCount: jobRecCount
+                  });
+                });
                 $(document).on('click','.all-btn',function(){
                     $('#all-events-list-section').load('php/load-all-events.php', {
                         allEventNewCount: allEventCount
                     });
                     $('#own-events-list').hide();
                     $('#change-info').hide();
+                    $('#work-rec-list').hide();
+                    $('#job-rec-list').hide();
                     $('#all-events-list').show();
                 });
-                var allEventCount = 2;
-                $('#more-all-events-button').click(function(){
-                    allEventCount += 2;
-                    $('#all-events-list-section').load('php/load-all-events.php', {
-                        allEventNewCount: allEventCount
-                    });
-                });
                 $(document).on('click','.own-btn',function(){
-                    $('#own-events-list-section').load('php/load-own-events.php', {
-                        ownEventNewCount: ownEventCount
-                    });
-                    $('#all-events-list').hide();
-                    $('#change-info').hide();
-                    $('#own-events-list').show();
+                  $('#own-events-list-section').load('php/load-own-events.php', {
+                    ownEventNewCount: ownEventCount
+                  });
+                  $('#all-events-list').hide();
+                  $('#change-info').hide();
+                  $('#work-rec-list').hide();
+                  $('#job-rec-list').hide();
+                  $('#own-events-list').show();
                 });
-                var ownEventCount = 2;
-                $('#more-own-events-button').click(function(){
-                    ownEventCount += 2;
-                    $('#own-events-list-section').load('php/load-own-events.php', {
-                        ownEventNewCount: ownEventCount
-                    });
+                $(document).on('click','.work-rec-btn',function(){
+                  $('#work-rec-list-section').load('php/load-work-rec-events.php', {
+                    workRecNewCount: workRecCount
+                  });
+                  $('#all-events-list').hide();
+                  $('#change-info').hide();
+                  $('#own-events-list').hide();
+                  $('#job-rec-list').hide();
+                  $('#work-rec-list').show();
+                });
+                $(document).on('click','.job-rec-btn',function(){
+                  $('#job-rec-list-section').load('php/load-job-rec-events.php', {
+                    jobRecNewCount: jobRecCount
+                  });
+                  $('#all-events-list').hide();
+                  $('#change-info').hide();
+                  $('#own-events-list').hide();
+                  $('#work-rec-list').hide();
+                  $('#job-rec-list').show();
                 });
                 $(document).on('click','.change-btn',function(){
                     $('#all-events-list').hide();
                     $('#own-events-list').hide();
-                    $('#upload-section').hide();
+                    $('#work-rec-list').hide();
+                    $('#job-rec-list').hide();
                     $('#change-info').show();
                 });
                 $(document).on('click','.change-pw-btn',function(){
                     $('#change-phone').hide();
                     $('#change-email').hide();
                     $('#upload-section').hide();
+                    $('#change-sector-section').hide();
                     $('#change-pw').show();
                 });
                 $(document).on('click','.change-phone-btn',function(){
                     $('#change-email').hide();
                     $('#change-pw').hide();
                     $('#upload-section').hide();
+                    $('#change-sector-section').hide();
                     $('#change-phone').show();
                 });
                 $(document).on('click','.change-email-btn',function(){
                     $('#change-phone').hide();
                     $('#change-pw').hide();
                     $('#upload-section').hide();
+                    $('#change-sector-section').hide();
                     $('#change-email').show();
                 });
                 $(document).on('click','.upload-btn',function(){
                     $('#change-phone').hide();
                     $('#change-pw').hide();
                     $('#change-email').hide();
+                    $('#change-sector-section').hide();
                     $('#upload-section').show();
+                });
+                $(document).on('click','.change-sector-btn',function(){
+                    $('#change-phone').hide();
+                    $('#change-pw').hide();
+                    $('#change-email').hide();
+                    $('#upload-section').hide();
+                    $('#change-sector-section').show();
                 });
                 $('#change-pw-form').submit(function(event){
                     var x = 'Are you sure you want to change your password?'
@@ -777,6 +827,33 @@ if (isset($_SESSION['user_uid']))
                         });
                     }
                 });
+                $('#change-sector-form').submit(function(event){
+                    var x = 'Are you sure you want to change your sectors?'
+                    if(confirm(x))
+                    {
+                        event.preventDefault();
+                        var med = $('#change-sector-med');
+                        var it = $('#change-sector-it');
+                        var bus = $('#change-sector-bus');
+                        var health = $('#change-sector-health');
+                        var food = $('#change-sector-food');
+                        var hosp = $('#change-sector-hosp');
+                        var cul = $('#change-sector-cul');
+
+                        var submit = $('#change-sector-submit').val();
+
+                            $('.form-message').load('php/reset-sectors.php', {
+                                med: med.prop('checked'),
+                                it: it.prop('checked'),
+                                bus: bus.prop('checked'),
+                                health: health.prop('checked'),
+                                food: food.prop('checked'),
+                                hosp: hosp.prop('checked'),
+                                cul: cul.prop('checked'),
+                                submit: submit
+                            });
+                    }
+                });
             });
             </script>
             ");
@@ -798,6 +875,10 @@ if (isset($_SESSION['user_uid']))
                 <ul class="navbar-nav ml-auto">
                     <li class=""><button class="btn-outline-secondary btn nav-link all-btn">All Workshops</button></li>
                     <li class=""><button class="btn-outline-secondary btn nav-link own-btn">Your Workshops</button></li>
+
+                    <li class=""><button class="btn-outline-secondary btn nav-link work-rec-btn">Workshops for you</button></li>
+                    <li class=""><button class="btn-outline-secondary btn nav-link job-rec-btn">Jobs for you</button></li>
+
                     <li class=""><button class="btn-outline-secondary btn nav-link change-btn">Update account</button></li>
                 </ul>
                 </div>
@@ -889,6 +970,98 @@ if (isset($_SESSION['user_uid']))
             echo("</div>");
             echo("</div>");
 
+            echo("<div id='work-rec-list' class='event-list p-2' style='display:none;'>");
+            echo("<h2 class='dash-header'>Workshops for you: </h2><hr>");
+            echo("<div id='work-rec-list-section' class='container'>");
+            $stm = $conn->prepare('SELECT * FROM events ORDER BY dateStamp DESC LIMIT 2');
+            $stm->execute();
+            while($event = $stm->fetch(PDO::FETCH_ASSOC))
+            {
+                            echo(
+                            "<div id='event" . $event['event_id'] . "' class='event my-4'>" .
+                            "<h3>"                   . $event['title']        . "</h3>" .
+                            "<b>Type: </b>"          . $event['type']         . "<br/>" .
+                            "<p>"                    . $event['description']  . "</p><br/><br/>" .
+                            "<b>Location: </b>"      . $event['location']     . "<br/>" .
+                            "<b>Date: </b>"          . $event['startTime']    . "<br/>" .
+                            "<b>Date Posted: </b>"   . $event['dateStamp']    . "<br/>");
+                            $stm2 = $conn->prepare('SELECT event_id from user_event WHERE user_id = ?');
+                            $stm2->execute([$result['user_id']]);
+                            $map_result = $stm2->fetchAll(PDO::FETCH_ASSOC);
+                            if(!empty($map_result))
+                            {
+                                    $flag = false;
+                                    foreach($map_result as $a)
+                                    {
+                                        if($a['event_id'] == $event['event_id'])
+                                        {
+                                            echo("<button id='" . $event['event_id'] . "' class='btn btn-primary sub-event-btn'>un-subscribe</button>");
+                                            $flag = true;
+                                        }
+                                    }
+                                    if(!$flag)
+                                    {
+                                        echo("<button id='" . $event['event_id'] . "' class='btn btn-primary event-btn'>subscribe</button>");
+                                    }
+                            }
+                            else
+                            {
+                                    echo("<button id='" . $event['event_id'] . "' class='btn btn-primary event-btn'>subscribe</button>");
+                            }
+                            echo("</div><hr>");
+            }
+            echo("</div>");
+            echo("<div class='show-more-container'>");
+            echo('<button id="more-work-rec-button" class="btn btn-primary more-btn">Show more</button>');
+            echo("</div>");
+            echo("</div>");
+
+            echo("<div id='job-rec-list' class='event-list p-2' style='display:none;'>");
+            echo("<h2 class='dash-header'>Jobs for you: </h2><hr>");
+            echo("<div id='job-rec-list-section' class='container'>");
+            /*
+            Get the users occupations
+            */
+            $stm = $conn->prepare('SELECT * from user_occupations WHERE user_id = ?');
+            $stm->execute([$result['user_id']]);
+            $userOccupation = $stm->fetch(PDO::FETCH_ASSOC);
+            $jobsFound = 0;
+            /*
+            Get the users occupations
+            */
+            $stm2 = $conn->prepare('SELECT * from jobs ORDER BY dateStamp DESC LIMIT 2');
+            $stm2->execute();
+            while($jobListing = $stm2->fetch(PDO::FETCH_ASSOC))
+            {
+              if(
+              ($jobListing['isMedical'] == 'true' && $userOccupation['medical'] == 'true') ||
+              ($jobListing['isIT'] == 'true' && $userOccupation['IT'] == 'true') ||
+              ($jobListing['isHealthcare'] == 'true' && $userOccupation['healthcare'] == 'true') ||
+              ($jobListing['isBusiness'] == 'true' && $userOccupation['business'] == 'true') ||
+              ($jobListing['isFoodservice'] == 'true' && $userOccupation['foodservice'] == 'true') ||
+              ($jobListing['isHospitality'] == 'true' && $userOccupation['hospitality'] == 'true') ||
+              ($jobListing['isCulinary'] == 'true' && $userOccupation['culinary'] == 'true')
+              )
+              {
+                  echo("<div id='job" . $jobListing['job_id'] . "' class='event my-4'>");
+                  echo('<h3>'. $jobListing['job_title'] .'</h3>');
+                  echo('<p>'. $jobListing['job_position'] .'</p>');
+                  echo('<p>'. $jobListing['job_description'] .'</p>');
+                  echo('<p>Location: '. $jobListing['job_location'] .'</p>');
+                  echo("</div><hr>");
+                  $jobsFound += 1;
+              }
+            }
+            if($jobsFound <= 0)
+            {
+              echo("<div class='my-4'><h3>Couldnt find a job for you m8</h3></div>");
+            }
+            echo("</div>");
+            echo("<div class='show-more-container'>");
+            echo('<button id="more-job-rec-button" class="btn btn-primary more-btn">Show more</button>');
+            echo("</div>");
+            echo("</div>");
+
             echo("<div id='change-info' class='p-2' style='display:none;'>");
             echo("<h2 class='dash-header'>Update your personal information: </h2><hr>");
             echo("<div id='change-section' class='container'>");
@@ -900,6 +1073,18 @@ if (isset($_SESSION['user_uid']))
             <li><b>Email: </b>". $result['user_email'] ."</li>
             <li><b>Phone number: </b>". $result['user_phone'] ."</li>
             <li><b>User name: </b>". $result['user_uid'] ."</li>
+            <li>
+              <b>Sectors: </b>
+              <ul>
+              <li>medical: ".$userOccupation['medical']."</li>
+              <li>IT: ".$userOccupation['IT']."</li>
+              <li>healthcare: ".$userOccupation['healthcare']."</li>
+              <li>business: ".$userOccupation['business']."</li>
+              <li>foodservice: ".$userOccupation['foodservice']."</li>
+              <li>hospitality: ".$userOccupation['hospitality']."</li>
+              <li>culinary: ".$userOccupation['culinary']."</li>
+              </ul>
+            </li>
             </ul>
             </div>
             <div class='row'>
@@ -908,13 +1093,13 @@ if (isset($_SESSION['user_uid']))
             <li><button class='btn-outline-primary btn nav-link change-pw-btn'>Change password</button></li>
             <li><button class='btn-outline-primary btn nav-link change-phone-btn'>Change phone number</button></li>
             <li><button class='btn-outline-primary btn nav-link change-email-btn'>Change email</button></li>
-
             <li><button class='btn-outline-primary btn nav-link upload-btn'>Upload Resume</button></li>
-
+            <li><button class='btn-outline-primary btn nav-link change-sector-btn'>Change sectors</button></li>
             <li></li>
             </ul>
             </div>
             <div class='change-section col-xs-7 col-sm-7 col-md-7 col-lg-8'>
+
             <div class='change-pw' id='change-pw' style='display:none;'>
             <form id='change-pw-form'>
                 <p class='form-message'></p>
@@ -955,6 +1140,40 @@ if (isset($_SESSION['user_uid']))
                     <li><input type='file' name='fileToUpload' id='fileToUpload'></li>
                 </ul>
                 <button id='upload-submit' type='submit' class='reset-btn btn btn-danger main-btn'>Upload</button>
+            </form>
+            </div>
+
+            <div class='change-sector-section' id='change-sector-section' style='display:none;'>
+            <h3>Check the sectors that apply to your job search.</h3>
+            <form id='change-sector-form'>
+                <p class='form-message'></p>
+                <ul class='reset-list'>
+                    <li>
+                    <div class='form-check'>
+                      <input class='form-check-input' type='checkbox' value='TRUE' id='change-sector-med'>
+                      <label class='form-check-label' for='change-sector-med'>Medical</label>
+                  <br/>
+                      <input class='form-check-input' type='checkbox' value='TRUE' id='change-sector-it'>
+                      <label class='form-check-label' for='change-sector-it'>IT</label>
+                  <br/>
+                      <input class='form-check-input' type='checkbox' value='TRUE' id='change-sector-bus'>
+                      <label class='form-check-label' for='change-sector-bus'>Business</label>
+                  <br/>
+                      <input class='form-check-input' type='checkbox' value='TRUE' id='change-sector-health'>
+                      <label class='form-check-label' for='change-sector-health'>Health care</label>
+                  <br/>
+                      <input class='form-check-input' type='checkbox' value='TRUE' id='change-sector-food'>
+                      <label class='form-check-label' for='change-sector-food'>Food service</label>
+                  <br/>
+                      <input class='form-check-input' type='checkbox' value='TRUE' id='change-sector-hosp'>
+                      <label class='form-check-label' for='change-sector-hosp'>Hospitality</label>
+                  <br/>
+                      <input class='form-check-input' type='checkbox' value='TRUE' id='change-sector-cul'>
+                      <label class='form-check-label' for='change-sector-cul'>Culinary</label>
+                    </div>
+                    </li>
+                </ul>
+                <button id='change-sector-submit' type='submit' class='reset-btn btn btn-danger main-btn'>Change sectors</button>
             </form>
             </div>
 

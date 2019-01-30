@@ -43,11 +43,10 @@ echo('
 <form id="recovery-form">
     <ul>
         <li><input id="recovery-email" type="text" placeholder="Enter your email" class="form-control" aria-label="small"/></li>
-        <li><button id="recovery" class="btn btn-outline-primary" type="button">Recover</button></li>
+        <li><button id="recovery" class="btn btn-outline-primary" type="submit">Recover</button></li>
     </ul>
 </form>
 </div>
-
 
 <div class="question" style="display: none;">
 <div id="question-section">

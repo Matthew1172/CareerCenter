@@ -141,8 +141,8 @@ if(isset($_POST['submit']))
             					$stm->execute([$user_uid]);
             					$result = $stm->fetch();
 
-                                $stm = $conn->prepare('INSERT INTO occupations(user_id, medical, IT, business, foodservice, healthcare, hospitality, culinary) VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
-                				$stm->execute([$result['user_id'], $user_med, $user_it, $user_bus, $user_food, $user_health, $user_hosp, $user_cul]);
+                                $stm = $conn->prepare('INSERT INTO user_occupations(user_id, medical, IT, business, foodservice, healthcare, hospitality, culinary) VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
+                				        $stm->execute([$result['user_id'], $user_med, $user_it, $user_bus, $user_food, $user_health, $user_hosp, $user_cul]);
 
                                 $stm = $conn->prepare('INSERT INTO employers(user_id, employer_company, employer_tax, employer_unemployNum, employer_web) VALUES (?, ?, ?, ?, ?)');
                                 $stm->execute([$result['user_id'], $employer_company, $employer_tax, $employer_employ, "This employer has not shared a website."]);
@@ -161,14 +161,14 @@ if(isset($_POST['submit']))
                                     $hashPwd = password_hash($user_pw, PASSWORD_DEFAULT);
 
                                     $stm = $conn->prepare('INSERT INTO users(user_first, user_last, user_email, user_phone, user_uid, user_pw, user_type, user_q1, user_a1, user_q2, user_a2, user_q3, user_a3) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
-                					$stm->execute([$user_first, $user_last, $user_email, $user_phone, $user_uid, $hashPwd, 'employer', $q1, $a1, $q2, $a2, $q3, $a3]);
+                					          $stm->execute([$user_first, $user_last, $user_email, $user_phone, $user_uid, $hashPwd, 'employer', $q1, $a1, $q2, $a2, $q3, $a3]);
 
                                     $stm = $conn->prepare('SELECT user_id FROM users WHERE user_uid = ?');
-                					$stm->execute([$user_uid]);
-                					$result = $stm->fetch();
+                					          $stm->execute([$user_uid]);
+                					          $result = $stm->fetch();
 
-                                    $stm = $conn->prepare('INSERT INTO occupations(user_id, medical, IT, business, foodservice, healthcare, hospitality, culinary) VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
-                    				$stm->execute([$result['user_id'], $user_med, $user_it, $user_bus, $user_food, $user_health, $user_hosp, $user_cul]);
+                                    $stm = $conn->prepare('INSERT INTO user_occupations(user_id, medical, IT, business, foodservice, healthcare, hospitality, culinary) VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
+                    				        $stm->execute([$result['user_id'], $user_med, $user_it, $user_bus, $user_food, $user_health, $user_hosp, $user_cul]);
 
                                     $stm = $conn->prepare('INSERT INTO employers(user_id, employer_company, employer_tax, employer_unemployNum, employer_web) VALUES (?, ?, ?, ?, ?)');
                                     $stm->execute([$result['user_id'], $employer_company, $employer_tax, $employer_employ, $employer_web]);
@@ -239,7 +239,7 @@ if(isset($_POST['submit']))
                             $stm = $conn->prepare('INSERT INTO seekers(user_id, user_stateNum) VALUES (?, ?)');
                             $stm->execute([$result['user_id'], $seeker_stateNum]);
 
-                            $stm = $conn->prepare('INSERT INTO occupations(user_id, medical, IT, business, foodservice, healthcare, hospitality, culinary) VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
+                            $stm = $conn->prepare('INSERT INTO user_occupations(user_id, medical, IT, business, foodservice, healthcare, hospitality, culinary) VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
             				$stm->execute([$result['user_id'], $user_med, $user_it, $user_bus, $user_food, $user_health, $user_hosp, $user_cul]);
 
                             echo("<span class='form-success'>Success~!</span>");
