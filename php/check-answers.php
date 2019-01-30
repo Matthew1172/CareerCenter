@@ -6,9 +6,10 @@ if(isset($_POST['submit']))
         $a1 = $_POST['a1'];
         $a2 = $_POST['a2'];
         $a3 = $_POST['a3'];
+        $recovery_email = $_POST['recovery_email'];
 
-        $sql = $conn->prepare('SELECT * FROM users WHERE user_a1=?');
-        $sql->execute([$a1]);
+        $sql = $conn->prepare('SELECT * FROM users WHERE user_email=?');
+        $sql->execute([$recovery_email]);
         if($sql->rowCount() > 0)
         {
             while($result = $sql->fetch())
@@ -17,11 +18,11 @@ if(isset($_POST['submit']))
                 {
                 		session_start();
                 		$_SESSION['user_uid'] = $result['user_uid'];
-                        exit('success');
+                    exit('success');
                 }
                 else
                 {
-                        exit('error200');
+                    exit('error200');
                 }
             }
         }

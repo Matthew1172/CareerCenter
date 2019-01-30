@@ -79,4 +79,4 @@ $(document).ready(function(){
     </ul>
     </div>
 </nav>
-<a class="navbar-brand p-3" href="index.php"><img src="pics/career-center-rockland-logo.png" height="60%" width="60%" alt="Rockland County career center logo"/></a>
+<a class="navbar-brand p-3" href="index.php"><img src="pics/career-center-rockland-logo.png" height="100%" width="100%" alt="Rockland County career center logo"/></a>

@@ -35,7 +35,6 @@ if(isset($_POST['submit']))
         {
             $sql = $conn->prepare('INSERT INTO events(title, description, location, dateStamp, startTime, endTime, isMedical, isIT, isHealthcare, isBusiness, isFoodservice, isHospitality, isCulinary) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
             $sql->execute([$work_title, $work_description, $work_location, date('Y-m-d H:i:s'), $work_start, $work_end, $work_med, $work_it, $work_health, $work_bus, $work_food, $work_hosp, $work_cul]);
-
             echo("<span class='form-success'>Success~!</span>");
         }
 }

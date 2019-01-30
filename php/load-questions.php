@@ -22,6 +22,7 @@ if(isset($_POST['submit']))
                               var a1 = $('#recovery-a1').val();
                               var a2 = $('#recovery-a2').val();
                               var a3 = $('#recovery-a3').val();
+                              var recovery_email = '". $recovery_email ."';
                               var submit = '1';
                                   $.ajax(
                                       {
@@ -31,6 +32,7 @@ if(isset($_POST['submit']))
                                               a1: a1,
                                               a2: a2,
                                               a3: a3,
+                                              recovery_email: recovery_email,
                                               submit: submit
                                           },
                                           success: function(response){

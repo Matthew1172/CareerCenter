@@ -13,82 +13,235 @@ if (isset($_SESSION['user_uid']))
             echo("<link href='styles/home-admin.css' rel='stylesheet'>");
 
             echo('<script>');
-            echo('
+            echo("
                 $(document).ready(function(){
-                    $("#reset-form").submit(function(event){
+                    $('#reset-form').submit(function(event){
                         event.preventDefault();
 
-                        var reset_email = $("#reset-email").val();
-                        var reset_pw = $("#reset-pw").val();
-                        var reset_pw2 = $("#reset-pw2").val();
+                        var reset_email = $('#reset-email').val();
+                        var reset_pw = $('#reset-pw').val();
+                        var reset_pw2 = $('#reset-pw2').val();
 
-                        var submit = $("#submit").val();
+                        var submit = $('#submit').val();
 
-                            $(".form-message").load("php/reset-pw-admin.php", {
+                            $('.form-message').load('php/reset-pw-admin.php', {
                                 reset_email: reset_email,
                                 reset_pw: reset_pw,
                                 reset_pw2: reset_pw2,
                                 submit: submit
                             });
                     });
-                    $("#add-work-form").submit(function(event){
-                        var x = "Are you sure you want to add this event?"
+                    $('#add-work-form').submit(function(event){
+                        var x = 'Are you sure you want to add this event?'
                         if(confirm(x))
                         {
                             event.preventDefault();
 
-                            var title = $("#work-title").val();
-                            var description = $("#work-desc").val();
-                            var location = $("#work-loc").val();
-                            var start = $("#work-start").val();
-                            var end = $("#work-end").val();
+                            var title = $('#work-title').val();
+                            var description = $('#work-desc').val();
+                            var location = $('#work-loc').val();
+                            var start = $('#work-start').val();
+                            var end = $('#work-end').val();
 
-                            var med = $("#add-work-med");
-                            var it = $("#add-work-it");
-                            var bus = $("#add-work-bus");
-                            var health = $("#add-work-health");
-                            var food = $("#add-work-food");
-                            var hosp = $("#add-work-hosp");
-                            var cul = $("#add-work-cul");
+                            var med = $('#add-work-med');
+                            var it = $('#add-work-it');
+                            var bus = $('#add-work-bus');
+                            var health = $('#add-work-health');
+                            var food = $('#add-work-food');
+                            var hosp = $('#add-work-hosp');
+                            var cul = $('#add-work-cul');
 
-                            var submit = $("#submit-workshop").val();
+                            var submit = $('#submit-workshop').val();
 
-                            $(".form-message").load("php/add-workshop.php", {
+                            $('.form-message').load('php/add-workshop.php', {
                                 title: title,
                                 description: description,
                                 location: location,
                                 start: start,
                                 end: end,
-                                med: med.prop("checked"),
-                                it: it.prop("checked"),
-                                bus: bus.prop("checked"),
-                                health: health.prop("checked"),
-                                food: food.prop("checked"),
-                                hosp: hosp.prop("checked"),
-                                cul: cul.prop("checked"),
+                                med: med.prop('checked'),
+                                it: it.prop('checked'),
+                                bus: bus.prop('checked'),
+                                health: health.prop('checked'),
+                                food: food.prop('checked'),
+                                hosp: hosp.prop('checked'),
+                                cul: cul.prop('checked'),
                                 submit: submit
                             });
                         }
                     });
+                    $(document).on('click','.current-btn',function(){
+                        $('#change-info').hide();
+                        $('#current-event-list').show();
+                    });
+                    $(document).on('click','.change-btn',function(){
+                        $('#current-event-list').hide();
+                        $('#change-info').show();
+                    });
+                    $(document).on('click','.change-pw-btn',function(){
+                        $('#change-phone').hide();
+                        $('#change-email').hide();
+                        $('#upload-section').hide();
+                        $('#change-sector-section').hide();
+                        $('#change-pw').show();
+                    });
+                    $(document).on('click','.change-phone-btn',function(){
+                        $('#change-email').hide();
+                        $('#change-pw').hide();
+                        $('#upload-section').hide();
+                        $('#change-sector-section').hide();
+                        $('#change-phone').show();
+                    });
+                    $(document).on('click','.change-email-btn',function(){
+                        $('#change-phone').hide();
+                        $('#change-pw').hide();
+                        $('#upload-section').hide();
+                        $('#change-sector-section').hide();
+                        $('#change-email').show();
+                    });
+                    $(document).on('click','.upload-btn',function(){
+                        $('#change-phone').hide();
+                        $('#change-pw').hide();
+                        $('#change-email').hide();
+                        $('#change-sector-section').hide();
+                        $('#upload-section').show();
+                    });
+                    $(document).on('click','.change-sector-btn',function(){
+                        $('#change-phone').hide();
+                        $('#change-pw').hide();
+                        $('#change-email').hide();
+                        $('#upload-section').hide();
+                        $('#change-sector-section').show();
+                    });
+                    $('#change-pw-form').submit(function(event){
+                        var x = 'Are you sure you want to change your password?'
+                        if(confirm(x))
+                        {
+                            event.preventDefault();
+                            var change_pw = $('#change-pw-input').val();
+                            var change_pw2 = $('#change-pw2-input').val();
+
+                            var submit = $('#change-pw-submit').val();
+
+                                $('.form-message').load('php/reset-pw.php', {
+                                    change_pw: change_pw,
+                                    change_pw2: change_pw2,
+                                    submit: submit
+                                });
+                        }
+                    });
+                    $('#change-phone-form').submit(function(event){
+                        var x = 'Are you sure you want to change your phone number?'
+                        if(confirm(x))
+                        {
+                            event.preventDefault();
+                            var change_phone = $('#change-phone-input').val();
+                            var change_phone2 = $('#change-phone2-input').val();
+
+                            var submit = $('#change-phone-submit').val();
+
+                                $('.form-message').load('php/reset-phone.php', {
+                                    change_phone: change_phone,
+                                    change_phone2: change_phone2,
+                                    submit: submit
+                                });
+                        }
+                    });
+                    $('#change-email-form').submit(function(event){
+                        var x = 'Are you sure you want to change your email?'
+                        if(confirm(x))
+                        {
+                            event.preventDefault();
+                            var change_email = $('#change-email-input').val();
+                            var change_email2 = $('#change-email2-input').val();
+
+                            var submit = $('#change-email-submit').val();
+
+                                $('.form-message').load('php/reset-email.php', {
+                                    change_email: change_email,
+                                    change_email2: change_email2,
+                                    submit: submit
+                                });
+                        }
+                    });
+                    $('#upload-form').submit(function(event){
+                        var x = 'Are you sure you want to upload this resume?'
+                        if(confirm(x))
+                        {
+                            event.preventDefault();
+
+                            $.ajax({
+                            url: 'php/upload-resume.php', // Url to which the request is send
+                            type: 'POST',             // Type of request to be send, called as method
+                            data: new FormData(this), // Data sent to server, a set of key/value pairs (i.e. form fields and values)
+                            contentType: false,       // The content type used when sending data to the server.
+                            cache: false,             // To unable request pages to be cached
+                            processData:false        // To send DOMDocument or non processed data file it is set to false
+                            });
+                        }
+                    });
+                    $('#change-sector-form').submit(function(event){
+                        var x = 'Are you sure you want to change your sectors?'
+                        if(confirm(x))
+                        {
+                            event.preventDefault();
+                            var med = $('#change-sector-med');
+                            var it = $('#change-sector-it');
+                            var bus = $('#change-sector-bus');
+                            var health = $('#change-sector-health');
+                            var food = $('#change-sector-food');
+                            var hosp = $('#change-sector-hosp');
+                            var cul = $('#change-sector-cul');
+
+                            var submit = $('#change-sector-submit').val();
+
+                                $('.form-message').load('php/reset-sectors.php', {
+                                    med: med.prop('checked'),
+                                    it: it.prop('checked'),
+                                    bus: bus.prop('checked'),
+                                    health: health.prop('checked'),
+                                    food: food.prop('checked'),
+                                    hosp: hosp.prop('checked'),
+                                    cul: cul.prop('checked'),
+                                    submit: submit
+                                });
+                        }
+                    });
                 });
-                ');
+                ");
             echo('</script>');
 
             echo("<div class='grid'>");
 
             echo("<div class='hero1'></div>");
+
             echo("<div class='greet py-5'>");
             echo("<h1 style='color: white' id='demo'>Welcome, " . $result['user_first'] . "</h1>");
             echo("</div>");
 
-            echo("<div class='btn-control-group'>");
-            echo('<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#reset">Reset user password</button>');
-            echo('<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#add-workshop">Add workshop</button>');
+            echo("<div class='dashboard-control'>");
+            echo('
+            <nav class="navbar navbar-expand-lg navbar-light bg-white py-3">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar2">
+                <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse justify-content-stretch" id="navbar2">
+                <ul class="navbar-nav ml-auto">
+                    <li><button class="btn-outline-secondary btn nav-link current-btn">Current Workshops</button></li>
+                    <li><button class="btn-outline-secondary btn nav-link change-btn">Update account</button></li>
+                    <li><button class="btn-outline-secondary btn nav-link" data-toggle="modal" data-target="#reset">Reset password</button></li>
+                    <li><button class="btn-outline-secondary btn nav-link" data-toggle="modal" data-target="#add-workshop">Add workshop</button></li>
+                </ul>
+                </div>
+            </nav>
+            ');
             echo("</div>");
 
-            echo("<div class='event-list'>");
-            echo("<h2>Current Workshops: </h2><hr>");
-            echo("<div id='event-list' class='container'>");
+            echo("<div class='control-area'>");
+
+            echo("<div id='current-event-list' class='event-list p-2'>");
+            echo("<h2 class='dash-header'>Current Workshops: </h2><hr>");
+            echo("<div id='current-event-list-section' class='container'>");
             $stm = $conn->prepare('SELECT * from events');
             $stm->execute();
             while($event = $stm->fetch(PDO::FETCH_ASSOC))
@@ -133,8 +286,71 @@ if (isset($_SESSION['user_uid']))
             echo("</div>");
             echo("</div>");
 
+            echo("<div id='change-info' class='p-2' style='display:none;'>");
+            echo("<h2 class='dash-header'>Update your personal information: </h2><hr>");
+            echo("<div id='change-section' class='container'>");
+            echo("
+            <div class='row'>
+            <ul class='current-info'>
+            <li><b>First name: </b>". $result['user_first'] ."</li>
+            <li><b>Last name: </b>". $result['user_last'] ."</li>
+            <li><b>Email: </b>". $result['user_email'] ."</li>
+            <li><b>Phone number: </b>". $result['user_phone'] ."</li>
+            <li><b>User name: </b>". $result['user_uid'] ."</li>
+            </ul>
+            </div>
+            <div class='row'>
+            <div class='col-xs-5 col-sm-5 col-md-5 col-lg-4'>
+            <ul class='change-list'>
+            <li><button class='btn-outline-primary btn nav-link change-pw-btn'>Change password</button></li>
+            <li><button class='btn-outline-primary btn nav-link change-phone-btn'>Change phone number</button></li>
+            <li><button class='btn-outline-primary btn nav-link change-email-btn'>Change email</button></li>
+            <li></li>
+            </ul>
+            </div>
+            <div class='change-section col-xs-7 col-sm-7 col-md-7 col-lg-8'>
+            <div class='change-pw' id='change-pw' style='display:none;'>
+            <form id='change-pw-form'>
+                <p class='form-message'></p>
+                <ul class='reset-list'>
+                    <li><input id='change-pw-input' type='text' placeholder='New password' class='form-control' aria-label='small' data-toggle='tooltip' title='Enter your new password (must be 8 characters long, ! ? @ $ % & * allowed)'></li>
+                    <li><input id='change-pw2-input' type='text' placeholder='Re-type new password' class='form-control' aria-label='small' data-toggle='tooltip' title='Re-type your new password (must be 8 characters long, ! ? @ $ % & * allowed)'></li>
+                </ul>
+                <button id='change-pw-submit' type='submit' class='reset-btn btn btn-danger main-btn'>Reset password</button>
+            </form>
+            </div>
+
+            <div class='change-phone' id='change-phone' style='display:none;'>
+            <form id='change-phone-form'>
+                <p class='form-message'></p>
+                <ul class='reset-list'>
+                    <li><input id='change-phone-input' type='text' class='input-small form-control bfh-phone' data-country='US' aria-label='small' data-toggle='tooltip' title='Enter your new phone number (only digits)'></li>
+                    <li><input id='change-phone2-input' type='text' class='input-small form-control bfh-phone' data-country='US' aria-label='small' data-toggle='tooltip' title='Re-type your new phone number (only digits)'></li>
+                </ul>
+                <button id='change-phone-submit' type='submit' class='reset-btn btn btn-danger main-btn'>Reset phone</button>
+            </form>
+            </div>
+
+            <div class='change-email' id='change-email' style='display:none;'>
+            <form id='change-email-form'>
+                <p class='form-message'></p>
+                <ul class='reset-list'>
+                    <li><input id='change-email-input' type='text' placeholder='New email' class='form-control' aria-label='small' data-toggle='tooltip' title='Enter your new email'></li>
+                    <li><input id='change-email2-input' type='text' placeholder='Re-type new email' class='form-control' aria-label='small' data-toggle='tooltip' title='Re-type your new email'></li>
+                </ul>
+                <button id='change-email-submit' type='submit' class='reset-btn btn btn-danger main-btn'>Reset email</button>
+            </form>
+            </div>
+
+            </div>
+            </div>
+            ");
+            echo("</div>");
             echo("</div>");
 
+            echo("</div>");
+
+            echo("</div>");
             //MODAL FOR RESET USER PASSWORD
             echo('
                     <div class="modal fade" id="reset" tabindex="-1" role="dialog" aria-labelledby="resetLabel">
@@ -164,15 +380,15 @@ if (isset($_SESSION['user_uid']))
 
                     //MODAL FOR ADD WORKSHOP
                     echo('
-                            <div class="modal fade" id="add-workshop" tabindex="-1" role="dialog" aria-labelledby="resetLabel">
-                              <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                  <div class="modal-header">
-                                    <h4 class="modal-title" id="resetLabel">Add a workshop</h4>
-                                  </div>
-                                  <div class="modal-body">
-                                      <form id="add-work-form">
-                                      <p class="form-message"></p>
+                    <div class="modal fade" id="add-workshop" tabindex="-1" role="dialog" aria-labelledby="resetLabel">
+                      <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h4 class="modal-title" id="resetLabel">Add a workshop</h4>
+                            </div>
+                            <div class="modal-body">
+                              <form id="add-work-form">
+                              <p class="form-message"></p>
                                           <ul>
                                               <li><input id="work-title" type="text" placeholder="Workshop title" class="form-control" aria-label="small"></li>
                                               <li><input id="work-desc" type="text" placeholder="Workshop description" class="form-control" aria-label="small"></li>
@@ -246,7 +462,7 @@ if (isset($_SESSION['user_uid']))
                             var hosp = $('#postJob-hosp');
                             var cul = $('#postJob-cul');
 
-                            var submit = $('#job-submit').val();
+                            var submit = $('#submit').val();
 
                             $('.form-message').load('php/post-job.php', {
                                 title: title,
@@ -638,7 +854,7 @@ if (isset($_SESSION['user_uid']))
                         </div>
                     </li>
                 </ul>
-                <button id='job-submit' type='submit' class='btn btn-primary main-btn more-btn'>Post job</button>
+                <button id='submit' type='submit' class='btn btn-primary main-btn more-btn'>Post job</button>
             </form>
             ");
             echo("</div>");
@@ -988,10 +1204,8 @@ if (isset($_SESSION['user_uid']))
                 <ul class="navbar-nav ml-auto">
                     <li class=""><button class="btn-outline-secondary btn nav-link all-btn">All Workshops</button></li>
                     <li class=""><button class="btn-outline-secondary btn nav-link own-btn">Your Workshops</button></li>
-
                     <li class=""><button class="btn-outline-secondary btn nav-link work-rec-btn">Workshops for you</button></li>
                     <li class=""><button class="btn-outline-secondary btn nav-link job-rec-btn">Jobs for you</button></li>
-
                     <li class=""><button class="btn-outline-secondary btn nav-link change-btn">Update account</button></li>
                 </ul>
                 </div>
