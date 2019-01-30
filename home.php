@@ -31,6 +31,45 @@ if (isset($_SESSION['user_uid']))
                                 submit: submit
                             });
                     });
+                    $("#add-work-form").submit(function(event){
+                        var x = "Are you sure you want to add this event?"
+                        if(confirm(x))
+                        {
+                            event.preventDefault();
+
+                            var title = $("#work-title").val();
+                            var description = $("#work-desc").val();
+                            var location = $("#work-loc").val();
+                            var start = $("#work-start").val();
+                            var end = $("#work-end").val();
+
+                            var med = $("#add-work-med");
+                            var it = $("#add-work-it");
+                            var bus = $("#add-work-bus");
+                            var health = $("#add-work-health");
+                            var food = $("#add-work-food");
+                            var hosp = $("#add-work-hosp");
+                            var cul = $("#add-work-cul");
+
+                            var submit = $("#submit-workshop").val();
+
+                            $(".form-message").load("php/add-workshop.php", {
+                                title: title,
+                                description: description,
+                                location: location,
+                                start: start,
+                                end: end,
+                                med: med.prop("checked"),
+                                it: it.prop("checked"),
+                                bus: bus.prop("checked"),
+                                health: health.prop("checked"),
+                                food: food.prop("checked"),
+                                hosp: hosp.prop("checked"),
+                                cul: cul.prop("checked"),
+                                submit: submit
+                            });
+                        }
+                    });
                 });
                 ');
             echo('</script>');
@@ -44,6 +83,7 @@ if (isset($_SESSION['user_uid']))
 
             echo("<div class='btn-control-group'>");
             echo('<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#reset">Reset user password</button>');
+            echo('<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#add-workshop">Add workshop</button>');
             echo("</div>");
 
             echo("<div class='event-list'>");
@@ -121,6 +161,63 @@ if (isset($_SESSION['user_uid']))
                       </div>
                     </div>
                     ');
+
+                    //MODAL FOR ADD WORKSHOP
+                    echo('
+                            <div class="modal fade" id="add-workshop" tabindex="-1" role="dialog" aria-labelledby="resetLabel">
+                              <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h4 class="modal-title" id="resetLabel">Add a workshop</h4>
+                                  </div>
+                                  <div class="modal-body">
+                                      <form id="add-work-form">
+                                      <p class="form-message"></p>
+                                          <ul>
+                                              <li><input id="work-title" type="text" placeholder="Workshop title" class="form-control" aria-label="small"></li>
+                                              <li><input id="work-desc" type="text" placeholder="Workshop description" class="form-control" aria-label="small"></li>
+                                              <li><input id="work-loc" type="text" placeholder="Workshop location" class="form-control" aria-label="small"></li>
+                                              <li><input id="work-start" type="text" placeholder="Workshop starting time (YYYY-MM-DD 00:00:00)" class="form-control" aria-label="small"></li>
+                                              <li><input id="work-end" type="text" placeholder="Workshop ending time (YYYY-MM-DD 00:00:00)" class="form-control" aria-label="small"></li>
+                                              <li>
+                                              <ul class="reset-list">
+                                                  <li>
+                                                  <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" value="TRUE" id="add-work-med">
+                                                    <label class="form-check-label" for="add-work-med">Medical</label>
+                                                <br/>
+                                                    <input class="form-check-input" type="checkbox" value="TRUE" id="add-work-it">
+                                                    <label class="form-check-label" for="add-work-it">IT</label>
+                                                <br/>
+                                                    <input class="form-check-input" type="checkbox" value="TRUE" id="add-work-bus">
+                                                    <label class="form-check-label" for="add-work-bus">Business</label>
+                                                <br/>
+                                                    <input class="form-check-input" type="checkbox" value="TRUE" id="add-work-health">
+                                                    <label class="form-check-label" for="add-work-health">Health care</label>
+                                                <br/>
+                                                    <input class="form-check-input" type="checkbox" value="TRUE" id="add-work-food">
+                                                    <label class="form-check-label" for="add-work-food">Food service</label>
+                                                <br/>
+                                                    <input class="form-check-input" type="checkbox" value="TRUE" id="add-work-hosp">
+                                                    <label class="form-check-label" for="add-work-hosp">Hospitality</label>
+                                                <br/>
+                                                    <input class="form-check-input" type="checkbox" value="TRUE" id="add-work-cul">
+                                                    <label class="form-check-label" for="add-work-cul">Culinary</label>
+                                                  </div>
+                                                  </li>
+                                              </ul>
+                                              </li>
+                                          </ul>
+                                          <button id="submit-workshop" type="submit" class="btn btn-primary main-btn"><b>Add</b></button>
+                                      </form>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            ');
     }
     elseif ($result['user_type'] == "employer")
     {
@@ -197,8 +294,16 @@ if (isset($_SESSION['user_uid']))
                                 data: {
                                     ID: ID
                                 },
-                                success: function(html){
-                                    $('#event'+ID).remove();
+                                success: function(response){
+                                  if(response == 'error100')
+                                  {
+                                      alert('You\\'re already subscribed for this workshop.');
+                                  }
+                                  else
+                                  {
+                                      $('#event'+ID).remove();
+                                      alert('You have subscribed to this workshop.');
+                                  }
                                 }
                             });
                         }
@@ -626,8 +731,16 @@ if (isset($_SESSION['user_uid']))
                                 data: {
                                     ID: ID
                                 },
-                                success: function(html){
-                                    $('#event'+ID).remove();
+                                success: function(response){
+                                  if(response == 'error100')
+                                  {
+                                      alert('You\\'re already subscribed for this workshop.');
+                                  }
+                                  else
+                                  {
+                                      $('#event'+ID).remove();
+                                      alert('You have subscribed to this workshop.');
+                                  }
                                 }
                         });
                     }
@@ -973,42 +1086,68 @@ if (isset($_SESSION['user_uid']))
             echo("<div id='work-rec-list' class='event-list p-2' style='display:none;'>");
             echo("<h2 class='dash-header'>Workshops for you: </h2><hr>");
             echo("<div id='work-rec-list-section' class='container'>");
-            $stm = $conn->prepare('SELECT * FROM events ORDER BY dateStamp DESC LIMIT 2');
-            $stm->execute();
-            while($event = $stm->fetch(PDO::FETCH_ASSOC))
+            /*
+            Get the users occupations
+            */
+            $stm = $conn->prepare('SELECT * from user_occupations WHERE user_id = ?');
+            $stm->execute([$result['user_id']]);
+            $userOccupation = $stm->fetch(PDO::FETCH_ASSOC);
+            $worksFound = 0;
+            /*
+            Get the users occupations
+            */
+            $stm2 = $conn->prepare('SELECT * from events ORDER BY dateStamp DESC LIMIT 2');
+            $stm2->execute();
+            while($eventListing = $stm2->fetch(PDO::FETCH_ASSOC))
             {
-                            echo(
-                            "<div id='event" . $event['event_id'] . "' class='event my-4'>" .
-                            "<h3>"                   . $event['title']        . "</h3>" .
-                            "<b>Type: </b>"          . $event['type']         . "<br/>" .
-                            "<p>"                    . $event['description']  . "</p><br/><br/>" .
-                            "<b>Location: </b>"      . $event['location']     . "<br/>" .
-                            "<b>Date: </b>"          . $event['startTime']    . "<br/>" .
-                            "<b>Date Posted: </b>"   . $event['dateStamp']    . "<br/>");
-                            $stm2 = $conn->prepare('SELECT event_id from user_event WHERE user_id = ?');
-                            $stm2->execute([$result['user_id']]);
-                            $map_result = $stm2->fetchAll(PDO::FETCH_ASSOC);
-                            if(!empty($map_result))
+              if(
+              ($eventListing['isMedical'] == 'true' && $userOccupation['medical'] == 'true') ||
+              ($eventListing['isIT'] == 'true' && $userOccupation['IT'] == 'true') ||
+              ($eventListing['isHealthcare'] == 'true' && $userOccupation['healthcare'] == 'true') ||
+              ($eventListing['isBusiness'] == 'true' && $userOccupation['business'] == 'true') ||
+              ($eventListing['isFoodservice'] == 'true' && $userOccupation['foodservice'] == 'true') ||
+              ($eventListing['isHospitality'] == 'true' && $userOccupation['hospitality'] == 'true') ||
+              ($eventListing['isCulinary'] == 'true' && $userOccupation['culinary'] == 'true')
+              )
+              {
+                echo(
+                "<div id='event" . $eventListing['event_id'] . "' class='event my-4'>" .
+                "<h3>"                   . $eventListing['title']        . "</h3>" .
+                "<b>Type: </b>"          . $eventListing['type']         . "<br/>" .
+                "<p>"                    . $eventListing['description']  . "</p><br/><br/>" .
+                "<b>Location: </b>"      . $eventListing['location']     . "<br/>" .
+                "<b>Date: </b>"          . $eventListing['startTime']    . "<br/>" .
+                "<b>Date Posted: </b>"   . $eventListing['dateStamp']    . "<br/>");
+                $stm2 = $conn->prepare('SELECT event_id from user_event WHERE user_id = ?');
+                $stm2->execute([$result['user_id']]);
+                $map_result = $stm2->fetchAll(PDO::FETCH_ASSOC);
+                if(!empty($map_result))
+                {
+                        $flag = false;
+                        foreach($map_result as $a)
+                        {
+                            if($a['event_id'] == $eventListing['event_id'])
                             {
-                                    $flag = false;
-                                    foreach($map_result as $a)
-                                    {
-                                        if($a['event_id'] == $event['event_id'])
-                                        {
-                                            echo("<button id='" . $event['event_id'] . "' class='btn btn-primary sub-event-btn'>un-subscribe</button>");
-                                            $flag = true;
-                                        }
-                                    }
-                                    if(!$flag)
-                                    {
-                                        echo("<button id='" . $event['event_id'] . "' class='btn btn-primary event-btn'>subscribe</button>");
-                                    }
+                                echo("<button id='" . $eventListing['event_id'] . "' class='btn btn-primary sub-event-btn'>un-subscribe</button>");
+                                $flag = true;
                             }
-                            else
-                            {
-                                    echo("<button id='" . $event['event_id'] . "' class='btn btn-primary event-btn'>subscribe</button>");
-                            }
-                            echo("</div><hr>");
+                        }
+                        if(!$flag)
+                        {
+                            echo("<button id='" . $eventListing['event_id'] . "' class='btn btn-primary event-btn'>subscribe</button>");
+                        }
+                }
+                else
+                {
+                        echo("<button id='" . $eventListing['event_id'] . "' class='btn btn-primary event-btn'>subscribe</button>");
+                }
+                echo("</div><hr>");
+                $worksFound += 1;
+              }
+            }
+            if($worksFound <= 0)
+            {
+              echo("<div class='my-4'><h3>Couldnt find a event for you m8</h3></div>");
             }
             echo("</div>");
             echo("<div class='show-more-container'>");
