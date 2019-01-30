@@ -1,8 +1,8 @@
--- MySQL dump 10.16  Distrib 10.1.37-MariaDB, for debian-linux-gnu (x86_64)
+-- MySQL dump 10.16  Distrib 10.1.35-MariaDB, for debian-linux-gnu (x86_64)
 --
 -- Host: localhost    Database: foo
 -- ------------------------------------------------------
--- Server version	10.1.37-MariaDB-3
+-- Server version	10.1.35-MariaDB-1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -28,7 +28,7 @@ CREATE TABLE `announcements` (
   `description` tinytext NOT NULL,
   `dateStamp` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -37,7 +37,6 @@ CREATE TABLE `announcements` (
 
 LOCK TABLES `announcements` WRITE;
 /*!40000 ALTER TABLE `announcements` DISABLE KEYS */;
-INSERT INTO `announcements` VALUES (1,'The office is open today!','short description...','2019-01-01 10:30:00'),(2,'The office is closed today! :(','short description...','2019-02-02 10:30:00'),(3,'The office is burning down..','short description...','2019-04-04 10:30:00'),(4,'This is a test announcement, lets see how far this baby can stretch! YEAHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH','Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur erat eros, mattis at rhoncus in, rutrum vitae justo. Pellentesque faucibus felis ante, vitae scelerisque dolor ultrices sed. Fusce augue purus, mollis interdum augue quis, condimentum vari','2019-01-22 10:30:00');
 /*!40000 ALTER TABLE `announcements` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -143,18 +142,8 @@ CREATE TABLE `employers` (
   PRIMARY KEY (`employer_id`),
   KEY `user_id` (`user_id`),
   CONSTRAINT `employers_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `employers`
---
-
-LOCK TABLES `employers` WRITE;
-/*!40000 ALTER TABLE `employers` DISABLE KEYS */;
-INSERT INTO `employers` VALUES (1,2,'TeckoUSA','1231231231','1231231231','This employer has not shared a website.');
-/*!40000 ALTER TABLE `employers` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `events`
@@ -171,20 +160,16 @@ CREATE TABLE `events` (
   `dateStamp` datetime NOT NULL,
   `startTime` datetime NOT NULL,
   `endTime` datetime NOT NULL,
-  `type` tinytext NOT NULL,
+  `isMedical` tinytext,
+  `isIT` tinytext,
+  `isHealthcare` tinytext,
+  `isBusiness` tinytext,
+  `isFoodservice` tinytext,
+  `isHospitality` tinytext,
+  `isCulinary` tinytext,
   PRIMARY KEY (`event_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `events`
---
-
-LOCK TABLES `events` WRITE;
-/*!40000 ALTER TABLE `events` DISABLE KEYS */;
-INSERT INTO `events` VALUES (1,'Microsoft Word','This is a microsoft Word event','JERSEY','2018-11-14 00:00:00','2018-11-14 12:00:00','2018-11-14 14:00:00','engineering'),(2,'Microsoft Access','This is a microsoft Access event','HACKENSACK','2018-11-16 00:00:00','2018-11-16 12:00:00','2018-11-18 14:00:00','Math'),(3,'Microsoft Excell','This is a microsoft Excell event','MONROE','2018-11-16 00:00:00','2018-11-16 12:00:00','2018-11-18 14:00:00','Math'),(4,'Microsoft Excell','This is another microsoft Excell event','MONROE','2018-11-11 00:00:00','2018-11-11 12:00:00','2018-11-11 14:00:00','Math'),(5,'Matthews test workshop','This is a testing workshop will will be used for only testing purposes!','Monroe, NY','2018-12-01 00:00:00','2019-01-08 22:00:00','2019-01-09 22:00:00','IT'),(6,'Another testing workshop',' Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur erat eros, mattis at rhoncus in, rutrum vitae justo. Pellentesque faucibus felis ante, vitae scelerisque dolor ultrices sed. Fusce augue purus, mollis interdum augue quis, condimentum varius massa. Maecenas commodo vitae nisi quis scelerisque. Nulla at elementum felis. Pellentesque eu arcu at nisi tincidunt porta ac sit amet eros. In hac habitasse platea dictumst. Vivamus auctor lacinia tincidunt. Phasellus eget ex et nunc maximus dapibus nec in ligula. Proin ullamcorper nisi a placerat viverra. Etiam feugiat velit nec justo feugiat, sed ornare odio egestas. Pellentesque ut posuere lectus. Vestibulum sed venenatis magna.','MONROE NY','2019-01-11 10:30:00','2019-01-12 10:30:00','2019-01-12 14:00:00','IT'),(7,'Another testing workshopppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppp',' Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur erat eros, mattis at rhoncus in, rutrum vitae justo. Pellentesque faucibus felis ante, vitae scelerisque dolor ultrices sed. Fusce augue purus, mollis interdum augue quis, condimentum varius massa. Maecenas commodo vitae nisi quis scelerisque. Nulla at elementum felis. Pellentesque eu arcu at nisi tincidunt porta ac sit amet eros. In hac habitasse platea dictumst. Vivamus auctor lacinia tincidunt. Phasellus eget ex et nunc maximus dapibus nec in ligula. Proin ullamcorper nisi a placerat viverra. Etiam feugiat velit nec justo feugiat, sed ornare odio egestas. Pellentesque ut posuere lectus. Vestibulum sed venenatis magna.','MONROE NY','2019-01-11 10:30:00','2019-01-12 10:30:00','2019-01-12 14:00:00','IT');
-/*!40000 ALTER TABLE `events` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `jobs`
@@ -211,18 +196,8 @@ CREATE TABLE `jobs` (
   PRIMARY KEY (`job_id`),
   KEY `employer_id` (`employer_id`),
   CONSTRAINT `jobs_ibfk_1` FOREIGN KEY (`employer_id`) REFERENCES `employers` (`employer_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `jobs`
---
-
-LOCK TABLES `jobs` WRITE;
-/*!40000 ALTER TABLE `jobs` DISABLE KEYS */;
-INSERT INTO `jobs` VALUES (1,1,'Sr. Full Stack Developer','This is a description','Sr. Full Stack Developer','Monroe, NY','true','false','true','false','false','false','true',NULL);
-/*!40000 ALTER TABLE `jobs` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `laborContact`
@@ -253,36 +228,6 @@ INSERT INTO `laborContact` VALUES (1,'Sandra Brandes','Supervising Labor Service
 /*!40000 ALTER TABLE `laborContact` ENABLE KEYS */;
 UNLOCK TABLES;
 
---
--- Table structure for table `occupations`
---
-
-DROP TABLE IF EXISTS `occupations`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `occupations` (
-  `user_id` int(11) NOT NULL,
-  `medical` tinytext NOT NULL,
-  `IT` tinytext NOT NULL,
-  `healthcare` tinytext NOT NULL,
-  `business` tinytext NOT NULL,
-  `foodservice` tinytext NOT NULL,
-  `hospitality` tinytext NOT NULL,
-  `culinary` tinytext NOT NULL,
-  KEY `user_id` (`user_id`),
-  CONSTRAINT `occupations_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `occupations`
---
-
-LOCK TABLES `occupations` WRITE;
-/*!40000 ALTER TABLE `occupations` DISABLE KEYS */;
-INSERT INTO `occupations` VALUES (1,'false','false','false','false','false','false','false'),(2,'false','true','true','false','false','true','false'),(1,'true','false','false','true','true','false','true'),(2,'false','true','true','false','false','true','false');
-/*!40000 ALTER TABLE `occupations` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `seekers`
@@ -298,18 +243,8 @@ CREATE TABLE `seekers` (
   PRIMARY KEY (`seeker_id`),
   KEY `user_id` (`user_id`),
   CONSTRAINT `seekers_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `seekers`
---
-
-LOCK TABLES `seekers` WRITE;
-/*!40000 ALTER TABLE `seekers` DISABLE KEYS */;
-INSERT INTO `seekers` VALUES (1,1,1231231231);
-/*!40000 ALTER TABLE `seekers` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `user_event`
@@ -329,13 +264,25 @@ CREATE TABLE `user_event` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `user_event`
+-- Table structure for table `user_occupations`
 --
 
-LOCK TABLES `user_event` WRITE;
-/*!40000 ALTER TABLE `user_event` DISABLE KEYS */;
-/*!40000 ALTER TABLE `user_event` ENABLE KEYS */;
-UNLOCK TABLES;
+DROP TABLE IF EXISTS `user_occupations`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `user_occupations` (
+  `user_id` int(11) NOT NULL,
+  `medical` tinytext NOT NULL,
+  `IT` tinytext NOT NULL,
+  `healthcare` tinytext NOT NULL,
+  `business` tinytext NOT NULL,
+  `foodservice` tinytext NOT NULL,
+  `hospitality` tinytext NOT NULL,
+  `culinary` tinytext NOT NULL,
+  KEY `user_id` (`user_id`),
+  CONSTRAINT `user_occupations_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `users`
@@ -360,18 +307,9 @@ CREATE TABLE `users` (
   `user_q2` tinytext,
   `user_q1` tinytext,
   PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `users`
---
-
-LOCK TABLES `users` WRITE;
-/*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'Matthew','Pecko','mpecko@sunyrockland.edu','18458260005','mpecko','$2y$10$rYtrgfORUzcAPyZ82bu7yeaSQnAcmkvlxkTV3vIGRdvsFB4QP52Du','user','blue3','blue2','blue1','what color is blue3','What is blue2','what color is blue1'),(2,'Johnny','Cage','jcage@gmail.com','11111111111','jcage123','$2y$10$7bVgH8cSpbJgsXz20XK/8uG3KFeP5uzbXH8WWGLlLyp37bUgU65qW','employer','blue3','blue2','blue','what color is blue3','what color is blue2','what color is blue');
-/*!40000 ALTER TABLE `users` ENABLE KEYS */;
-UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -382,4 +320,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-01-26 22:09:43
+-- Dump completed on 2019-01-29 23:16:16
