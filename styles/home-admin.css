@@ -11,16 +11,15 @@
     padding-left: 20px;
 }
 
-.event-list h3
+.main-btn
 {
-    white-space: -moz-pre-wrap !important;  /* Mozilla, since 1999 */
-    white-space: -pre-wrap;      /* Opera 4-6 */
-    white-space: -o-pre-wrap;    /* Opera 7 */
-    white-space: pre-wrap;       /* css-3 */
-    word-wrap: break-word;       /* Internet Explorer 5.5+ */
-    white-space: -webkit-pre-wrap; /* Newer versions of Chrome/Safari*/
-    word-break: break-all;
-    white-space: normal;
+    width: 100%;
+}
+
+.reset-btn
+{
+    width: 50%;
+    text-align: center;
 }
 
 .reset-list
@@ -35,35 +34,28 @@
     margin-bottom: 10px;
 }
 
-.reset-btn
+.dashboard-control
 {
-    width: 50%;
-    text-align: center;
+    grid-area: d;
+}
+
+.dashboard-control ul
+{
+    width: 100%;
+}
+
+.dashboard-control ul li button
+{
+    width: 100%;
+    height: 100px;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 .dash-header
 {
     padding-left: 15px;
     padding-right: 15px;
-}
-
-.dashboard-control
-{
-    grid-area: d;
-}
-
-.dashboard-control ul li
-{
-    margin-left: 0px;
-}
-
-.dashboard-control ul li button
-{
-    width: 150px;
-    padding: 7px;
-    margin-right: 20px;
-    margin-top: 20px;
-    margin-bottom: 20px;
 }
 
 .change-list
@@ -91,6 +83,18 @@
     background-color: white;
 }
 
+.event-list h3
+{
+    white-space: -moz-pre-wrap !important;  /* Mozilla, since 1999 */
+    white-space: -pre-wrap;      /* Opera 4-6 */
+    white-space: -o-pre-wrap;    /* Opera 7 */
+    white-space: pre-wrap;       /* css-3 */
+    word-wrap: break-word;       /* Internet Explorer 5.5+ */
+    white-space: -webkit-pre-wrap; /* Newer versions of Chrome/Safari*/
+    word-break: break-all;
+    white-space: normal;
+}
+
 .current-info
 {
     padding: 20px;
@@ -101,14 +105,23 @@
 {
     background-color: #fafafa;
     display: grid;
-    grid-template-rows: auto 100px auto auto 100px;
+    grid-template-rows: auto 100px auto 100px auto 100px;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-template-areas:
     "g g g g"
     ". . . ."
     "d d d d"
+    ". . . ."
     "a a a a"
     ". . . .";
+}
+
+@media screen and (min-width: 500px)
+{
+    .main-btn
+    {
+        width: 50%;
+    }
 }
 
 @media screen and (min-width: 1000px)
@@ -116,13 +129,19 @@
     .grid
     {
         display: grid;
-        grid-template-rows: auto 100px auto auto 100px;
+        grid-template-rows: auto 100px auto 100px auto 100px;
         grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
         grid-template-areas:
-        ". g g g g g g ."
+	". g g g g g g ."
         ". . . . . . . ."
         ". d d d d d d ."
+        ". . . . . . . ."
         ". a a a a a a ."
         ". . . . . . . .";
+    }
+
+    .main-btn
+    {
+        width: 100%;
     }
 }

@@ -19,7 +19,6 @@ $(document).ready(function() {
 ");
 
 echo('
-
 <div class="grid">
 
 <div class="hero1">
