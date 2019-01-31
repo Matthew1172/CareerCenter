@@ -4,20 +4,13 @@ if (isset($_SESSION['user_uid']))
 {
         include 'connect.php';
         $workRecNewCount = $_POST['workRecNewCount'];
-        $worksFound = 0;
-
         $sql = $conn->prepare("SELECT * FROM users WHERE user_uid=?");
         $sql->execute([$_SESSION['user_uid']]);
         $result = $sql->fetch(PDO::FETCH_ASSOC);
-        /*
-        Get the users occupations
-        */
-        $stm = $conn->prepare('SELECT * from user_occupations WHERE user_id = ?');
-        $stm->execute([$result['user_id']]);
-        $userOccupation = $stm->fetch(PDO::FETCH_ASSOC);
-        /*
-        Get the users occupations
-        */
+        $stmOccupations = $conn->prepare('SELECT * from user_occupations WHERE user_id = ?');
+        $stmOccupations->execute([$result['user_id']]);
+        $userOccupation = $stmOccupations->fetch(PDO::FETCH_ASSOC);
+        $worksFound = 0;
         $stm2 = $conn->prepare('SELECT * from events ORDER BY dateStamp DESC LIMIT ' . $workRecNewCount . ';');
         $stm2->execute();
         while($eventListing = $stm2->fetch(PDO::FETCH_ASSOC))
@@ -40,9 +33,9 @@ if (isset($_SESSION['user_uid']))
             "<b>Location: </b>"      . $eventListing['location']     . "<br/>" .
             "<b>Date: </b>"          . $eventListing['startTime']    . "<br/>" .
             "<b>Date Posted: </b>"   . $eventListing['dateStamp']    . "<br/>");
-            $stm2 = $conn->prepare('SELECT event_id from user_event WHERE user_id = ?');
-            $stm2->execute([$result['user_id']]);
-            $map_result = $stm2->fetchAll(PDO::FETCH_ASSOC);
+            $stm3 = $conn->prepare('SELECT event_id from user_event WHERE user_id = ?');
+            $stm3->execute([$result['user_id']]);
+            $map_result = $stm3->fetchAll(PDO::FETCH_ASSOC);
             if(!empty($map_result))
             {
                     $flag = false;

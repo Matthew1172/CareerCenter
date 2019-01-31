@@ -45,9 +45,10 @@ else
     {
       $("#change-sector-med, #change-sector-it, #change-sector-food, #change-sector-health, #change-sector-hosp, #change-sector-cul, #change-sector-bus").addClass("input-error");
     }
-    if(errorEmpty == false && errorEmailTaken == false && errorEmailValid == false && errorEmailMatch == false)
+    if(errorEmpty == false)
     {
       $("#change-sector-med, #change-sector-it, #change-sector-food, #change-sector-health, #change-sector-hosp, #change-sector-cul, #change-sector-bus").removeClass("input-error");
       $("#change-sector-med, #change-sector-it, #change-sector-food, #change-sector-health, #change-sector-hosp, #change-sector-cul, #change-sector-bus").prop("checked", false);
+      window.location.reload();
     }
 </script>

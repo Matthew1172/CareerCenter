@@ -1,4 +1,10 @@
 <?php
+
+function printEvent($x)
+{
+    return $x;
+}
+
 session_start();
 if (isset($_SESSION['user_uid']))
 {
@@ -7,6 +13,161 @@ if (isset($_SESSION['user_uid']))
     $sql = $conn->prepare("SELECT * FROM users WHERE user_uid=?");
     $sql->execute([$_SESSION['user_uid']]);
     $result = $sql->fetch(PDO::FETCH_ASSOC);
+    
+    echo('<script>');
+    echo("
+            $(document).ready(function(){
+                $(document).on('click','.event-btn',function(){
+                    var x = 'Are you sure you want to subscribe?'
+                    if(confirm(x))
+                    {
+                        var ID = $(this).attr('id');
+                        $('#event'+ID).hide();
+                            $.ajax({
+                                type: 'POST',
+                                url: 'php/subscribe.php',
+                                data: {
+                                    ID: ID
+                                },
+                                success: function(response){
+                                  if(response == 'error100')
+                                  {
+                                      alert('You\\'re already subscribed for this workshop.');
+                                  }
+                                  else
+                                  {
+                                      $('#event'+ID).remove();
+                                      alert('You have subscribed to this workshop.');
+                                  }
+                                }
+                        });
+                    }
+                });
+                $(document).on('click','.sub-event-btn',function(){
+                    var x = 'Are you sure you want to un-subscribe?'
+                    if(confirm(x))
+                    {
+                        var ID = $(this).attr('id');
+                        $('#sub-event'+ID).hide();
+                            $.ajax({
+                                type: 'POST',
+                                url: 'php/unsubscribe.php',
+                                data: {
+                                    ID: ID
+                                },
+                                success: function(html){
+                                    $('#event'+ID).remove();
+                                }
+                        });
+                    }
+                });
+                var allEventCount = 2;
+                $('#more-all-events-button').click(function(){
+                  allEventCount += 2;
+                  $('#all-events-list-section').load('php/load-all-events.php', {
+                    allEventNewCount: allEventCount
+                  });
+                });
+                var ownEventCount = 2;
+                $('#more-own-events-button').click(function(){
+                    ownEventCount += 2;
+                    $('#own-events-list-section').load('php/load-own-events.php', {
+                        ownEventNewCount: ownEventCount
+                    });
+                });
+                var jobCount = 2;
+                $('#more-own-jobs-button').click(function(){
+                    jobCount += 2;
+                    $('#job-list-section').load('php/load-own-jobs.php', {
+                        jobNewCount: jobCount
+                    });
+                });
+                var workRecCount = 2;
+                $('#more-work-rec-button').click(function(){
+                    workRecCount += 2;
+                    $('#work-rec-list-section').load('php/load-work-rec-events.php', {
+                      workRecNewCount: workRecCount
+                    });
+                });
+                $('#change-sector-form').submit(function(event){
+                    var x = 'Are you sure you want to change your sectors?'
+                    if(confirm(x))
+                    {
+                        event.preventDefault();
+                        var med = $('#change-sector-med');
+                        var it = $('#change-sector-it');
+                        var bus = $('#change-sector-bus');
+                        var health = $('#change-sector-health');
+                        var food = $('#change-sector-food');
+                        var hosp = $('#change-sector-hosp');
+                        var cul = $('#change-sector-cul');
+
+                        var submit = $('#change-sector-submit').val();
+
+                            $('.form-message').load('php/reset-sectors.php', {
+                                med: med.prop('checked'),
+                                it: it.prop('checked'),
+                                bus: bus.prop('checked'),
+                                health: health.prop('checked'),
+                                food: food.prop('checked'),
+                                hosp: hosp.prop('checked'),
+                                cul: cul.prop('checked'),
+                                submit: submit,
+                                success: function(response){
+                                    console.log(response);
+                                   //window.location.reload();
+                                }
+                            });
+                    }
+                });
+                $('#change-pw-form').submit(function(event){
+                  var x = 'Are you sure you want to change your password?'
+                  if(confirm(x))
+                  {
+                      event.preventDefault();
+                      var change_pw = $('#change-pw-input').val();
+                      var change_pw2 = $('#change-pw2-input').val();
+                      var submit = $('#change-pw-submit').val();
+                      $('.form-message').load('php/reset-pw.php', {
+                          change_pw: change_pw,
+                          change_pw2: change_pw2,
+                          submit: submit
+                      });
+                  }
+                });
+                $('#change-phone-form').submit(function(event){
+                  var x = 'Are you sure you want to change your phone number?'
+                  if(confirm(x))
+                  {
+                      event.preventDefault();
+                      var change_phone = $('#change-phone-input').val();
+                      var change_phone2 = $('#change-phone2-input').val();
+                      var submit = $('#change-phone-submit').val();
+                      $('.form-message').load('php/reset-phone.php', {
+                          change_phone: change_phone,
+                          change_phone2: change_phone2,
+                          submit: submit
+                      });
+                  }
+                });
+                $('#change-email-form').submit(function(event){
+                  var x = 'Are you sure you want to change your email?'
+                  if(confirm(x))
+                  {
+                      event.preventDefault();
+                      var change_email = $('#change-email-input').val();
+                      var change_email2 = $('#change-email2-input').val();
+                      var submit = $('#change-email-submit').val();
+                      $('.form-message').load('php/reset-email.php', {
+                          change_email: change_email,
+                          change_email2: change_email2,
+                          submit: submit
+                      });
+                  }
+              });
+            });
+    ");
+    echo('</script>');
 
     if($result['user_type'] == "admin")
     {
@@ -498,55 +659,7 @@ if (isset($_SESSION['user_uid']))
                       });
                   }
               });
-              $(document).on('click','.event-btn',function(){
-                  var x = 'Are you sure you want to subscribe?'
-                  if(confirm(x))
-                  {
-                      var ID = $(this).attr('id');
-                      $('#event'+ID).hide();
-                      $.ajax({
-                          type: 'POST',
-                          url: 'php/subscribe.php',
-                          data: {
-                              ID: ID
-                          },
-                          success: function(response){
-                            if(response == 'error100')
-                            {
-                                alert('You\\'re already subscribed for this workshop.');
-                            }
-                            else
-                            {
-                                $('#event'+ID).remove();
-                                alert('You have subscribed to this workshop.');
-                            }
-                          }
-                      });
-                  }
-              });
-              $(document).on('click','.sub-event-btn',function(){
-                  var x = 'Are you sure you want to un-subscribe?'
-                  if(confirm(x))
-                  {
-                      var ID = $(this).attr('id');
-                      $('#sub-event'+ID).hide();
-                      $.ajax({
-                          type: 'POST',
-                          url: 'php/unsubscribe.php',
-                          data: {
-                              ID: ID
-                          },
-                          success: function(html){
-                              $('#event'+ID).remove();
-                          }
-                      });
-                  }
-              });
-              var allEventCount = 2;
               $(document).on('click','.all-btn',function(){
-                  $('#all-events-list-section').load('php/load-all-events.php', {
-                      allEventNewCount: allEventCount
-                  });
                   $('#own-events-list').hide();
                   $('#change-info').hide();
                   $('#job-list').hide();
@@ -554,17 +667,7 @@ if (isset($_SESSION['user_uid']))
                   $('#work-rec-list').hide();
                   $('#all-events-list').show();
               });
-              $('#more-all-events-button').click(function(){
-                  allEventCount += 2;
-                  $('#all-events-list-section').load('php/load-all-events.php', {
-                      allEventNewCount: allEventCount
-                  });
-              });
-              var ownEventCount = 2;
               $(document).on('click','.own-btn',function(){
-                  $('#own-events-list-section').load('php/load-own-events.php', {
-                      ownEventNewCount: ownEventCount
-                  });
                   $('#all-events-list').hide();
                   $('#change-info').hide();
                   $('#job-list').hide();
@@ -572,17 +675,7 @@ if (isset($_SESSION['user_uid']))
                   $('#work-rec-list').hide();
                   $('#own-events-list').show();
               });
-              $('#more-own-events-button').click(function(){
-                  ownEventCount += 2;
-                  $('#own-events-list-section').load('php/load-own-events.php', {
-                      ownEventNewCount: ownEventCount
-                  });
-              });
-              var jobCount = 2;
               $(document).on('click','.job-list-btn',function(){
-                  $('#job-list-section').load('php/load-own-jobs.php', {
-                      jobNewCount: jobCount
-                  });
                   $('#all-events-list').hide();
                   $('#change-info').hide();
                   $('#own-events-list').hide();
@@ -590,29 +683,13 @@ if (isset($_SESSION['user_uid']))
                   $('#work-rec-list').hide();
                   $('#job-list').show();
               });
-              $('#more-own-jobs-button').click(function(){
-                  jobCount += 2;
-                  $('#job-list-section').load('php/load-own-jobs.php', {
-                      jobNewCount: jobCount
-                  });
-              });
-              var workRecCount = 2;
               $(document).on('click','.work-rec-btn',function(){
-                $('#work-rec-list-section').load('php/load-work-rec-events.php', {
-                  workRecNewCount: workRecCount
-                });
                 $('#all-events-list').hide();
                 $('#change-info').hide();
                 $('#own-events-list').hide();
                 $('#post-job').hide();
                 $('#job-list').hide();
                 $('#work-rec-list').show();
-              });
-              $('#more-work-rec-button').click(function(){
-                workRecCount += 2;
-                $('#work-rec-list-section').load('php/load-work-rec-events.php', {
-                  workRecNewCount: workRecCount
-                });
               });
               $(document).on('click','.post-job-btn',function(){
                   $('#all-events-list').hide();
@@ -653,78 +730,6 @@ if (isset($_SESSION['user_uid']))
                   $('#change-pw').hide();
                   $('#change-email').hide();
                   $('#change-sector-section').show();
-              });
-              $('#change-pw-form').submit(function(event){
-                  var x = 'Are you sure you want to change your password?'
-                  if(confirm(x))
-                  {
-                      event.preventDefault();
-                      var change_pw = $('#change-pw-input').val();
-                      var change_pw2 = $('#change-pw2-input').val();
-                      var submit = $('#change-pw-submit').val();
-                      $('.form-message').load('php/reset-pw.php', {
-                          change_pw: change_pw,
-                          change_pw2: change_pw2,
-                          submit: submit
-                      });
-                  }
-              });
-              $('#change-phone-form').submit(function(event){
-                  var x = 'Are you sure you want to change your phone number?'
-                  if(confirm(x))
-                  {
-                      event.preventDefault();
-                      var change_phone = $('#change-phone-input').val();
-                      var change_phone2 = $('#change-phone2-input').val();
-                      var submit = $('#change-phone-submit').val();
-                      $('.form-message').load('php/reset-phone.php', {
-                          change_phone: change_phone,
-                          change_phone2: change_phone2,
-                          submit: submit
-                      });
-                  }
-              });
-              $('#change-email-form').submit(function(event){
-                  var x = 'Are you sure you want to change your email?'
-                  if(confirm(x))
-                  {
-                      event.preventDefault();
-                      var change_email = $('#change-email-input').val();
-                      var change_email2 = $('#change-email2-input').val();
-                      var submit = $('#change-email-submit').val();
-                      $('.form-message').load('php/reset-email.php', {
-                          change_email: change_email,
-                          change_email2: change_email2,
-                          submit: submit
-                      });
-                  }
-              });
-              $('#change-sector-form').submit(function(event){
-                  var x = 'Are you sure you want to change your sectors?'
-                  if(confirm(x))
-                  {
-                      event.preventDefault();
-                      var med = $('#change-sector-med');
-                      var it = $('#change-sector-it');
-                      var bus = $('#change-sector-bus');
-                      var health = $('#change-sector-health');
-                      var food = $('#change-sector-food');
-                      var hosp = $('#change-sector-hosp');
-                      var cul = $('#change-sector-cul');
-
-                      var submit = $('#change-sector-submit').val();
-
-                          $('.form-message').load('php/reset-sectors.php', {
-                              med: med.prop('checked'),
-                              it: it.prop('checked'),
-                              bus: bus.prop('checked'),
-                              health: health.prop('checked'),
-                              food: food.prop('checked'),
-                              hosp: hosp.prop('checked'),
-                              cul: cul.prop('checked'),
-                              submit: submit
-                          });
-                  }
               });
           });
           ");
@@ -923,76 +928,70 @@ if (isset($_SESSION['user_uid']))
       echo("</div>");
 
       echo("<div id='work-rec-list' class='event-list p-2' style='display:none;'>");
-      echo("<h2 class='dash-header'>Workshops for you: </h2><hr>");
-      echo("<div id='work-rec-list-section' class='container'>");
-      /*
-      Get the users occupations
-      */
-      $stm = $conn->prepare('SELECT * from user_occupations WHERE user_id = ?');
-      $stm->execute([$result['user_id']]);
-      $userOccupation = $stm->fetch(PDO::FETCH_ASSOC);
-      $worksFound = 0;
-      /*
-      Get the users occupations
-      */
-      $stm2 = $conn->prepare('SELECT * from events ORDER BY dateStamp DESC LIMIT 2');
-      $stm2->execute();
-      while($eventListing = $stm2->fetch(PDO::FETCH_ASSOC))
-      {
-        if(
-        ($eventListing['isMedical'] == 'true' && $userOccupation['medical'] == 'true') ||
-        ($eventListing['isIT'] == 'true' && $userOccupation['IT'] == 'true') ||
-        ($eventListing['isHealthcare'] == 'true' && $userOccupation['healthcare'] == 'true') ||
-        ($eventListing['isBusiness'] == 'true' && $userOccupation['business'] == 'true') ||
-        ($eventListing['isFoodservice'] == 'true' && $userOccupation['foodservice'] == 'true') ||
-        ($eventListing['isHospitality'] == 'true' && $userOccupation['hospitality'] == 'true') ||
-        ($eventListing['isCulinary'] == 'true' && $userOccupation['culinary'] == 'true')
-        )
-        {
-          echo(
-          "<div id='event" . $eventListing['event_id'] . "' class='event my-4'>" .
-          "<h3>"                   . $eventListing['title']        . "</h3>" .
-          "<b>Type: </b>"          . $eventListing['type']         . "<br/>" .
-          "<p>"                    . $eventListing['description']  . "</p><br/><br/>" .
-          "<b>Location: </b>"      . $eventListing['location']     . "<br/>" .
-          "<b>Date: </b>"          . $eventListing['startTime']    . "<br/>" .
-          "<b>Date Posted: </b>"   . $eventListing['dateStamp']    . "<br/>");
-          $stm2 = $conn->prepare('SELECT event_id from user_event WHERE user_id = ?');
-          $stm2->execute([$result['user_id']]);
-          $map_result = $stm2->fetchAll(PDO::FETCH_ASSOC);
-          if(!empty($map_result))
-          {
-                  $flag = false;
-                  foreach($map_result as $a)
-                  {
-                      if($a['event_id'] == $eventListing['event_id'])
-                      {
-                          echo("<button id='" . $eventListing['event_id'] . "' class='btn btn-primary sub-event-btn'>un-subscribe</button>");
-                          $flag = true;
-                      }
-                  }
-                  if(!$flag)
-                  {
-                      echo("<button id='" . $eventListing['event_id'] . "' class='btn btn-primary event-btn'>subscribe</button>");
-                  }
-          }
-          else
-          {
-                  echo("<button id='" . $eventListing['event_id'] . "' class='btn btn-primary event-btn'>subscribe</button>");
-          }
-          echo("</div><hr>");
-          $worksFound += 1;
-        }
-      }
-      if($worksFound <= 0)
-      {
-        echo("<div class='my-4'><h3>Couldnt find a event for you m8</h3></div>");
-      }
-      echo("</div>");
-      echo("<div class='show-more-container'>");
-      echo('<button id="more-work-rec-button" class="btn btn-primary more-btn">Show more</button>');
-      echo("</div>");
-      echo("</div>");
+            echo("<h2 class='dash-header'>Workshops for you: </h2><hr>");
+            echo("<div id='work-rec-list-section' class='container'>");
+            $stmOccupations = $conn->prepare('SELECT * from user_occupations WHERE user_id = ?');
+            $stmOccupations->execute([$result['user_id']]);
+            $userOccupation = $stmOccupations->fetch(PDO::FETCH_ASSOC);
+            $worksFound = 0;
+            $stm2 = $conn->prepare('SELECT * FROM events ORDER BY dateStamp DESC LIMIT 2');
+            $stm2->execute();
+            while($eventListing = $stm2->fetch(PDO::FETCH_ASSOC))
+            {
+              if(
+              ($eventListing['isMedical'] == 'true' && $userOccupation['medical'] == 'true') ||
+              ($eventListing['isIT'] == 'true' && $userOccupation['IT'] == 'true') ||
+              ($eventListing['isHealthcare'] == 'true' && $userOccupation['healthcare'] == 'true') ||
+              ($eventListing['isBusiness'] == 'true' && $userOccupation['business'] == 'true') ||
+              ($eventListing['isFoodservice'] == 'true' && $userOccupation['foodservice'] == 'true') ||
+              ($eventListing['isHospitality'] == 'true' && $userOccupation['hospitality'] == 'true') ||
+              ($eventListing['isCulinary'] == 'true' && $userOccupation['culinary'] == 'true')
+              )
+              {
+                echo(
+                "<div id='event" . $eventListing['event_id'] . "' class='event my-4'>" .
+                "<h3>"                   . $eventListing['title']        . "</h3>" .
+                "<b>Type: </b>"          . $eventListing['type']         . "<br/>" .
+                "<p>"                    . $eventListing['description']  . "</p><br/><br/>" .
+                "<b>Location: </b>"      . $eventListing['location']     . "<br/>" .
+                "<b>Date: </b>"          . $eventListing['startTime']    . "<br/>" .
+                "<b>Date Posted: </b>"   . $eventListing['dateStamp']    . "<br/>");
+                $stm3 = $conn->prepare('SELECT event_id from user_event WHERE user_id = ?');
+                $stm3->execute([$result['user_id']]);
+                $map_result = $stm3->fetchAll(PDO::FETCH_ASSOC);
+                if(!empty($map_result))
+                {
+                        $flag = false;
+                        foreach($map_result as $a)
+                        {
+                            if($a['event_id'] == $eventListing['event_id'])
+                            {
+                                echo("<button id='" . $eventListing['event_id'] . "' class='btn btn-primary sub-event-btn'>un-subscribe</button>");
+                                $flag = true;
+                            }
+                        }
+                        if(!$flag)
+                        {
+                            echo("<button id='" . $eventListing['event_id'] . "' class='btn btn-primary event-btn'>subscribe</button>");
+                        }
+                }
+                else
+                {
+                        echo("<button id='" . $eventListing['event_id'] . "' class='btn btn-primary event-btn'>subscribe</button>");
+                }
+                echo("</div><hr>");
+                $worksFound += 1;
+              }
+            }
+            if($worksFound <= 0)
+            {
+              echo("<div class='my-4'><h3>Couldnt find a event for you m8</h3></div>");
+            }
+            echo("</div>");
+            echo("<div class='show-more-container'>");
+            echo('<button id="more-work-rec-button" class="btn btn-primary more-btn">Show more</button>');
+            echo("</div>");
+            echo("</div>");
 
       echo("<div id='change-info' class='p-2' style='display:none;'>");
       echo("<h2 class='dash-header'>Update your personal information: </h2><hr>");
@@ -1116,71 +1115,6 @@ if (isset($_SESSION['user_uid']))
             echo("
             <script>
             $(document).ready(function() {
-                $(document).on('click','.event-btn',function(){
-                    var x = 'Are you sure you want to subscribe?'
-                    if(confirm(x))
-                    {
-                        var ID = $(this).attr('id');
-                        $('#event'+ID).hide();
-                            $.ajax({
-                                type: 'POST',
-                                url: 'php/subscribe.php',
-                                data: {
-                                    ID: ID
-                                },
-                                success: function(response){
-                                  if(response == 'error100')
-                                  {
-                                      alert('You\\'re already subscribed for this workshop.');
-                                  }
-                                  else
-                                  {
-                                      $('#event'+ID).remove();
-                                      alert('You have subscribed to this workshop.');
-                                  }
-                                }
-                        });
-                    }
-                });
-                $(document).on('click','.sub-event-btn',function(){
-                    var x = 'Are you sure you want to un-subscribe?'
-                    if(confirm(x))
-                    {
-                        var ID = $(this).attr('id');
-                        $('#sub-event'+ID).hide();
-                            $.ajax({
-                                type: 'POST',
-                                url: 'php/unsubscribe.php',
-                                data: {
-                                    ID: ID
-                                },
-                                success: function(html){
-                                    $('#event'+ID).remove();
-                                }
-                        });
-                    }
-                });
-                var allEventCount = 2;
-                $('#more-all-events-button').click(function(){
-                  allEventCount += 2;
-                  $('#all-events-list-section').load('php/load-all-events.php', {
-                    allEventNewCount: allEventCount
-                  });
-                });
-                var ownEventCount = 2;
-                $('#more-own-events-button').click(function(){
-                  ownEventCount += 2;
-                  $('#own-events-list-section').load('php/load-own-events.php', {
-                    ownEventNewCount: ownEventCount
-                  });
-                });
-                var workRecCount = 2;
-                $('#more-work-rec-button').click(function(){
-                  workRecCount += 2;
-                  $('#work-rec-list-section').load('php/load-work-rec-events.php', {
-                    workRecNewCount: workRecCount
-                  });
-                });
                 var jobRecCount = 2;
                 $('#more-job-rec-button').click(function(){
                   jobRecCount += 2;
@@ -1189,9 +1123,6 @@ if (isset($_SESSION['user_uid']))
                   });
                 });
                 $(document).on('click','.all-btn',function(){
-                    $('#all-events-list-section').load('php/load-all-events.php', {
-                        allEventNewCount: allEventCount
-                    });
                     $('#own-events-list').hide();
                     $('#change-info').hide();
                     $('#work-rec-list').hide();
@@ -1199,9 +1130,6 @@ if (isset($_SESSION['user_uid']))
                     $('#all-events-list').show();
                 });
                 $(document).on('click','.own-btn',function(){
-                  $('#own-events-list-section').load('php/load-own-events.php', {
-                    ownEventNewCount: ownEventCount
-                  });
                   $('#all-events-list').hide();
                   $('#change-info').hide();
                   $('#work-rec-list').hide();
@@ -1209,9 +1137,6 @@ if (isset($_SESSION['user_uid']))
                   $('#own-events-list').show();
                 });
                 $(document).on('click','.work-rec-btn',function(){
-                  $('#work-rec-list-section').load('php/load-work-rec-events.php', {
-                    workRecNewCount: workRecCount
-                  });
                   $('#all-events-list').hide();
                   $('#change-info').hide();
                   $('#own-events-list').hide();
@@ -1270,57 +1195,6 @@ if (isset($_SESSION['user_uid']))
                     $('#upload-section').hide();
                     $('#change-sector-section').show();
                 });
-                $('#change-pw-form').submit(function(event){
-                    var x = 'Are you sure you want to change your password?'
-                    if(confirm(x))
-                    {
-                        event.preventDefault();
-                        var change_pw = $('#change-pw-input').val();
-                        var change_pw2 = $('#change-pw2-input').val();
-
-                        var submit = $('#change-pw-submit').val();
-
-                            $('.form-message').load('php/reset-pw.php', {
-                                change_pw: change_pw,
-                                change_pw2: change_pw2,
-                                submit: submit
-                            });
-                    }
-                });
-                $('#change-phone-form').submit(function(event){
-                    var x = 'Are you sure you want to change your phone number?'
-                    if(confirm(x))
-                    {
-                        event.preventDefault();
-                        var change_phone = $('#change-phone-input').val();
-                        var change_phone2 = $('#change-phone2-input').val();
-
-                        var submit = $('#change-phone-submit').val();
-
-                            $('.form-message').load('php/reset-phone.php', {
-                                change_phone: change_phone,
-                                change_phone2: change_phone2,
-                                submit: submit
-                            });
-                    }
-                });
-                $('#change-email-form').submit(function(event){
-                    var x = 'Are you sure you want to change your email?'
-                    if(confirm(x))
-                    {
-                        event.preventDefault();
-                        var change_email = $('#change-email-input').val();
-                        var change_email2 = $('#change-email2-input').val();
-
-                        var submit = $('#change-email-submit').val();
-
-                            $('.form-message').load('php/reset-email.php', {
-                                change_email: change_email,
-                                change_email2: change_email2,
-                                submit: submit
-                            });
-                    }
-                });
                 $('#upload-form').submit(function(event){
                     var x = 'Are you sure you want to upload this resume?'
                     if(confirm(x))
@@ -1335,33 +1209,6 @@ if (isset($_SESSION['user_uid']))
                         cache: false,             // To unable request pages to be cached
                         processData:false        // To send DOMDocument or non processed data file it is set to false
                         });
-                    }
-                });
-                $('#change-sector-form').submit(function(event){
-                    var x = 'Are you sure you want to change your sectors?'
-                    if(confirm(x))
-                    {
-                        event.preventDefault();
-                        var med = $('#change-sector-med');
-                        var it = $('#change-sector-it');
-                        var bus = $('#change-sector-bus');
-                        var health = $('#change-sector-health');
-                        var food = $('#change-sector-food');
-                        var hosp = $('#change-sector-hosp');
-                        var cul = $('#change-sector-cul');
-
-                        var submit = $('#change-sector-submit').val();
-
-                            $('.form-message').load('php/reset-sectors.php', {
-                                med: med.prop('checked'),
-                                it: it.prop('checked'),
-                                bus: bus.prop('checked'),
-                                health: health.prop('checked'),
-                                food: food.prop('checked'),
-                                hosp: hosp.prop('checked'),
-                                cul: cul.prop('checked'),
-                                submit: submit
-                            });
                     }
                 });
             });
@@ -1383,11 +1230,11 @@ if (isset($_SESSION['user_uid']))
                 </button>
                 <div class="navbar-collapse collapse justify-content-stretch" id="navbar2">
                 <ul class="navbar-nav ml-auto">
-                    <li class=""><button class="btn-outline-secondary btn nav-link all-btn">All Workshops</button></li>
-                    <li class=""><button class="btn-outline-secondary btn nav-link own-btn">Your Workshops</button></li>
-                    <li class=""><button class="btn-outline-secondary btn nav-link work-rec-btn">Workshops for you</button></li>
-                    <li class=""><button class="btn-outline-secondary btn nav-link job-rec-btn">Jobs for you</button></li>
-                    <li class=""><button class="btn-outline-secondary btn nav-link change-btn">Update account</button></li>
+                    <li class="main-btn"><button class="btn-outline-secondary btn nav-link all-btn">All Workshops</button></li>
+                    <li class="main-btn"><button class="btn-outline-secondary btn nav-link own-btn">Your Workshops</button></li>
+                    <li class="main-btn"><button class="btn-outline-secondary btn nav-link work-rec-btn">Workshops for you</button></li>
+                    <li class="main-btn"><button class="btn-outline-secondary btn nav-link job-rec-btn">Jobs for you</button></li>
+                    <li class="main-btn"><button class="btn-outline-secondary btn nav-link change-btn">Update account</button></li>
                 </ul>
                 </div>
             </nav>
@@ -1481,17 +1328,11 @@ if (isset($_SESSION['user_uid']))
             echo("<div id='work-rec-list' class='event-list p-2' style='display:none;'>");
             echo("<h2 class='dash-header'>Workshops for you: </h2><hr>");
             echo("<div id='work-rec-list-section' class='container'>");
-            /*
-            Get the users occupations
-            */
-            $stm = $conn->prepare('SELECT * from user_occupations WHERE user_id = ?');
-            $stm->execute([$result['user_id']]);
-            $userOccupation = $stm->fetch(PDO::FETCH_ASSOC);
+            $stmOccupations = $conn->prepare('SELECT * from user_occupations WHERE user_id = ?');
+            $stmOccupations->execute([$result['user_id']]);
+            $userOccupation = $stmOccupations->fetch(PDO::FETCH_ASSOC);
             $worksFound = 0;
-            /*
-            Get the users occupations
-            */
-            $stm2 = $conn->prepare('SELECT * from events ORDER BY dateStamp DESC LIMIT 2');
+            $stm2 = $conn->prepare('SELECT * FROM events ORDER BY dateStamp DESC LIMIT 2');
             $stm2->execute();
             while($eventListing = $stm2->fetch(PDO::FETCH_ASSOC))
             {
@@ -1513,9 +1354,9 @@ if (isset($_SESSION['user_uid']))
                 "<b>Location: </b>"      . $eventListing['location']     . "<br/>" .
                 "<b>Date: </b>"          . $eventListing['startTime']    . "<br/>" .
                 "<b>Date Posted: </b>"   . $eventListing['dateStamp']    . "<br/>");
-                $stm2 = $conn->prepare('SELECT event_id from user_event WHERE user_id = ?');
-                $stm2->execute([$result['user_id']]);
-                $map_result = $stm2->fetchAll(PDO::FETCH_ASSOC);
+                $stm3 = $conn->prepare('SELECT event_id from user_event WHERE user_id = ?');
+                $stm3->execute([$result['user_id']]);
+                $map_result = $stm3->fetchAll(PDO::FETCH_ASSOC);
                 if(!empty($map_result))
                 {
                         $flag = false;
