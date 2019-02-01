@@ -1,4 +1,5 @@
 <?php
+$conn;
 $host = 'localhost';
 $db = 'foo';
 $username = 'eddy';
@@ -15,4 +16,4 @@ $dsn = "mysql:host=$host;dbname=$db;charset=utf8";
 	{
 	  echo $e->getMessage();
 	}
-?>
+

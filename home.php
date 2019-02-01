@@ -1,18 +1,29 @@
 <?php
-
-function printEvent($x)
+function getEventList($conn)
 {
-    return $x;
+    $eventListArray = array();
+    $sql = $conn->prepare("SELECT * FROM events ORDER BY dateStamp DESC");
+    $sql->execute();
+    while($result = $sql->fetch(PDO::FETCH_ASSOC))
+    {
+        $eventListArray[] = new Event($result['event_id'], $result['title'], $result['description'], $result['location'], $result['dateStamp'], $result['startTime'], $result['endTime'], $result['isMedical'], $result['isIT'], $result['isHealthcare'], $result['isBusiness'], $result['isFoodservice'], $result['isHospitality'], $result['isCulinary']);
+    }
+    return $eventListArray;
 }
 
 session_start();
 if (isset($_SESSION['user_uid']))
 {
-    require 'header.php';
+    include 'php/user-class.php';
+    include 'php/event-class.php';
+
+    include 'header.php';
     include 'php/connect.php';
     $sql = $conn->prepare("SELECT * FROM users WHERE user_uid=?");
     $sql->execute([$_SESSION['user_uid']]);
     $result = $sql->fetch(PDO::FETCH_ASSOC);
+    
+
     
     echo('<script>');
     echo("
@@ -771,43 +782,42 @@ if (isset($_SESSION['user_uid']))
       echo("<div id='all-events-list' class='event-list p-2'>");
       echo("<h2 class='dash-header'>All Workshops: </h2><hr>");
       echo("<div id='all-events-list-section' class='container'>");
-      $stm = $conn->prepare('SELECT * from events ORDER BY dateStamp DESC LIMIT 2');
-      $stm->execute();
-      while($event = $stm->fetch(PDO::FETCH_ASSOC))
-      {
-                      echo(
-                      "<div id='event" . $event['event_id'] . "' class='event my-4'>" .
-                      "<h3>"                   . $event['title']        . "</h3>" .
-                      "<b>Type: </b>"          . $event['type']         . "<br/>" .
-                      "<p>"                    . $event['description']  . "</p><br/><br/>" .
-                      "<b>Location: </b>"      . $event['location']     . "<br/>" .
-                      "<b>Date: </b>"          . $event['startTime']    . "<br/>" .
-                      "<b>Date Posted: </b>"   . $event['dateStamp']    . "<br/>");
-                      $stm2 = $conn->prepare('SELECT event_id from user_event WHERE user_id = ?');
-                      $stm2->execute([$result['user_id']]);
-                      $map_result = $stm2->fetchAll(PDO::FETCH_ASSOC);
-                      if(!empty($map_result))
-                      {
-                              $flag = false;
-                              foreach($map_result as $a)
-                              {
-                                  if($a['event_id'] == $event['event_id'])
-                                  {
-                                      echo("<button id='" . $event['event_id'] . "' class='btn btn-primary sub-event-btn'>un-subscribe</button>");
-                                      $flag = true;
-                                  }
-                              }
-                              if(!$flag)
-                              {
-                                  echo("<button id='" . $event['event_id'] . "' class='btn btn-primary event-btn'>subscribe</button>");
-                              }
-                      }
-                      else
-                      {
-                              echo("<button id='" . $event['event_id'] . "' class='btn btn-primary event-btn'>subscribe</button>");
-                      }
-                      echo("</div><hr>");
-      }
+      
+            //for ($i = 0; $i < sizeof(getEventList($conn)); $i++)
+            foreach(getEventList($conn) as $e)
+            {      
+                            echo(
+                            "<div id='event" . $e->getID()  . "' class='event my-4'>" .
+                            "<h3>"                   . $e->getTitle()        . "</h3>" .
+                            "<p>"                    . $e->getDesc()  . "</p><br/><br/>" .
+                            "<b>Location: </b>"      . $e->getLoc()     . "<br/>" .
+                            "<b>Date: </b>"          . $e->getStart()    . "<br/>" .
+                            "<b>Date Posted: </b>"   . $e->getDateStamp()    . "<br/>");
+                            $stm2 = $conn->prepare('SELECT event_id from user_event WHERE user_id = ?');
+                            $stm2->execute([$result['user_id']]);
+                            $map_result = $stm2->fetchAll(PDO::FETCH_ASSOC);
+                            if(!empty($map_result))
+                            {
+                                    $flag = false;
+                                    foreach($map_result as $a)
+                                    {
+                                        if($a['event_id'] == $e->getID())
+                                        {
+                                            echo("<button id='" . $e->getID() . "' class='btn btn-primary sub-event-btn'>un-subscribe</button>");
+                                            $flag = true;
+                                        }
+                                    }
+                                    if(!$flag)
+                                    {
+                                        echo("<button id='" . $e->getID() . "' class='btn btn-primary event-btn'>subscribe</button>");
+                                    }
+                            }
+                            else
+                            {
+                                    echo("<button id='" . $e->getID() . "' class='btn btn-primary event-btn'>subscribe</button>");
+                            }
+                            echo("</div><hr>");
+            }
       echo("</div>");
       echo("<div class='show-more-container'>");
       echo('<button id="more-all-events-button" class="btn btn-primary more-btn">Show more</button>');
@@ -1246,43 +1256,40 @@ if (isset($_SESSION['user_uid']))
             echo("<div id='all-events-list' class='event-list p-2'>");
             echo("<h2 class='dash-header'>All Workshops: </h2><hr>");
             echo("<div id='all-events-list-section' class='container'>");
-            $stm = $conn->prepare('SELECT * from events ORDER BY dateStamp DESC LIMIT 2');
-            $stm->execute();
-            while($event = $stm->fetch(PDO::FETCH_ASSOC))
-            {
-                            echo(
-                            "<div id='event" . $event['event_id'] . "' class='event my-4'>" .
-                            "<h3>"                   . $event['title']        . "</h3>" .
-                            "<b>Type: </b>"          . $event['type']         . "<br/>" .
-                            "<p>"                    . $event['description']  . "</p><br/><br/>" .
-                            "<b>Location: </b>"      . $event['location']     . "<br/>" .
-                            "<b>Date: </b>"          . $event['startTime']    . "<br/>" .
-                            "<b>Date Posted: </b>"   . $event['dateStamp']    . "<br/>");
-                            $stm2 = $conn->prepare('SELECT event_id from user_event WHERE user_id = ?');
-                            $stm2->execute([$result['user_id']]);
-                            $map_result = $stm2->fetchAll(PDO::FETCH_ASSOC);
-                            if(!empty($map_result))
-                            {
-                                    $flag = false;
-                                    foreach($map_result as $a)
+                    foreach(getEventList($conn) as $e)
+                    {
+                                    echo(
+                                    "<div id='event"         . $e->getID()  . "' class='event my-4'>" .
+                                    "<h3>"                   . $e->getTitle()        . "</h3>" .
+                                    "<p>"                    . $e->getDesc()  . "</p><br/><br/>" .
+                                    "<b>Location: </b>"      . $e->getLoc()     . "<br/>" .
+                                    "<b>Date: </b>"          . $e->getStart()    . "<br/>" .
+                                    "<b>Date Posted: </b>"   . $e->getDateStamp()    . "<br/>");
+                                    $stm2 = $conn->prepare('SELECT event_id from user_event WHERE user_id = ?');
+                                    $stm2->execute([$result['user_id']]);
+                                    $map_result = $stm2->fetchAll(PDO::FETCH_ASSOC);
+                                    if(!empty($map_result))
                                     {
-                                        if($a['event_id'] == $event['event_id'])
-                                        {
-                                            echo("<button id='" . $event['event_id'] . "' class='btn btn-primary sub-event-btn'>un-subscribe</button>");
-                                            $flag = true;
-                                        }
+                                            $flag = false;
+                                            foreach($map_result as $a)
+                                            {
+                                                if($a['event_id'] == $e->getID())
+                                                {
+                                                    echo("<button id='" . $e->getID() . "' class='btn btn-primary sub-event-btn'>un-subscribe</button>");
+                                                    $flag = true;
+                                                }
+                                            }
+                                            if(!$flag)
+                                            {
+                                                echo("<button id='" . $e->getID() . "' class='btn btn-primary event-btn'>subscribe</button>");
+                                            }
                                     }
-                                    if(!$flag)
+                                    else
                                     {
-                                        echo("<button id='" . $event['event_id'] . "' class='btn btn-primary event-btn'>subscribe</button>");
+                                            echo("<button id='" . $e->getID() . "' class='btn btn-primary event-btn'>subscribe</button>");
                                     }
-                            }
-                            else
-                            {
-                                    echo("<button id='" . $event['event_id'] . "' class='btn btn-primary event-btn'>subscribe</button>");
-                            }
-                            echo("</div><hr>");
-            }
+                                    echo("</div><hr>");
+                    }
             echo("</div>");
             echo("<div class='show-more-container'>");
             echo('<button id="more-all-events-button" class="btn btn-primary more-btn">Show more</button>');
@@ -1564,7 +1571,7 @@ if (isset($_SESSION['user_uid']))
             echo("<script src='formhelper/js/bootstrap-formhelpers-phone.js'></script>");
             echo("<script src='formhelper/js/bootstrap-formhelpers.js'></script>");
     }
-    require 'footer.php';
+    include 'footer.php';
 }
 else
 {

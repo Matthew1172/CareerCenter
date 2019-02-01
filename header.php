@@ -43,7 +43,9 @@ $(document).ready(function(){
 
 </head>
 <body>
-<nav class="navbar sticky-top navbar-expand-lg navbar-light bg-white" id="nav1">
+    <a class="navbar-brand p-3" href="index.php"><img src="pics/career-center-rockland-logo.png" height="100%" width="100%" alt="Rockland County career center logo"/></a>
+
+    <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-white" id="nav1">
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar1"><span class="navbar-toggler-icon"></span></button>
     <div class="navbar-collapse collapse justify-content-stretch" id="navbar1">
     <ul class="navbar-nav ml-auto">
@@ -79,4 +81,3 @@ $(document).ready(function(){
     </ul>
     </div>
 </nav>
-<a class="navbar-brand p-3" href="index.php"><img src="pics/career-center-rockland-logo.png" height="100%" width="100%" alt="Rockland County career center logo"/></a>
