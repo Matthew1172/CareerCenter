@@ -3,12 +3,14 @@ session_start();
 
     include 'connect.php';
     $jobNewCount = $_POST['jobNewCount'];
-    $jobList = getOwnJobList($conn, $_SESSION['user_uid']);
+    $jobList = getJobList($conn, $_SESSION['user_uid']);
     $check = sizeof($jobList) % 2;
       
     if(sizeof($jobList) == 0)      
     {              
-        echo("<div class='my-4'><h3>You have not posted any jobs yet.</h3></div>");
+        echo('<tr>');
+        echo("<td>There are no more jobs</td>");  
+        echo('</tr>'); 
     }
     else if($check == 0)
     {
@@ -54,7 +56,7 @@ session_start();
                 echo('</tr>');  
             }   
             echo('<tr>');
-            echo("<td>There are no more events</td>");  
+            echo("<td>There are no more jobs</td>");  
             echo('</tr>'); 
         }
     }
@@ -102,7 +104,7 @@ session_start();
                 echo('</tr>');  
             }   
             echo('<tr>');
-            echo("<td>There are no more events</td>");  
+            echo("<td>There are no more jobs</td>");  
             echo('</tr>');  
         }
     }
