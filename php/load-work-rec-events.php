@@ -3,66 +3,172 @@ session_start();
 if (isset($_SESSION['user_uid']))
 {
         include 'connect.php';
-        $workRecNewCount = $_POST['workRecNewCount'];
         $sql = $conn->prepare("SELECT * FROM users WHERE user_uid=?");
         $sql->execute([$_SESSION['user_uid']]);
         $result = $sql->fetch(PDO::FETCH_ASSOC);
-        $stmOccupations = $conn->prepare('SELECT * from user_occupations WHERE user_id = ?');
-        $stmOccupations->execute([$result['user_id']]);
-        $userOccupation = $stmOccupations->fetch(PDO::FETCH_ASSOC);
-        $worksFound = 0;
-        $stm2 = $conn->prepare('SELECT * from events ORDER BY dateStamp DESC LIMIT ' . $workRecNewCount . ';');
-        $stm2->execute();
-        while($eventListing = $stm2->fetch(PDO::FETCH_ASSOC))
+        
+        $recNewCount = $_POST['workRecNewCount'];
+        $recEventList = getWorkRecList($conn, $result['user_id']);
+        $check = sizeof($recEventList) % 2;
+        
+        if(sizeof($recEventList) == 0)      
+        {              
+            echo("<div class='my-4'><h3>We dont have any recommondations right now.</h3></div>");
+        }
+        else if($check == 0)
         {
-          if(
-          ($eventListing['isMedical'] == 'true' && $userOccupation['medical'] == 'true') ||
-          ($eventListing['isIT'] == 'true' && $userOccupation['IT'] == 'true') ||
-          ($eventListing['isHealthcare'] == 'true' && $userOccupation['healthcare'] == 'true') ||
-          ($eventListing['isBusiness'] == 'true' && $userOccupation['business'] == 'true') ||
-          ($eventListing['isFoodservice'] == 'true' && $userOccupation['foodservice'] == 'true') ||
-          ($eventListing['isHospitality'] == 'true' && $userOccupation['hospitality'] == 'true') ||
-          ($eventListing['isCulinary'] == 'true' && $userOccupation['culinary'] == 'true')
-          )
-          {
-            echo(
-            "<div id='event" . $eventListing['event_id'] . "' class='event my-4'>" .
-            "<h3>"                   . $eventListing['title']        . "</h3>" .
-            "<b>Type: </b>"          . $eventListing['type']         . "<br/>" .
-            "<p>"                    . $eventListing['description']  . "</p><br/><br/>" .
-            "<b>Location: </b>"      . $eventListing['location']     . "<br/>" .
-            "<b>Date: </b>"          . $eventListing['startTime']    . "<br/>" .
-            "<b>Date Posted: </b>"   . $eventListing['dateStamp']    . "<br/>");
-            $stm3 = $conn->prepare('SELECT event_id from user_event WHERE user_id = ?');
-            $stm3->execute([$result['user_id']]);
-            $map_result = $stm3->fetchAll(PDO::FETCH_ASSOC);
-            if(!empty($map_result))
+            if($recNewCount <= sizeof($recEventList))
             {
-                    $flag = false;
-                    foreach($map_result as $a)
-                    {
-                        if($a['event_id'] == $eventListing['event_id'])
-                        {
-                            echo("<button id='" . $eventListing['event_id'] . "' class='btn btn-primary sub-event-btn'>un-subscribe</button>");
-                            $flag = true;
-                        }
-                    }
-                    if(!$flag)
-                    {
-                        echo("<button id='" . $eventListing['event_id'] . "' class='btn btn-primary event-btn'>subscribe</button>");
-                    }
+                for($i = 0; $i < $recNewCount; $i++)
+                {
+                                    echo(
+                                    "<div id='event"         . $recEventList[$i]->getID()  . "' class='event my-4'>" .
+                                    "<h3>"                   . $recEventList[$i]->getTitle()        . "</h3>" .
+                                    "<p>"                    . $recEventList[$i]->getDesc()  . "</p><br/><br/>" .
+                                    "<b>Location: </b>"      . $recEventList[$i]->getLoc()     . "<br/>" .
+                                    "<b>Date: </b>"          . $recEventList[$i]->getStart()    . "<br/>" .
+                                    "<b>Date Posted: </b>"   . $recEventList[$i]->getDateStamp()    . "<br/>");
+                                    $stm2 = $conn->prepare('SELECT event_id from user_event WHERE user_id = ?');
+                                    $stm2->execute([$result['user_id']]);
+                                    $map_result = $stm2->fetchAll(PDO::FETCH_ASSOC);
+                                    if(!empty($map_result))
+                                    {
+                                            $flag = false;
+                                            foreach($map_result as $a)
+                                            {
+                                                if($a['event_id'] == $recEventList[$i]->getID())
+                                                {
+                                                    echo("<button id='" . $recEventList[$i]->getID() . "' class='btn btn-primary sub-event-btn'>un-subscribe</button>");
+                                                    $flag = true;
+                                                }
+                                            }
+                                            if(!$flag)
+                                            {
+                                                echo("<button id='" . $recEventList[$i]->getID() . "' class='btn btn-primary event-btn'>subscribe</button>");
+                                            }
+                                    }
+                                    else
+                                    {
+                                            echo("<button id='" . $recEventList[$i]->getID() . "' class='btn btn-primary event-btn'>subscribe</button>");
+                                    }
+                                    echo("</div><hr>");   
+                }
             }
             else
             {
-                    echo("<button id='" . $eventListing['event_id'] . "' class='btn btn-primary event-btn'>subscribe</button>");
+                foreach($recEventList as $e)
+                {
+                                        echo(
+                                        "<div id='event"         . $e->getID()  . "' class='event my-4'>" .
+                                        "<h3>"                   . $e->getTitle()        . "</h3>" .
+                                        "<p>"                    . $e->getDesc()  . "</p><br/><br/>" .
+                                        "<b>Location: </b>"      . $e->getLoc()     . "<br/>" .
+                                        "<b>Date: </b>"          . $e->getStart()    . "<br/>" .
+                                        "<b>Date Posted: </b>"   . $e->getDateStamp()    . "<br/>");
+                                        $stm2 = $conn->prepare('SELECT event_id from user_event WHERE user_id = ?');
+                                        $stm2->execute([$result['user_id']]);
+                                        $map_result = $stm2->fetchAll(PDO::FETCH_ASSOC);
+                                        if(!empty($map_result))
+                                        {
+                                                $flag = false;
+                                                foreach($map_result as $a)
+                                                {
+                                                    if($a['event_id'] == $e->getID())
+                                                    {
+                                                        echo("<button id='" . $e->getID() . "' class='btn btn-primary sub-event-btn'>un-subscribe</button>");
+                                                        $flag = true;
+                                                    }
+                                                }
+                                                if(!$flag)
+                                                {
+                                                    echo("<button id='" . $e->getID() . "' class='btn btn-primary event-btn'>subscribe</button>");
+                                                }
+                                        }
+                                        else
+                                        {
+                                                echo("<button id='" . $e->getID() . "' class='btn btn-primary event-btn'>subscribe</button>");
+                                        }
+                                        echo("</div><hr>");
+                }
+                echo("<div>There are no more events</div>");
             }
-            echo("</div><hr>");
-            $worksFound += 1;
-          }
         }
-        if($worksFound <= 0)
+        else 
         {
-          echo("<div class='my-4'><h3>Couldnt find a event for you m8</h3></div>");
+            if($recNewCount - 1 <= sizeof($recEventList))
+            {
+                for($i = 0; $i < $recNewCount - 1; $i++)
+                {
+                                    echo(
+                                    "<div id='event"         . $recEventList[$i]->getID()  . "' class='event my-4'>" .
+                                    "<h3>"                   . $recEventList[$i]->getTitle()        . "</h3>" .
+                                    "<p>"                    . $recEventList[$i]->getDesc()  . "</p><br/><br/>" .
+                                    "<b>Location: </b>"      . $recEventList[$i]->getLoc()     . "<br/>" .
+                                    "<b>Date: </b>"          . $recEventList[$i]->getStart()    . "<br/>" .
+                                    "<b>Date Posted: </b>"   . $recEventList[$i]->getDateStamp()    . "<br/>");
+                                    $stm2 = $conn->prepare('SELECT event_id from user_event WHERE user_id = ?');
+                                    $stm2->execute([$result['user_id']]);
+                                    $map_result = $stm2->fetchAll(PDO::FETCH_ASSOC);
+                                    if(!empty($map_result))
+                                    {
+                                            $flag = false;
+                                            foreach($map_result as $a)
+                                            {
+                                                if($a['event_id'] == $recEventList[$i]->getID())
+                                                {
+                                                    echo("<button id='" . $recEventList[$i]->getID() . "' class='btn btn-primary sub-event-btn'>un-subscribe</button>");
+                                                    $flag = true;
+                                                }
+                                            }
+                                            if(!$flag)
+                                            {
+                                                echo("<button id='" . $recEventList[$i]->getID() . "' class='btn btn-primary event-btn'>subscribe</button>");
+                                            }
+                                    }
+                                    else
+                                    {
+                                            echo("<button id='" . $recEventList[$i]->getID() . "' class='btn btn-primary event-btn'>subscribe</button>");
+                                    }
+                                    echo("</div><hr>");   
+                }
+            }
+            else
+            {
+                foreach($recEventList as $e)
+                {
+                                        echo(
+                                        "<div id='event"         . $e->getID()  . "' class='event my-4'>" .
+                                        "<h3>"                   . $e->getTitle()        . "</h3>" .
+                                        "<p>"                    . $e->getDesc()  . "</p><br/><br/>" .
+                                        "<b>Location: </b>"      . $e->getLoc()     . "<br/>" .
+                                        "<b>Date: </b>"          . $e->getStart()    . "<br/>" .
+                                        "<b>Date Posted: </b>"   . $e->getDateStamp()    . "<br/>");
+                                        $stm2 = $conn->prepare('SELECT event_id from user_event WHERE user_id = ?');
+                                        $stm2->execute([$result['user_id']]);
+                                        $map_result = $stm2->fetchAll(PDO::FETCH_ASSOC);
+                                        if(!empty($map_result))
+                                        {
+                                                $flag = false;
+                                                foreach($map_result as $a)
+                                                {
+                                                    if($a['event_id'] == $e->getID())
+                                                    {
+                                                        echo("<button id='" . $e->getID() . "' class='btn btn-primary sub-event-btn'>un-subscribe</button>");
+                                                        $flag = true;
+                                                    }
+                                                }
+                                                if(!$flag)
+                                                {
+                                                    echo("<button id='" . $e->getID() . "' class='btn btn-primary event-btn'>subscribe</button>");
+                                                }
+                                        }
+                                        else
+                                        {
+                                                echo("<button id='" . $e->getID() . "' class='btn btn-primary event-btn'>subscribe</button>");
+                                        }
+                                        echo("</div><hr>");
+                }
+                echo("<div>There are no more events</div>");
+            }
         }
 }
-?>

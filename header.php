@@ -10,11 +10,8 @@
 -->
     <link href="bootstrap/css/cosmo.min.css" rel="stylesheet">
 
-	<!--	CUSTOM	STYLE	-->
-	<link href="styles/style.css" rel="stylesheet">
-
-	<!--	ION-ICONS     	-->
-	<link href="https://unpkg.com/ionicons@4.4.6/dist/css/ionicons.min.css" rel="stylesheet">
+    <!--	CUSTOM	STYLE	-->
+    <link href="styles/style.css" rel="stylesheet">
 
     <!--	JQUERY	        -->
     <script src='js/jquery.min.js'></script>
