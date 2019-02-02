@@ -19,6 +19,9 @@ if (isset($_SESSION['user_uid']))
     $eventList = getEventList($conn);
     //get a list of all the users events
     $ownEventList = getOwnEventList($conn, $result['user_id']);
+    //get a list of all jobs
+    $jobList = getJobList($conn);
+    
     
     echo('<script>');
     echo("
@@ -619,6 +622,14 @@ if (isset($_SESSION['user_uid']))
       echo("<link href='styles/home-employer.css' rel='stylesheet'>");
       echo("<link href='formhelper/css/bootstrap-formhelpers.css' rel='stylesheet'/>");
 
+      $stm = $conn->prepare('SELECT * FROM employers WHERE user_id = ?');
+      $stm->execute([$result['user_id']]);
+      $employerResult = $stm->fetch();
+      
+        //get a list of the logged in employers jobs
+        //$jobOwnList = getOwnJobList($conn, $_SESSION['user_uid']);
+        //print_r($jobOwnList);
+      
       echo('<script>');
       echo("
           $(document).ready(function(){
@@ -631,6 +642,7 @@ if (isset($_SESSION['user_uid']))
                 var workRecCount = 2;
                 var allEventCount = 2;
                 var ownEventCount = 2;
+                var jobCount = 2;
                 
               $('#postJob-form').submit(function(event){
                   var x = 'Are you sure you want to post this job?'
@@ -712,6 +724,9 @@ if (isset($_SESSION['user_uid']))
                   $('#own-events-list').show();
               });
               $(document).on('click','.job-list-btn',function(){
+                    $('#job-list-section').load('php/load-own-jobs.php', {
+                        jobNewCount: jobCount
+                    });
                   $('#all-events-list').hide();
                   $('#change-info').hide();
                   $('#own-events-list').hide();
@@ -873,6 +888,7 @@ if (isset($_SESSION['user_uid']))
       echo("<div id='job-list' class='event-list p-2' style='display:none;'>");
       echo("<h2 class='dash-header'>My jobs: </h2><hr>");
       echo("<div id='job-list-section' class='container'>");
+      /*
       $stm = $conn->prepare('SELECT * FROM employers WHERE user_id = ?');
       $stm->execute([$result['user_id']]);
       $employerResult = $stm->fetch();
@@ -897,6 +913,7 @@ if (isset($_SESSION['user_uid']))
       {
           echo("<div class='my-4'><h3>You have no job postings yet!</h3></div>");
       }
+       * */
       echo("</div>");
       echo("<div class='show-more-container'>");
       echo('<button id="more-own-jobs-button" class="btn btn-primary more-btn">Show more</button>');

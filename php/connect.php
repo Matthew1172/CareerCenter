@@ -1,5 +1,6 @@
 <?php
 include 'event-class.php';
+include 'job-class.php';
 
 $conn;
 $host = 'localhost';
@@ -70,4 +71,34 @@ function getWorkRecList($conn, $user_id)
         }    
     }
     return $eventListRecArray;
+}
+
+function getJobList($conn)
+{
+    $jobListArray = array();
+    $sql = $conn->prepare("SELECT * FROM jobs ORDER BY dateStamp DESC");
+    $sql->execute();
+    while($result = $sql->fetch(PDO::FETCH_ASSOC))
+    {
+        $jobListArray[] = new Job($result['job_id'], $result['employer_id'], $result['job_title'], $result['job_description'], $result['job_position'], $result['location'], $result['isMedical'], $result['isIT'], $result['isHealthcare'], $result['isBusiness'], $result['isFoodservice'], $result['isHospitality'], $result['isCulinary'], $result['dateStamp']);
+    }
+    return $jobListArray;
+}
+
+function getOwnJobList($conn, $user_uid)
+{
+    $sql = $conn->prepare("SELECT * FROM users WHERE user_uid = ?");
+    $sql->execute([$user_uid]);
+        $userResult = $sql->fetch(PDO::FETCH_ASSOC);
+        $sql2 = $conn->prepare("SELECT * FROM employers WHERE user_id = ?");
+        $sql2->execute([$userResult['user_id']]);
+            $employerResult = $sql2->fetch(PDO::FETCH_ASSOC);     
+            $jobOwnListArray = array();
+            $sql3 = $conn->prepare("SELECT * FROM jobs WHERE employer_id = ? ORDER BY dateStamp DESC");
+            $sql3->execute([$employerResult['employer_id']]);
+                while($result = $sql3->fetch(PDO::FETCH_ASSOC))
+                {
+                    $jobOwnListArray[] = new Job($result['job_id'], $result['employer_id'], $result['job_title'], $result['job_description'], $result['job_position'], $result['job_location'], $result['isMedical'], $result['isIT'], $result['isHealthcare'], $result['isBusiness'], $result['isFoodservice'], $result['isHospitality'], $result['isCulinary'], $result['dateStamp']);
+                }
+                return $jobOwnListArray;
 }
