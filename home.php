@@ -26,12 +26,6 @@ if (isset($_SESSION['user_uid']))
     echo('<script>');
     echo("
             $(document).ready(function(){
-                var eventListCount = ". sizeof($eventList) .";
-                var workRecListCount = ". sizeof($recWorkList) .";
-                var ownEventListCount = ". sizeof($ownEventList) .";
-                
-                var ownEventListLoadIndex = ownEventListCount % 2;
-                    
                 $(document).on('click','.event-btn',function(){
                     var x = 'Are you sure you want to subscribe?'
                     if(confirm(x))
@@ -54,9 +48,6 @@ if (isset($_SESSION['user_uid']))
                                       $('#event'+ID).remove();
                                       alert('You have subscribed to this workshop.');
                                   }
-                                eventListCount = ". sizeof($eventList) .";
-                                workRecListCount = ". sizeof($recWorkList) .";
-                                ownEventListCount = ". sizeof($ownEventList) .";
                                 }
                         });
                     }
@@ -75,9 +66,6 @@ if (isset($_SESSION['user_uid']))
                                 },
                                 success: function(html){
                                     $('#event'+ID).remove();
-                                    eventListCount = ". sizeof($eventList) .";
-                                    workRecListCount = ". sizeof($recWorkList) .";
-                                    ownEventListCount = ". sizeof($ownEventList) .";
                                 }
                         });
                     }
@@ -633,12 +621,6 @@ if (isset($_SESSION['user_uid']))
       echo('<script>');
       echo("
           $(document).ready(function(){
-                var eventListCount = ". sizeof($eventList) .";
-                var workRecListCount = ". sizeof($recWorkList) .";
-                var ownEventListCount = ". sizeof($ownEventList) .";
-                
-                var ownEventListLoadIndex = ownEventListCount % 2;
-                
                 var workRecCount = 2;
                 var allEventCount = 2;
                 var ownEventCount = 2;
@@ -868,7 +850,7 @@ if (isset($_SESSION['user_uid']))
       echo("<div id='own-events-list' class='event-list p-2' style='display:none;'>");
       echo("<h2 class='dash-header'>Your Workshops: </h2><hr>");
       echo("<div id='own-events-list-section' class='container'>");
-      /*javascript will load list of own events here when work-own-btn is pressed*/
+      /*javascript will load list of own events here when own-btn is pressed*/
       echo("</div>");
       echo("<div class='show-more-container'>");
       echo('<button id="more-own-events-button" class="btn btn-primary more-btn">Show more</button>');
@@ -888,32 +870,7 @@ if (isset($_SESSION['user_uid']))
       echo("<div id='job-list' class='event-list p-2' style='display:none;'>");
       echo("<h2 class='dash-header'>My jobs: </h2><hr>");
       echo("<div id='job-list-section' class='container'>");
-      /*
-      $stm = $conn->prepare('SELECT * FROM employers WHERE user_id = ?');
-      $stm->execute([$result['user_id']]);
-      $employerResult = $stm->fetch();
-      $stm = $conn->prepare('SELECT * from jobs WHERE employer_id = ? ORDER BY dateStamp DESC LIMIT 2');
-      $stm->execute([$employerResult['employer_id']]);
-      if($stm->rowCount() > 0)
-      {
-          while($event = $stm->fetch(PDO::FETCH_ASSOC))
-          {
-                      echo (
-                      "<div id='job" . $event['job_id'] . "' class='event my-4'>" .
-                      "<h3>"                   . htmlspecialchars($event['job_title'])        . "</h3>" .
-                      "<b>Position: </b>"      . htmlspecialchars($event['job_position'])         . "</p>" .
-                      "<p>"                    . htmlspecialchars($event['job_description'])  . "<br/><br/>" .
-                      "<b>Location: </b>"      . htmlspecialchars($event['job_location'])     . "<br/>" .
-                      "<b>Contact: </b>"       . htmlspecialchars($result['user_email'])     . "<br/>");
-                      echo("<button id='" . $event['job_id'] . "' class='btn btn-primary rem-btn'>Remove</button>");
-                      echo("</div><hr>");
-          }
-      }
-      else
-      {
-          echo("<div class='my-4'><h3>You have no job postings yet!</h3></div>");
-      }
-       * */
+      /*javascript will load list of jobs here when job-list-btn is pressed*/
       echo("</div>");
       echo("<div class='show-more-container'>");
       echo('<button id="more-own-jobs-button" class="btn btn-primary more-btn">Show more</button>');
@@ -1292,7 +1249,7 @@ if (isset($_SESSION['user_uid']))
             echo("<div id='job-rec-list' class='event-list p-2' style='display:none;'>");
             echo("<h2 class='dash-header'>Jobs for you: </h2><hr>");
             echo("<div id='job-rec-list-section' class='container'>");
-
+            /*
             $stm2 = $conn->prepare('SELECT * from jobs ORDER BY dateStamp DESC LIMIT 2');
             $stm2->execute();
             while($jobListing = $stm2->fetch(PDO::FETCH_ASSOC))
@@ -1320,6 +1277,7 @@ if (isset($_SESSION['user_uid']))
             {
               echo("<div class='my-4'><h3>Couldnt find a job for you m8</h3></div>");
             }
+            */
             echo("</div>");
             echo("<div class='show-more-container'>");
             echo('<button id="more-job-rec-button" class="btn btn-primary more-btn">Show more</button>');

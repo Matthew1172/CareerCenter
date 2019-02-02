@@ -89,7 +89,7 @@ function getOwnJobList($conn, $user_uid)
 {
     $sql = $conn->prepare("SELECT * FROM users WHERE user_uid = ?");
     $sql->execute([$user_uid]);
-        $userResult = $sql->fetch(PDO::FETCH_ASSOC);
+    $userResult = $sql->fetch(PDO::FETCH_ASSOC);
         $sql2 = $conn->prepare("SELECT * FROM employers WHERE user_id = ?");
         $sql2->execute([$userResult['user_id']]);
             $employerResult = $sql2->fetch(PDO::FETCH_ASSOC);     
@@ -101,4 +101,33 @@ function getOwnJobList($conn, $user_uid)
                     $jobOwnListArray[] = new Job($result['job_id'], $result['employer_id'], $result['job_title'], $result['job_description'], $result['job_position'], $result['job_location'], $result['isMedical'], $result['isIT'], $result['isHealthcare'], $result['isBusiness'], $result['isFoodservice'], $result['isHospitality'], $result['isCulinary'], $result['dateStamp']);
                 }
                 return $jobOwnListArray;
+}
+
+function getJobRecList($conn, $user_uid)
+{
+    $sql = $conn->prepare("SELECT * FROM users WHERE user_uid = ?");
+    $sql->execute([$user_uid]);
+    $userResult = $sql->fetch(PDO::FETCH_ASSOC);
+    
+    $stmOccupations = $conn->prepare('SELECT * from user_occupations WHERE user_id = ?');
+    $stmOccupations->execute([$userResult['user_id']]);
+    $userOccupation = $stmOccupations->fetch(PDO::FETCH_ASSOC);
+    
+    $jobListRecArray = array();
+    foreach(getJobList($conn) as $e)
+    {
+        if(
+              ($e->getMed() == 'true' && $userOccupation['medical'] == 'true') ||
+              ($e->getIT() == 'true' && $userOccupation['IT'] == 'true') ||
+              ($e->getHealth() == 'true' && $userOccupation['healthcare'] == 'true') ||
+              ($e->getBus() == 'true' && $userOccupation['business'] == 'true') ||
+              ($e->getFood() == 'true' && $userOccupation['foodservice'] == 'true') ||
+              ($e->getHosp() == 'true' && $userOccupation['hospitality'] == 'true') ||
+              ($e->getCul() == 'true' && $userOccupation['culinary'] == 'true')
+              )
+        {
+            $jobListRecArray[] = new Job($e->getID(), $e->getEmployerID(), $e->getTitle(), $e->getDesc(), $e->getPos(), $e->getLoc(), $e->getMed(), $e->getIT(), $e->getHealth(), $e->getBus(), $e->getFood(), $e->getHosp(), $e->getCul(), $e->getDate());
+        }    
+    }
+    return $jobListRecArray;
 }

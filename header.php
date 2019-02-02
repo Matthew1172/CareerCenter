@@ -60,7 +60,7 @@ $(document).ready(function(){
                         <li>
                         <form id="logout-form" action="php/sign-out.php" method="POST">
                         <ul class="navbar-nav ml-auto">
-                        <li><button id="logout-btn" type="submit" name="logout" class="btn btn-outline-secondary">Log out</button></li>
+                        <li><button id="logout-btn" type="submit" name="logout" class="btn btn-outline-secondary my-5">Log out</button></li>
                         </ul>
                         </form>
                         </li>
