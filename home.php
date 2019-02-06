@@ -1084,9 +1084,10 @@ if (isset($_SESSION['user_uid']))
                   $('#work-rec-list').show();
                 });
                 $(document).on('click','.job-rec-btn',function(){
-                  $('#job-rec-list-section').load('php/load-job-rec-events.php', {
-                    jobRecNewCount: jobRecCount
-                  });
+                  getJobRecData();
+                  //$('#job-rec-list-section').load('php/load-job-rec-events.php', {
+                  //  jobRecNewCount: jobRecCount
+                  //});
                   $('#all-events-list').hide();
                   $('#change-info').hide();
                   $('#own-events-list').hide();
@@ -1104,36 +1105,49 @@ if (isset($_SESSION['user_uid']))
                     $('#change-phone').hide();
                     $('#change-email').hide();
                     $('#upload-section').hide();
-                    $('#change-sector-section').hide();
+                    $('#change-sector-section').hide();                   
+                    $('#change-unemp-section').hide();
                     $('#change-pw').show();
                 });
                 $(document).on('click','.change-phone-btn',function(){
                     $('#change-email').hide();
                     $('#change-pw').hide();
                     $('#upload-section').hide();
-                    $('#change-sector-section').hide();
+                    $('#change-sector-section').hide();                    
+                    $('#change-unemp-section').hide();
                     $('#change-phone').show();
                 });
                 $(document).on('click','.change-email-btn',function(){
                     $('#change-phone').hide();
                     $('#change-pw').hide();
                     $('#upload-section').hide();
-                    $('#change-sector-section').hide();
+                    $('#change-sector-section').hide();                    
+                    $('#change-unemp-section').hide();
                     $('#change-email').show();
                 });
                 $(document).on('click','.upload-btn',function(){
                     $('#change-phone').hide();
                     $('#change-pw').hide();
                     $('#change-email').hide();
-                    $('#change-sector-section').hide();
+                    $('#change-sector-section').hide();                    
+                    $('#change-unemp-section').hide();
                     $('#upload-section').show();
                 });
                 $(document).on('click','.change-sector-btn',function(){
                     $('#change-phone').hide();
                     $('#change-pw').hide();
                     $('#change-email').hide();
-                    $('#upload-section').hide();
+                    $('#upload-section').hide();                    
+                    $('#change-unemp-section').hide();
                     $('#change-sector-section').show();
+                });
+                $(document).on('click','.change-unemp-btn',function(){
+                    $('#change-phone').hide();
+                    $('#change-pw').hide();
+                    $('#change-email').hide();
+                    $('#upload-section').hide();
+                    $('#change-sector-section').hide();
+                    $('#change-unemp-section').show();
                 });
                 $('#upload-form').submit(function(event){
                     var x = 'Are you sure you want to upload this resume?'
@@ -1151,7 +1165,55 @@ if (isset($_SESSION['user_uid']))
                         });
                     }
                 });
+                $('#change-unemp-form').submit(function(event){
+                  var x = 'Are you sure you want to change your state unemployment number?'
+                  if(confirm(x))
+                  {
+                      event.preventDefault();
+                      var change_unemp = $('#change-unemp-input').val();
+                      var change_unemp2 = $('#change-unemp2-input').val();
+                      var submit = $('#change-unemp-submit').val();
+                      $('.form-message').load('php/reset-unemp.php', {
+                          change_unemp: change_unemp,
+                          change_unemp2: change_unemp2,
+                          submit: submit
+                      });
+                  }
+                });
             });
+            
+            var jobRecStart = 0;
+            var jobRecLimit = 1;
+            var jobRecEnd = false;
+            function getJobRecData()
+            {
+                if(jobRecEnd)
+                {
+                    return;
+                }
+                $.ajax({
+                url: 'php/jobRecLoad.php',
+                method: 'POST',
+                dataType: 'text',
+                data: {
+                    getData: 1,
+                    start: jobRecStart,
+                    limit: jobRecLimit
+                },
+                success: function(response){
+                        if(response == 'reachedMax')
+                        {
+                            jobRecEnd = true;
+                        }
+                        else
+                        {
+                            jobRecStart += jobRecLimit;
+                            $('#job-rec-list-section').append(response);
+                        }
+                    }
+                });
+            }
+            
             </script>
             ");
             echo("<div class='grid'>");
@@ -1249,35 +1311,8 @@ if (isset($_SESSION['user_uid']))
             echo("<div id='job-rec-list' class='event-list p-2' style='display:none;'>");
             echo("<h2 class='dash-header'>Jobs for you: </h2><hr>");
             echo("<div id='job-rec-list-section' class='container'>");
-            /*
-            $stm2 = $conn->prepare('SELECT * from jobs ORDER BY dateStamp DESC LIMIT 2');
-            $stm2->execute();
-            while($jobListing = $stm2->fetch(PDO::FETCH_ASSOC))
-            {
-              if(
-              ($jobListing['isMedical'] == 'true' && $userOccupation['medical'] == 'true') ||
-              ($jobListing['isIT'] == 'true' && $userOccupation['IT'] == 'true') ||
-              ($jobListing['isHealthcare'] == 'true' && $userOccupation['healthcare'] == 'true') ||
-              ($jobListing['isBusiness'] == 'true' && $userOccupation['business'] == 'true') ||
-              ($jobListing['isFoodservice'] == 'true' && $userOccupation['foodservice'] == 'true') ||
-              ($jobListing['isHospitality'] == 'true' && $userOccupation['hospitality'] == 'true') ||
-              ($jobListing['isCulinary'] == 'true' && $userOccupation['culinary'] == 'true')
-              )
-              {
-                  echo("<div id='job" . $jobListing['job_id'] . "' class='event my-4'>");
-                  echo('<h3>'. $jobListing['job_title'] .'</h3>');
-                  echo('<p>'. $jobListing['job_position'] .'</p>');
-                  echo('<p>'. $jobListing['job_description'] .'</p>');
-                  echo('<p>Location: '. $jobListing['job_location'] .'</p>');
-                  echo("</div><hr>");
-                  $jobsFound += 1;
-              }
-            }
-            if($jobsFound <= 0)
-            {
-              echo("<div class='my-4'><h3>Couldnt find a job for you m8</h3></div>");
-            }
-            */
+            /*javascript will load list of rec jobs here when work-job-btn is pressed*/
+
             echo("</div>");
             echo("<div class='show-more-container'>");
             echo('<button id="more-job-rec-button" class="btn btn-primary more-btn">Show more</button>');
@@ -1317,6 +1352,7 @@ if (isset($_SESSION['user_uid']))
             <li><button class='btn-outline-primary btn nav-link change-email-btn'>Change email</button></li>
             <li><button class='btn-outline-primary btn nav-link upload-btn'>Upload Resume</button></li>
             <li><button class='btn-outline-primary btn nav-link change-sector-btn'>Change sectors</button></li>
+            <li><button class='btn-outline-primary btn nav-link change-unemp-btn'>Update state unemployment number</button></li>
             <li></li>
             </ul>
             </div>
@@ -1398,6 +1434,17 @@ if (isset($_SESSION['user_uid']))
                 <button id='change-sector-submit' type='submit' class='reset-btn btn btn-danger main-btn'>Change sectors</button>
             </form>
             </div>
+            
+            <div class='change-unemp-section' id='change-unemp-section' style='display:none;'>
+            <form id='change-unemp-form'>
+                <p class='form-message'></p>
+                <ul class='reset-list'>
+                    <li><input id='change-unemp-input' type='text' placeholder='New state unemployment number' class='form-control' aria-label='small' data-toggle='tooltip' title='Enter your state unemployment number'/></li>
+                    <li><input id='change-unemp2-input' type='text' placeholder='Re-type new state unemployment number' class='form-control' aria-label='small' data-toggle='tooltip' title='Re-type your state unemployment number'/></li>
+                </ul>                                        
+                <button id='change-unemp-submit' type='submit' class='reset-btn btn btn-danger main-btn'>Submit</button>
+            </form>
+            </div>
 
             </div>
             </div>
@@ -1417,4 +1464,13 @@ else
 {
     header("Location: index.php?error=signIn");
 }
+/*
+ *                 <p class='form-message'></p>
+                
+<input id='change-unemp-input' type='text' placeholder='New state unemployment number' class='form-control' aria-label='small' data-toggle='tooltip' title='Enter your state unemployment number'/>
+<input id='change-unemp2-input' type='text' placeholder='Re-type new state unemployment number' class='form-control' aria-label='small' data-toggle='tooltip' title='Re-type your state unemployment number'/>
+
+                <button id='change-unemp-submit' type='submit' class='reset-btn btn btn-danger main-btn'>Submit</button>
+            
+ */
 ?>

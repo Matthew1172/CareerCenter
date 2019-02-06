@@ -4,13 +4,13 @@ if(isset($_POST['submit']))
 {
     require 'connect.php';
 
-	$user_first = $_POST['fName'];
-	$user_last = $_POST['lName'];
-	$user_email = $_POST['email'];
-	$user_phone = preg_replace("/[^0-9]/", "", $_POST['phone']);
-	$user_uid = $_POST['uid'];
-	$user_pw = $_POST['pw'];
-	$user_pw2 = $_POST['pw2'];
+    $user_first = $_POST['fName'];
+    $user_last = $_POST['lName'];
+    $user_email = $_POST['email'];
+    $user_phone = preg_replace("/[^0-9]/", "", $_POST['phone']);
+    $user_uid = $_POST['uid'];
+    $user_pw = $_POST['pw'];
+    $user_pw2 = $_POST['pw2'];
 
     $q1 = $_POST['q1'];
     $a1 = $_POST['a1'];
@@ -94,10 +94,10 @@ if(isset($_POST['submit']))
             $errorWeb = false;
 
             if(empty($user_first) || empty($user_last) || empty($user_email) || empty($user_phone) || empty($user_uid) || empty($user_pw) || empty($user_pw2) || empty($employer_company) || empty($employer_tax) || empty($employer_employ) || empty($q1) || empty($a1) || empty($q2) || empty($a2) || empty($q3) || empty($a3))
-        	{
-        		echo("<span class='form-error'>please fill in all fields.</span>");
-        		$errorEmpty = true;
-        	}
+            {
+        	echo("<span class='form-error'>please fill in all fields.</span>");
+        	$errorEmpty = true;
+            }
             else if(!preg_match("/^[a-zA-Z0-9]*$/", $employer_company))
             {
                 echo("<span class='form-error'>this is not a valid company name.</span>");
@@ -129,53 +129,52 @@ if(isset($_POST['submit']))
         			{
         				if($user_pw == $user_pw2)
         				{
+                                            if(empty($employer_web))
+                                            {
+                                                $hashPwd = password_hash($user_pw, PASSWORD_DEFAULT);
 
-                            if(empty($employer_web))
-                            {
-                                $hashPwd = password_hash($user_pw, PASSWORD_DEFAULT);
+                                                $stm = $conn->prepare('INSERT INTO users(user_first, user_last, user_email, user_phone, user_uid, user_pw, user_type, user_q1, user_a1, user_q2, user_a2, user_q3, user_a3) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
+                                                $stm->execute([$user_first, $user_last, $user_email, $user_phone, $user_uid, $hashPwd, 'employer', $q1, $a1, $q2, $a2, $q3, $a3]);
 
-            					$stm = $conn->prepare('INSERT INTO users(user_first, user_last, user_email, user_phone, user_uid, user_pw, user_type, user_q1, user_a1, user_q2, user_a2, user_q3, user_a3) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
-            					$stm->execute([$user_first, $user_last, $user_email, $user_phone, $user_uid, $hashPwd, 'employer', $q1, $a1, $q2, $a2, $q3, $a3]);
+                                                $stm2 = $conn->prepare('SELECT user_id FROM users WHERE user_uid = ?');
+                                                $stm2->execute([$user_uid]);
+                                                $result = $stm2->fetch();
 
-                                $stm = $conn->prepare('SELECT user_id FROM users WHERE user_uid = ?');
-            					$stm->execute([$user_uid]);
-            					$result = $stm->fetch();
+                                                $stm3 = $conn->prepare('INSERT INTO user_occupations(user_id, medical, IT, business, foodservice, healthcare, hospitality, culinary) VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
+                                                $stm3->execute([$result['user_id'], $user_med, $user_it, $user_bus, $user_food, $user_health, $user_hosp, $user_cul]);
 
-                                $stm = $conn->prepare('INSERT INTO user_occupations(user_id, medical, IT, business, foodservice, healthcare, hospitality, culinary) VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
-                				        $stm->execute([$result['user_id'], $user_med, $user_it, $user_bus, $user_food, $user_health, $user_hosp, $user_cul]);
+                                                $stm4 = $conn->prepare('INSERT INTO employers(user_id, employer_company, employer_tax, employer_unemployNum, employer_web) VALUES (?, ?, ?, ?, ?)');
+                                                $stm4->execute([$result['user_id'], $employer_company, $employer_tax, $employer_employ, "This employer has not shared a website."]);
 
-                                $stm = $conn->prepare('INSERT INTO employers(user_id, employer_company, employer_tax, employer_unemployNum, employer_web) VALUES (?, ?, ?, ?, ?)');
-                                $stm->execute([$result['user_id'], $employer_company, $employer_tax, $employer_employ, "This employer has not shared a website."]);
+                                                echo("<span class='form-success'>Success~!</span>");
+                                            }
+                                            else
+                                            {
+                                                if (!filter_var($employer_web, FILTER_VALIDATE_URL))
+                                                {
+                                                    echo("<span class='form-error'>please put a valid URL.</span>");
+                                                    $errorWeb = true;
+                                                }
+                                                else
+                                                {
+                                                    $hashPwd = password_hash($user_pw, PASSWORD_DEFAULT);
 
-                                echo("<span class='form-success'>Success~!</span>");
-                            }
-                            else
-                            {
-                                if (!filter_var($employer_web, FILTER_VALIDATE_URL))
-                                {
-                                    echo("<span class='form-error'>please put a valid URL.</span>");
-                                    $errorWeb = true;
-                                }
-                                else
-                                {
-                                    $hashPwd = password_hash($user_pw, PASSWORD_DEFAULT);
+                                                    $stm = $conn->prepare('INSERT INTO users(user_first, user_last, user_email, user_phone, user_uid, user_pw, user_type, user_q1, user_a1, user_q2, user_a2, user_q3, user_a3) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
+                                                    $stm->execute([$user_first, $user_last, $user_email, $user_phone, $user_uid, $hashPwd, 'employer', $q1, $a1, $q2, $a2, $q3, $a3]);
 
-                                    $stm = $conn->prepare('INSERT INTO users(user_first, user_last, user_email, user_phone, user_uid, user_pw, user_type, user_q1, user_a1, user_q2, user_a2, user_q3, user_a3) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
-                					          $stm->execute([$user_first, $user_last, $user_email, $user_phone, $user_uid, $hashPwd, 'employer', $q1, $a1, $q2, $a2, $q3, $a3]);
+                                                    $stm = $conn->prepare('SELECT user_id FROM users WHERE user_uid = ?');
+                                                    $stm->execute([$user_uid]);
+                                                    $result = $stm->fetch();
 
-                                    $stm = $conn->prepare('SELECT user_id FROM users WHERE user_uid = ?');
-                					          $stm->execute([$user_uid]);
-                					          $result = $stm->fetch();
+                                                    $stm = $conn->prepare('INSERT INTO user_occupations(user_id, medical, IT, business, foodservice, healthcare, hospitality, culinary) VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
+                                                    $stm->execute([$result['user_id'], $user_med, $user_it, $user_bus, $user_food, $user_health, $user_hosp, $user_cul]);
 
-                                    $stm = $conn->prepare('INSERT INTO user_occupations(user_id, medical, IT, business, foodservice, healthcare, hospitality, culinary) VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
-                    				        $stm->execute([$result['user_id'], $user_med, $user_it, $user_bus, $user_food, $user_health, $user_hosp, $user_cul]);
+                                                    $stm = $conn->prepare('INSERT INTO employers(user_id, employer_company, employer_tax, employer_unemployNum, employer_web) VALUES (?, ?, ?, ?, ?)');
+                                                    $stm->execute([$result['user_id'], $employer_company, $employer_tax, $employer_employ, $employer_web]);
 
-                                    $stm = $conn->prepare('INSERT INTO employers(user_id, employer_company, employer_tax, employer_unemployNum, employer_web) VALUES (?, ?, ?, ?, ?)');
-                                    $stm->execute([$result['user_id'], $employer_company, $employer_tax, $employer_employ, $employer_web]);
-
-                                    echo("<span class='form-success'>success!</span>");
-                                }
-                            }
+                                                    echo("<span class='form-success'>success!</span>");
+                                                }
+                                            }
         				}
         				else
         				{
@@ -202,10 +201,10 @@ if(isset($_POST['submit']))
             $errorStateNum = false;
 
             if(empty($user_first) || empty($user_last) || empty($user_email) || empty($user_phone) || empty($user_uid) || empty($user_pw) || empty($user_pw2) || empty($seeker_stateNum) || empty($q1) || empty($a1) || empty($q2) || empty($a2) || empty($q3) || empty($a3))
-        	{
-        		echo("<span class='form-error'>please Fill in all fields.</span>");
-        		$errorEmpty = true;
-        	}
+            {
+        	echo("<span class='form-error'>please Fill in all fields.</span>");
+        	$errorEmpty = true;
+            }
             else if(strlen($seeker_stateNum) != 10 || !preg_match("/^[0-9]*$/", $seeker_stateNum))
             {
                 echo("<span class='form-error'>please write a state number.</span>");
@@ -232,17 +231,17 @@ if(isset($_POST['submit']))
         					$stm = $conn->prepare('INSERT INTO users(user_first, user_last, user_email, user_phone, user_uid, user_pw, user_type, user_q1, user_a1, user_q2, user_a2, user_q3, user_a3) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
         					$stm->execute([$user_first, $user_last, $user_email, $user_phone, $user_uid, $hashPwd, 'user', $q1, $a1, $q2, $a2, $q3, $a3]);
 
-                            $stm = $conn->prepare('SELECT user_id FROM users WHERE user_uid = ?');
+                                                $stm = $conn->prepare('SELECT user_id FROM users WHERE user_uid = ?');
         					$stm->execute([$user_uid]);
         					$result = $stm->fetch();
 
-                            $stm = $conn->prepare('INSERT INTO seekers(user_id, user_stateNum) VALUES (?, ?)');
-                            $stm->execute([$result['user_id'], $seeker_stateNum]);
+                                                $stm = $conn->prepare('INSERT INTO seekers(user_id, user_stateNum) VALUES (?, ?)');
+                                                $stm->execute([$result['user_id'], $seeker_stateNum]);
 
-                            $stm = $conn->prepare('INSERT INTO user_occupations(user_id, medical, IT, business, foodservice, healthcare, hospitality, culinary) VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
-            				$stm->execute([$result['user_id'], $user_med, $user_it, $user_bus, $user_food, $user_health, $user_hosp, $user_cul]);
+                                                $stm = $conn->prepare('INSERT INTO user_occupations(user_id, medical, IT, business, foodservice, healthcare, hospitality, culinary) VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
+                                                $stm->execute([$result['user_id'], $user_med, $user_it, $user_bus, $user_food, $user_health, $user_hosp, $user_cul]);
 
-                            echo("<span class='form-success'>Success~!</span>");
+                                                echo("<span class='form-success'>Success~!</span>");
         				}
         				else
         				{

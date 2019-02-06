@@ -80,7 +80,7 @@ function getJobList($conn)
     $sql->execute();
     while($result = $sql->fetch(PDO::FETCH_ASSOC))
     {
-        $jobListArray[] = new Job($result['job_id'], $result['employer_id'], $result['job_title'], $result['job_description'], $result['job_position'], $result['location'], $result['isMedical'], $result['isIT'], $result['isHealthcare'], $result['isBusiness'], $result['isFoodservice'], $result['isHospitality'], $result['isCulinary'], $result['dateStamp']);
+        $jobListArray[] = new Job($result['job_id'], $result['employer_id'], $result['job_title'], $result['job_description'], $result['job_position'], $result['job_location'], $result['isMedical'], $result['isIT'], $result['isHealthcare'], $result['isBusiness'], $result['isFoodservice'], $result['isHospitality'], $result['isCulinary'], $result['dateStamp']);
     }
     return $jobListArray;
 }

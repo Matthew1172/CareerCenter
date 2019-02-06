@@ -16,10 +16,12 @@ echo('
                 case "seeker":
                     $("#employerPartB").hide();
                     $("#seekerPartB").show();
+                    
                     break;
                 case "employer":
                     $("#seekerPartB").hide();
                     $("#employerPartB").show();
+                    
                     break;
                 default:
                     $("#employerPartB, #seekerPartB").hide();
