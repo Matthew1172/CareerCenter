@@ -240,13 +240,38 @@ if (isset($_SESSION['user_uid']))
                             });
                         }
                     });
+                    $(document).on('click','.rem-event-btn',function(){
+                    var x = 'Are you sure you want to remove this event?'
+                    if(confirm(x))
+                    {
+                        var ID = $(this).attr('id');
+                        $('#event'+ID).hide();
+                        $.ajax({
+                            type: 'POST',
+                            url: 'php/remove-event.php',
+                            data: {
+                                ID: ID
+                            },
+                            success: function(html){
+                                $('#event'+ID).remove();
+                            }
+                        });
+                    }
+                    });
                     $(document).on('click','.current-btn',function(){
                         $('#change-info').hide();
+                        $('#mod-event-list').hide();
                         $('#current-event-list').show();
                     });
                     $(document).on('click','.change-btn',function(){
                         $('#current-event-list').hide();
+                        $('#mod-event-list').hide();
                         $('#change-info').show();
+                    });
+                    $(document).on('click','.mod-work-btn',function(){
+                        $('#current-event-list').hide();
+                        $('#change-info').hide();
+                        $('#mod-event-list').show();
                     });
                     $(document).on('click','.change-pw-btn',function(){
                         $('#change-phone').hide();
@@ -397,10 +422,11 @@ if (isset($_SESSION['user_uid']))
                 </button>
                 <div class="navbar-collapse collapse justify-content-stretch" id="navbar2">
                 <ul class="navbar-nav ml-auto">
-                    <li><button class="btn-outline-secondary btn nav-link current-btn">Current Workshops</button></li>
-                    <li><button class="btn-outline-secondary btn nav-link change-btn">Update account</button></li>
-                    <li><button class="btn-outline-secondary btn nav-link" data-toggle="modal" data-target="#reset">Reset password</button></li>
-                    <li><button class="btn-outline-secondary btn nav-link" data-toggle="modal" data-target="#add-workshop">Add workshop</button></li>
+                    <li class="main-btn"><button class="btn-outline-secondary btn nav-link current-btn">Current Workshops</button></li>
+                    <li class="main-btn"><button class="btn-outline-secondary btn nav-link mod-work-btn">Modify workshops</button></li>
+                    <li class="main-btn"><button class="btn-outline-secondary btn nav-link" data-toggle="modal" data-target="#reset">Reset password</button></li>
+                    <li class="main-btn"><button class="btn-outline-secondary btn nav-link" data-toggle="modal" data-target="#add-workshop">Add workshop</button></li>
+                    <li class="main-btn"><button class="btn-outline-secondary btn nav-link change-btn">Update account</button></li>
                 </ul>
                 </div>
             </nav>
@@ -421,7 +447,6 @@ if (isset($_SESSION['user_uid']))
                         "<div id='event" . $eventID . "' class='row event my-4 p-2'>" .
                         "<div class='col-xs-9 col-sm-9 col-md-10 col-lg-10'>" .
                         "<h3>"                   . $event['title']        . "</h3>" .
-                        "<b>Type: </b>"          . $event['type']         . "<br/>" .
                         "<p>"                    . $event['description']  . "</p><br/><br/>" .
                         "<b>Location: </b>"      . $event['location']     . "<br/>" .
                         "<b>Date: </b>"          . $event['startTime']    . "<br/>" .
@@ -429,29 +454,68 @@ if (isset($_SESSION['user_uid']))
                         "</div>");
 
                         echo("<div class='col-xs-3 col-sm-3 col-md-2 col-lg-2'>");
-                            echo("<ul class='user-attendance'>");
-                            $sql = $conn->prepare('SELECT user_id FROM user_event WHERE event_id = ?');
-                            $sql->execute([$eventID]);
-                            if($sql->rowCount() > 0)
-                            {
-                                while($eventResult = $sql->fetch())
-                                {
-                                    $sql2 = $conn->prepare('SELECT * FROM users WHERE user_id = ?');
-                                    $sql2->execute([$eventResult['user_id']]);
-                                    while($userResults = $sql2->fetch())
-                                    {
-                                        echo("<li>". $userResults['user_uid'] ."</li>");
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                echo("<li>There are no users going to this event</li>");
-                            }
-                            echo("</ul>");
+
                         echo("</div>");
 
                         echo("</div><hr>");
+            }
+            echo("</div>");
+            echo("</div>");
+            
+            //list to modify workshops
+            echo("<div id='mod-event-list' class='event-list p-2' style='display: none;'>");
+            echo("<h2 class='dash-header'>Modify Workshops: </h2><hr>");
+            echo("<div id='mod-event-list-section' class='container'>");
+            $stm = $conn->prepare('SELECT * from events');
+            $stm->execute();
+            while($event = $stm->fetch(PDO::FETCH_ASSOC))
+            {
+                $eventID = $event['event_id'];
+                echo(
+                "<div id='event"         . $eventID         . "' class='event my-4 p-2'>" .
+                "<h3>Event number: "     . $eventID         . "</h3>" .
+                "<h3>"                   . $event['title']  . "</h3>");
+                $sql = $conn->prepare('SELECT user_id FROM user_event WHERE event_id = ?');
+                $sql->execute([$eventID]);
+                if($sql->rowCount() > 0)
+                {
+                    echo('<table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th>user</th>
+                            <th>name</th>
+                            <th>phone</th>
+                            <th>email</th>
+                            <th>type</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        ');
+                        while($eventResult = $sql->fetch())
+                        {
+                            $sql2 = $conn->prepare('SELECT * FROM users WHERE user_id = ?');
+                            $sql2->execute([$eventResult['user_id']]);
+                            while($userResults = $sql2->fetch())
+                            {
+                                echo("<tr>");
+                                echo("<td><p>". $userResults['user_uid'] ."</p></td>");
+                                echo("<td><p>". $userResults['user_first']." ".$userResults['user_last'] ."</p></td>");
+                                echo("<td><p>". $userResults['user_phone'] ."</p></td>");
+                                echo("<td><p>". $userResults['user_email'] ."</p></td>");
+                                echo("<td><p>". $userResults['user_type'] ."</p></td>");
+                                echo("</tr>");
+                             }
+                        }
+                        echo("
+                            </tbody>
+                            </table>");
+                }
+                else
+                {
+                    echo("<p>There are no users going to this event</p>");
+                }
+                echo("<button id='" . $eventID . "' class='btn btn-primary rem-event-btn'>Remove</button>");
+                echo("</div><hr>");
             }
             echo("</div>");
             echo("</div>");
@@ -1041,7 +1105,7 @@ if (isset($_SESSION['user_uid']))
             echo("<link href='styles/home-user.css' rel='stylesheet'>");
             echo("<link href='formhelper/css/bootstrap-formhelpers.css' rel='stylesheet'/>");
             echo("
-            <script>
+            <script>       
             $(document).ready(function() {
                 var jobRecCount = 2;               
                 var workRecCount = 2;
@@ -1084,10 +1148,9 @@ if (isset($_SESSION['user_uid']))
                   $('#work-rec-list').show();
                 });
                 $(document).on('click','.job-rec-btn',function(){
-                  getJobRecData();
-                  //$('#job-rec-list-section').load('php/load-job-rec-events.php', {
-                  //  jobRecNewCount: jobRecCount
-                  //});
+                  $('#job-rec-list-section').load('php/load-job-rec-events.php', {
+                    jobRecNewCount: jobRecCount
+                  });
                   $('#all-events-list').hide();
                   $('#change-info').hide();
                   $('#own-events-list').hide();
@@ -1181,39 +1244,6 @@ if (isset($_SESSION['user_uid']))
                   }
                 });
             });
-            
-            var jobRecStart = 0;
-            var jobRecLimit = 1;
-            var jobRecEnd = false;
-            function getJobRecData()
-            {
-                if(jobRecEnd)
-                {
-                    return;
-                }
-                $.ajax({
-                url: 'php/jobRecLoad.php',
-                method: 'POST',
-                dataType: 'text',
-                data: {
-                    getData: 1,
-                    start: jobRecStart,
-                    limit: jobRecLimit
-                },
-                success: function(response){
-                        if(response == 'reachedMax')
-                        {
-                            jobRecEnd = true;
-                        }
-                        else
-                        {
-                            jobRecStart += jobRecLimit;
-                            $('#job-rec-list-section').append(response);
-                        }
-                    }
-                });
-            }
-            
             </script>
             ");
             echo("<div class='grid'>");
