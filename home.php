@@ -20,184 +20,164 @@ if (isset($_SESSION['user_uid'])) {
     $ownEventList = getOwnEventList($conn, $result['user_id']);
     //get a list of all jobs
     $jobList = getJobList($conn);
-
-
     echo('<script>');
     echo("
-    $(document).ready(function(){
-        $(document).on('click','.event-btn',function(){
-            var x = 'Are you sure you want to subscribe?'
-            if(confirm(x))
-            {
-                var ID = $(this).attr('id');
-                $('#event'+ID).hide();
-                    $.ajax({
-                        type: 'POST',
-                        url: 'php/subscribe.php',
-                        data: {
-                            ID: ID
-                        },
-                        success: function(response){
-                          if(response == 'error100')
-                          {
-                              alert('You\\'re already subscribed for this workshop.');
-                          }
-                          else
-                          {
-                              $('#event'+ID).remove();
-                              alert('You have subscribed to this workshop.');
-                          }
-                        }
-                });
-            }
-        });
-        $(document).on('click','.sub-event-btn',function(){
-            var x = 'Are you sure you want to un-subscribe?'
-            if(confirm(x))
-            {
-                var ID = $(this).attr('id');
-                $('#sub-event'+ID).hide();
-                    $.ajax({
-                        type: 'POST',
-                        url: 'php/unsubscribe.php',
-                        data: {
-                            ID: ID
-                        },
-                        success: function(html){
-                            $('#event'+ID).remove();
-                        }
-                });
-            }
-        });
-        var allEventCount = 2;
-        $('#more-all-events-button').click(function(){
-            allEventCount += 2;
-            $('#all-events-list-section').load('php/load-all-events.php', {
-                allEventNewCount: allEventCount
-            });
-        });
-        var ownEventCount = 2;
-        $('#more-own-events-button').click(function(){
-            ownEventCount += 2;
-            $('#own-events-list-section').load('php/load-own-events.php', {
-                ownEventNewCount: ownEventCount
-            });
-        });
-        var jobCount = 2;
-        $('#more-own-jobs-button').click(function(){
-            jobCount += 2;
-            $('#job-list-section').load('php/load-own-jobs.php', {
-                jobNewCount: jobCount
-            });
-        });
-        var workRecCount = 2;
-        $('#more-work-rec-button').click(function(){
-            workRecCount += 2;
-            $('#work-rec-list-section').load('php/load-work-rec-events.php', {
-                workRecNewCount: workRecCount
-            });
-        });
-        $('#change-sector-form').submit(function(event){
-            var x = 'Are you sure you want to change your sectors?'
-            if(confirm(x))
-            {
-                event.preventDefault();
-                var med = $('#change-sector-med');
-                var it = $('#change-sector-it');
-                var bus = $('#change-sector-bus');
-                var health = $('#change-sector-health');
-                var food = $('#change-sector-food');
-                var hosp = $('#change-sector-hosp');
-                var cul = $('#change-sector-cul');
-
-                var submit = $('#change-sector-submit').val();
-
-                    $('.form-message').load('php/reset-sectors.php', {
-                        med: med.prop('checked'),
-                        it: it.prop('checked'),
-                        bus: bus.prop('checked'),
-                        health: health.prop('checked'),
-                        food: food.prop('checked'),
-                        hosp: hosp.prop('checked'),
-                        cul: cul.prop('checked'),
-                        submit: submit,
-                        success: function(response){
-                            console.log(response);
-                        }
+        $(document).ready(function(){
+            $(document).on('click','.event-btn',function(){
+                var x = 'Are you sure you want to subscribe?'
+                if(confirm(x))
+                {
+                    var ID = $(this).attr('id');
+                    $('#event'+ID).hide();
+                        $.ajax({
+                            type: 'POST',
+                            url: 'php/subscribe.php',
+                            data: {
+                                ID: ID
+                            },
+                            success: function(response){
+                                if(response == 'error100')
+                                {
+                                    alert('You\\'re already subscribed for this workshop.');
+                                }
+                                else
+                                {
+                                    $('#event'+ID).remove();
+                                    alert('You have subscribed to this workshop.');
+                                }
+                            }
                     });
-            }
-        });
-        $('#change-pw-form').submit(function(event){
-          var x = 'Are you sure you want to change your password?'
-          if(confirm(x))
-          {
-              event.preventDefault();
-              var change_pw = $('#change-pw-input').val();
-              var change_pw2 = $('#change-pw2-input').val();
-              var submit = $('#change-pw-submit').val();
-              $('.form-message').load('php/reset-pw.php', {
-                  change_pw: change_pw,
-                  change_pw2: change_pw2,
-                  submit: submit
-              });
-          }
-        });
-        $('#change-phone-form').submit(function(event){
-          var x = 'Are you sure you want to change your phone number?'
-          if(confirm(x))
-          {
-              event.preventDefault();
-              var change_phone = $('#change-phone-input').val();
-              var change_phone2 = $('#change-phone2-input').val();
-              var submit = $('#change-phone-submit').val();
-              $('.form-message').load('php/reset-phone.php', {
-                  change_phone: change_phone,
-                  change_phone2: change_phone2,
-                  submit: submit
-              });
-          }
-        });
-        $('#change-email-form').submit(function(event){
-          var x = 'Are you sure you want to change your email?'
-          if(confirm(x))
-          {
-              event.preventDefault();
-              var change_email = $('#change-email-input').val();
-              var change_email2 = $('#change-email2-input').val();
-              var submit = $('#change-email-submit').val();
-              $('.form-message').load('php/reset-email.php', {
-                  change_email: change_email,
-                  change_email2: change_email2,
-                  submit: submit
-              });
-          }
-      });
-    });
-");
-    echo('</script>');
+                }
+            });
+            $(document).on('click','.sub-event-btn',function(){
+                var x = 'Are you sure you want to un-subscribe?'
+                if(confirm(x))
+                {
+                    var ID = $(this).attr('id');
+                    $('#sub-event'+ID).hide();
+                        $.ajax({
+                            type: 'POST',
+                            url: 'php/unsubscribe.php',
+                            data: {
+                                ID: ID
+                            },
+                            success: function(html){
+                                $('#event'+ID).remove();
+                            }
+                    });
+                }
+            });
+            var allEventCount = 2;
+            $('#more-all-events-button').click(function(){
+                allEventCount += 2;
+                $('#all-events-list-section').load('php/load-all-events.php', {
+                    allEventNewCount: allEventCount
+                });
+            });
+            var ownEventCount = 2;
+            $('#more-own-events-button').click(function(){
+                ownEventCount += 2;
+                $('#own-events-list-section').load('php/load-own-events.php', {
+                    ownEventNewCount: ownEventCount
+                });
+            });
+            var jobCount = 2;
+            $('#more-own-jobs-button').click(function(){
+                jobCount += 2;
+                $('#job-list-section').load('php/load-own-jobs.php', {
+                    jobNewCount: jobCount
+                });
+            });
+            var workRecCount = 2;
+            $('#more-work-rec-button').click(function(){
+                workRecCount += 2;
+                $('#work-rec-list-section').load('php/load-work-rec-events.php', {
+                    workRecNewCount: workRecCount
+                });
+            });
+            $('#change-sector-form').submit(function(event){
+                var x = 'Are you sure you want to change your sectors?'
+                if(confirm(x))
+                {
+                    event.preventDefault();
+                    var med = $('#change-sector-med');
+                    var it = $('#change-sector-it');
+                    var bus = $('#change-sector-bus');
+                    var health = $('#change-sector-health');
+                    var food = $('#change-sector-food');
+                    var hosp = $('#change-sector-hosp');
+                    var cul = $('#change-sector-cul');
 
+                    var submit = $('#change-sector-submit').val();
+
+                        $('.form-message').load('php/reset-sectors.php', {
+                            med: med.prop('checked'),
+                            it: it.prop('checked'),
+                            bus: bus.prop('checked'),
+                            health: health.prop('checked'),
+                            food: food.prop('checked'),
+                            hosp: hosp.prop('checked'),
+                            cul: cul.prop('checked'),
+                            submit: submit,
+                            success: function(response){
+                                console.log(response);
+                            }
+                        });
+                }
+            });
+            $('#change-pw-form').submit(function(event){
+              var x = 'Are you sure you want to change your password?'
+              if(confirm(x))
+              {
+                  event.preventDefault();
+                  var change_pw = $('#change-pw-input').val();
+                  var change_pw2 = $('#change-pw2-input').val();
+                  var submit = $('#change-pw-submit').val();
+                  $('.form-message').load('php/reset-pw.php', {
+                      change_pw: change_pw,
+                      change_pw2: change_pw2,
+                      submit: submit
+                  });
+              }
+            });
+            $('#change-phone-form').submit(function(event){
+              var x = 'Are you sure you want to change your phone number?'
+              if(confirm(x))
+              {
+                  event.preventDefault();
+                  var change_phone = $('#change-phone-input').val();
+                  var change_phone2 = $('#change-phone2-input').val();
+                  var submit = $('#change-phone-submit').val();
+                  $('.form-message').load('php/reset-phone.php', {
+                      change_phone: change_phone,
+                      change_phone2: change_phone2,
+                      submit: submit
+                  });
+              }
+            });
+            $('#change-email-form').submit(function(event){
+              var x = 'Are you sure you want to change your email?'
+              if(confirm(x))
+              {
+                  event.preventDefault();
+                  var change_email = $('#change-email-input').val();
+                  var change_email2 = $('#change-email2-input').val();
+                  var submit = $('#change-email-submit').val();
+                  $('.form-message').load('php/reset-email.php', {
+                      change_email: change_email,
+                      change_email2: change_email2,
+                      submit: submit
+                  });
+              }
+          });
+        });
+        ");
+    echo('</script>');
     if ($result['user_type'] == "admin") {
         echo("<link href='styles/home-admin.css' rel='stylesheet'>");
-
         echo('<script>');
         echo("
                 $(document).ready(function(){
-                    $('#reset-form').submit(function(event){
-                        event.preventDefault();
-
-                        var reset_email = $('#reset-email').val();
-                        var reset_pw = $('#reset-pw').val();
-                        var reset_pw2 = $('#reset-pw2').val();
-
-                        var submit = $('#submit').val();
-
-                            $('.form-message').load('php/reset-pw-admin.php', {
-                                reset_email: reset_email,
-                                reset_pw: reset_pw,
-                                reset_pw2: reset_pw2,
-                                submit: submit
-                            });
-                    });
                     $('#add-work-form').submit(function(event){
                         var x = 'Are you sure you want to add this event?'
                         if(confirm(x))
@@ -312,14 +292,12 @@ if (isset($_SESSION['user_uid'])) {
                             event.preventDefault();
                             var change_pw = $('#change-pw-input').val();
                             var change_pw2 = $('#change-pw2-input').val();
-
                             var submit = $('#change-pw-submit').val();
-
-                                $('.form-message').load('php/reset-pw.php', {
-                                    change_pw: change_pw,
-                                    change_pw2: change_pw2,
-                                    submit: submit
-                                });
+                            $('.form-message').load('php/reset-pw.php', {
+                                change_pw: change_pw,
+                                change_pw2: change_pw2,
+                                submit: submit
+                            });
                         }
                     });
                     $('#change-phone-form').submit(function(event){
@@ -329,14 +307,12 @@ if (isset($_SESSION['user_uid'])) {
                             event.preventDefault();
                             var change_phone = $('#change-phone-input').val();
                             var change_phone2 = $('#change-phone2-input').val();
-
                             var submit = $('#change-phone-submit').val();
-
-                                $('.form-message').load('php/reset-phone.php', {
-                                    change_phone: change_phone,
-                                    change_phone2: change_phone2,
-                                    submit: submit
-                                });
+                            $('.form-message').load('php/reset-phone.php', {
+                                change_phone: change_phone,
+                                change_phone2: change_phone2,
+                                submit: submit
+                            });
                         }
                     });
                     $('#change-email-form').submit(function(event){
@@ -346,57 +322,29 @@ if (isset($_SESSION['user_uid'])) {
                             event.preventDefault();
                             var change_email = $('#change-email-input').val();
                             var change_email2 = $('#change-email2-input').val();
-
                             var submit = $('#change-email-submit').val();
-
-                                $('.form-message').load('php/reset-email.php', {
-                                    change_email: change_email,
-                                    change_email2: change_email2,
-                                    submit: submit
-                                });
-                        }
-                    });
-                    $('#upload-form').submit(function(event){
-                        var x = 'Are you sure you want to upload this resume?'
-                        if(confirm(x))
-                        {
-                            event.preventDefault();
-
-                            $.ajax({
-                            url: 'php/upload-resume.php', // Url to which the request is send
-                            type: 'POST',             // Type of request to be send, called as method
-                            data: new FormData(this), // Data sent to server, a set of key/value pairs (i.e. form fields and values)
-                            contentType: false,       // The content type used when sending data to the server.
-                            cache: false,             // To unable request pages to be cached
-                            processData:false        // To send DOMDocument or non processed data file it is set to false
+                            $('.form-message').load('php/reset-email.php', {
+                                change_email: change_email,
+                                change_email2: change_email2,
+                                submit: submit
                             });
                         }
                     });
-                    $('#change-sector-form').submit(function(event){
-                        var x = 'Are you sure you want to change your sectors?'
+                    $('#reset-form').submit(function(event){
+                        var x = 'Are you sure you want to reset this users password?'
                         if(confirm(x))
                         {
                             event.preventDefault();
-                            var med = $('#change-sector-med');
-                            var it = $('#change-sector-it');
-                            var bus = $('#change-sector-bus');
-                            var health = $('#change-sector-health');
-                            var food = $('#change-sector-food');
-                            var hosp = $('#change-sector-hosp');
-                            var cul = $('#change-sector-cul');
-
-                            var submit = $('#change-sector-submit').val();
-
-                                $('.form-message').load('php/reset-sectors.php', {
-                                    med: med.prop('checked'),
-                                    it: it.prop('checked'),
-                                    bus: bus.prop('checked'),
-                                    health: health.prop('checked'),
-                                    food: food.prop('checked'),
-                                    hosp: hosp.prop('checked'),
-                                    cul: cul.prop('checked'),
-                                    submit: submit
-                                });
+                            var reset_email = $('#reset-email').val();
+                            var reset_pw = $('#reset-pw').val();
+                            var reset_pw2 = $('#reset-pw2').val();
+                            var submit = $('#submit').val();
+                            $('.form-message').load('php/reset-pw-admin.php', {
+                                reset_email: reset_email,
+                                reset_pw: reset_pw,
+                                reset_pw2: reset_pw2,
+                                submit: submit
+                            });
                         }
                     });
                 });
@@ -421,8 +369,8 @@ if (isset($_SESSION['user_uid'])) {
                 <ul class="navbar-nav ml-auto">
                     <li class="main-btn"><button class="btn-outline-secondary btn nav-link current-btn">Current Workshops</button></li>
                     <li class="main-btn"><button class="btn-outline-secondary btn nav-link mod-work-btn">Modify workshops</button></li>
-                    <li class="main-btn"><button class="btn-outline-secondary btn nav-link" data-toggle="modal" data-target="#reset">Reset password</button></li>
                     <li class="main-btn"><button class="btn-outline-secondary btn nav-link" data-toggle="modal" data-target="#add-workshop">Add workshop</button></li>
+                    <li class="main-btn"><button class="btn-outline-secondary btn nav-link" data-toggle="modal" data-target="#reset">Reset password</button></li>
                     <li class="main-btn"><button class="btn-outline-secondary btn nav-link change-btn">Update account</button></li>
                 </ul>
                 </div>
@@ -572,10 +520,9 @@ if (isset($_SESSION['user_uid'])) {
         echo("</div>");
         echo("</div>");
 
-        echo("</div>");
+        echo("</div>");/*Control area end*/
 
-        echo("</div>");
-
+        echo("</div>");/*grid area end*/
         //MODAL FOR RESET USER PASSWORD
         echo('
             <div class="modal fade" id="reset" tabindex="-1" role="dialog" aria-labelledby="resetLabel">
@@ -598,7 +545,6 @@ if (isset($_SESSION['user_uid'])) {
                 </div>
             </div>
             ');
-
         //MODAL FOR ADD WORKSHOP
         echo('
             <div class="modal fade" id="add-workshop" tabindex="-1" role="dialog" aria-labelledby="resetLabel">
@@ -654,11 +600,6 @@ if (isset($_SESSION['user_uid'])) {
     } elseif ($result['user_type'] == "employer") {
         echo("<link href='styles/home-employer.css' rel='stylesheet'>");
         echo("<link href='formhelper/css/bootstrap-formhelpers.css' rel='stylesheet'/>");
-
-        $stm = $conn->prepare('SELECT * FROM employers WHERE user_id = ?');
-        $stm->execute([$result['user_id']]);
-        $employerResult = $stm->fetch();
-
         echo('<script>');
         echo("
         $(document).ready(function(){
@@ -666,7 +607,6 @@ if (isset($_SESSION['user_uid'])) {
             var allEventCount = 2;
             var ownEventCount = 2;
             var jobCount = 2;
-
             $('#postJob-form').submit(function(event){
                 var x = 'Are you sure you want to post this job?'
                 if(confirm(x))
@@ -708,18 +648,18 @@ if (isset($_SESSION['user_uid'])) {
                 var x = 'Are you sure you want to remove this job?'
                 if(confirm(x))
                 {
-                  var ID = $(this).attr('id');
-                  $('#job'+ID).hide();
-                  $.ajax({
-                      type: 'POST',
-                      url: 'php/remove-job.php',
-                      data: {
-                          ID: ID
-                      },
-                      success: function(html){
-                          $('#job'+ID).remove();
-                      }
-                  });
+                    var ID = $(this).attr('id');
+                    $('#job'+ID).hide();
+                    $.ajax({
+                            type: 'POST',
+                            url: 'php/remove-job.php',
+                            data: {
+                                ID: ID
+                            },
+                            success: function(html){
+                                $('#job'+ID).remove();
+                            }
+                    });
                 }
             });
             $(document).on('click','.all-btn',function(){
@@ -911,43 +851,43 @@ if (isset($_SESSION['user_uid'])) {
         echo("<h2 class='dash-header'>Post your job: </h2><hr>");
         echo("<div id='post-job-section' class='container'>");
         echo("
-      <form id='postJob-form'>
-      <p class='form-message'></p>
-          <ul>
-              <li><input id='postJob-title' type='text' placeholder='Job title' class='form-control' aria-label='small'></li>
-              <li><input id='postJob-position' type='text' placeholder='Job position' class='form-control' aria-label='small'></li>
-              <li><input id='postJob-location' type='text' placeholder='Job location' class='form-control' aria-label='small'></li>
-              <li><textarea id='postJob-description' type='text' placeholder='Job description' class='form-control' aria-label='small' rows='3'></textarea></li>
+            <form id='postJob-form'>
+            <p class='form-message'></p>
+                <ul>
+                    <li><input id='postJob-title' type='text' placeholder='Job title' class='form-control' aria-label='small'></li>
+                    <li><input id='postJob-position' type='text' placeholder='Job position' class='form-control' aria-label='small'></li>
+                    <li><input id='postJob-location' type='text' placeholder='Job location' class='form-control' aria-label='small'></li>
+                    <li><textarea id='postJob-description' type='text' placeholder='Job description' class='form-control' aria-label='small' rows='3'></textarea></li>
 
-              <li class='py-3'><h6>What sections is your job involved with? <br/>(check all that apply)</h6></li>
-              <li>
-                  <div class='form-check'>
-                    <input class='form-check-input' type='checkbox' value='TRUE' id='postJob-med'>
-                    <label class='form-check-label' for='postJob-medical'>Medical</label>
-                <br/>
-                    <input class='form-check-input' type='checkbox' value='TRUE' id='postJob-it'>
-                    <label class='form-check-label' for='postJob-it'>IT</label>
-                <br/>
-                    <input class='form-check-input' type='checkbox' value='TRUE' id='postJob-bus'>
-                    <label class='form-check-label' for='postJob-business'>Business</label>
-                <br/>
-                    <input class='form-check-input' type='checkbox' value='TRUE' id='postJob-health'>
-                    <label class='form-check-label' for='postJob-health'>Health care</label>
-                <br/>
-                    <input class='form-check-input' type='checkbox' value='TRUE' id='postJob-food'>
-                    <label class='form-check-label' for='postJob-food'>Food service</label>
-                <br/>
-                    <input class='form-check-input' type='checkbox' value='TRUE' id='postJob-hosp'>
-                    <label class='form-check-label' for='postJob-hosp'>Hospitality</label>
-                <br/>
-                    <input class='form-check-input' type='checkbox' value='TRUE' id='postJob-cul'>
-                    <label class='form-check-label' for='postJob-cul'>Culinary</label>
-                  </div>
-              </li>
-          </ul>
-          <button id='submit' type='submit' class='btn btn-primary main-btn more-btn'>Post job</button>
-      </form>
-      ");
+                    <li class='py-3'><h6>What sections is your job involved with? <br/>(check all that apply)</h6></li>
+                    <li>
+                        <div class='form-check'>
+                          <input class='form-check-input' type='checkbox' value='TRUE' id='postJob-med'>
+                          <label class='form-check-label' for='postJob-medical'>Medical</label>
+                      <br/>
+                          <input class='form-check-input' type='checkbox' value='TRUE' id='postJob-it'>
+                          <label class='form-check-label' for='postJob-it'>IT</label>
+                      <br/>
+                          <input class='form-check-input' type='checkbox' value='TRUE' id='postJob-bus'>
+                          <label class='form-check-label' for='postJob-business'>Business</label>
+                      <br/>
+                          <input class='form-check-input' type='checkbox' value='TRUE' id='postJob-health'>
+                          <label class='form-check-label' for='postJob-health'>Health care</label>
+                      <br/>
+                          <input class='form-check-input' type='checkbox' value='TRUE' id='postJob-food'>
+                          <label class='form-check-label' for='postJob-food'>Food service</label>
+                      <br/>
+                          <input class='form-check-input' type='checkbox' value='TRUE' id='postJob-hosp'>
+                          <label class='form-check-label' for='postJob-hosp'>Hospitality</label>
+                      <br/>
+                          <input class='form-check-input' type='checkbox' value='TRUE' id='postJob-cul'>
+                          <label class='form-check-label' for='postJob-cul'>Culinary</label>
+                        </div>
+                    </li>
+                </ul>
+                <button id='submit' type='submit' class='btn btn-primary main-btn more-btn'>Post job</button>
+            </form>
+            ");
         echo("</div>");
         echo("</div>");
 
@@ -955,116 +895,114 @@ if (isset($_SESSION['user_uid'])) {
         echo("<h2 class='dash-header'>Update your personal information: </h2><hr>");
         echo("<div id='change-section' class='container'>");
         echo("
-      <div class='row'>
-      <ul class='current-info'>
-      <li><b>First name: </b>" . $result['user_first'] . "</li>
-      <li><b>Last name: </b>" . $result['user_last'] . "</li>
-      <li><b>Email: </b>" . $result['user_email'] . "</li>
-      <li><b>Phone number: </b>" . $result['user_phone'] . "</li>
-      <li><b>User name: </b>" . $result['user_uid'] . "</li>
-      <li>
-        <b>Sectors: </b>
-        <ul>
-        <li>medical: " . $userOccupation['medical'] . "</li>
-        <li>IT: " . $userOccupation['IT'] . "</li>
-        <li>healthcare: " . $userOccupation['healthcare'] . "</li>
-        <li>business: " . $userOccupation['business'] . "</li>
-        <li>foodservice: " . $userOccupation['foodservice'] . "</li>
-        <li>hospitality: " . $userOccupation['hospitality'] . "</li>
-        <li>culinary: " . $userOccupation['culinary'] . "</li>
-        </ul>
-      </li>
-      </ul>
-      </div>
-      <div class='row'>
-      <div class='col-xs-5 col-sm-5 col-md-5 col-lg-4'>
-      <ul class='change-list'>
-      <li><button class='btn-outline-primary btn nav-link change-pw-btn'>Change password</button></li>
-      <li><button class='btn-outline-primary btn nav-link change-phone-btn'>Change phone number</button></li>
-      <li><button class='btn-outline-primary btn nav-link change-email-btn'>Change email</button></li>
-      <li><button class='btn-outline-primary btn nav-link change-sector-btn'>Change sectors</button></li>
-      <li></li>
-      </ul>
-      </div>
-      <div class='change-section col-xs-7 col-sm-7 col-md-7 col-lg-8'>
-      <div class='change-pw' id='change-pw' style='display:none;'>
-      <form id='change-pw-form'>
-          <p class='form-message'></p>
-          <ul class='reset-list'>
-              <li><input id='change-pw-input' type='text' placeholder='New password' class='form-control' aria-label='small' data-toggle='tooltip' title='Enter your new password (must be 8 characters long, ! ? @ $ % & * allowed)'></li>
-              <li><input id='change-pw2-input' type='text' placeholder='Re-type new password' class='form-control' aria-label='small' data-toggle='tooltip' title='Re-type your new password (must be 8 characters long, ! ? @ $ % & * allowed)'></li>
-          </ul>
-          <button id='change-pw-submit' type='submit' class='reset-btn btn btn-danger main-btn'>Reset password</button>
-      </form>
-      </div>
+            <div class='row'>
+            <ul class='current-info'>
+            <li><b>First name: </b>" . $result['user_first'] . "</li>
+            <li><b>Last name: </b>" . $result['user_last'] . "</li>
+            <li><b>Email: </b>" . $result['user_email'] . "</li>
+            <li><b>Phone number: </b>" . $result['user_phone'] . "</li>
+            <li><b>User name: </b>" . $result['user_uid'] . "</li>
+            <li>
+              <b>Sectors: </b>
+              <ul>
+              <li>medical: " . $userOccupation['medical'] . "</li>
+              <li>IT: " . $userOccupation['IT'] . "</li>
+              <li>healthcare: " . $userOccupation['healthcare'] . "</li>
+              <li>business: " . $userOccupation['business'] . "</li>
+              <li>foodservice: " . $userOccupation['foodservice'] . "</li>
+              <li>hospitality: " . $userOccupation['hospitality'] . "</li>
+              <li>culinary: " . $userOccupation['culinary'] . "</li>
+              </ul>
+            </li>
+            </ul>
+            </div>
+            <div class='row'>
+            <div class='col-xs-5 col-sm-5 col-md-5 col-lg-4'>
+            <ul class='change-list'>
+            <li><button class='btn-outline-primary btn nav-link change-pw-btn'>Change password</button></li>
+            <li><button class='btn-outline-primary btn nav-link change-phone-btn'>Change phone number</button></li>
+            <li><button class='btn-outline-primary btn nav-link change-email-btn'>Change email</button></li>
+            <li><button class='btn-outline-primary btn nav-link change-sector-btn'>Change sectors</button></li>
+            <li></li>
+            </ul>
+            </div>
+            <div class='change-section col-xs-7 col-sm-7 col-md-7 col-lg-8'>
+            <div class='change-pw' id='change-pw' style='display:none;'>
+            <form id='change-pw-form'>
+                <p class='form-message'></p>
+                <ul class='reset-list'>
+                    <li><input id='change-pw-input' type='text' placeholder='New password' class='form-control' aria-label='small' data-toggle='tooltip' title='Enter your new password (must be 8 characters long, ! ? @ $ % & * allowed)'></li>
+                    <li><input id='change-pw2-input' type='text' placeholder='Re-type new password' class='form-control' aria-label='small' data-toggle='tooltip' title='Re-type your new password (must be 8 characters long, ! ? @ $ % & * allowed)'></li>
+                </ul>
+                <button id='change-pw-submit' type='submit' class='reset-btn btn btn-danger main-btn'>Reset password</button>
+            </form>
+            </div>
 
-      <div class='change-phone' id='change-phone' style='display:none;'>
-      <form id='change-phone-form'>
-          <p class='form-message'></p>
-          <ul class='reset-list'>
-              <li><input id='change-phone-input' type='text' class='input-small form-control bfh-phone' data-country='US' aria-label='small' data-toggle='tooltip' title='Enter your new phone number (only digits)'></li>
-              <li><input id='change-phone2-input' type='text' class='input-small form-control bfh-phone' data-country='US' aria-label='small' data-toggle='tooltip' title='Re-type your new phone number (only digits)'></li>
-          </ul>
-          <button id='change-phone-submit' type='submit' class='reset-btn btn btn-danger main-btn'>Reset phone</button>
-      </form>
-      </div>
+            <div class='change-phone' id='change-phone' style='display:none;'>
+            <form id='change-phone-form'>
+                <p class='form-message'></p>
+                <ul class='reset-list'>
+                    <li><input id='change-phone-input' type='text' class='input-small form-control bfh-phone' data-country='US' aria-label='small' data-toggle='tooltip' title='Enter your new phone number (only digits)'></li>
+                    <li><input id='change-phone2-input' type='text' class='input-small form-control bfh-phone' data-country='US' aria-label='small' data-toggle='tooltip' title='Re-type your new phone number (only digits)'></li>
+                </ul>
+                <button id='change-phone-submit' type='submit' class='reset-btn btn btn-danger main-btn'>Reset phone</button>
+            </form>
+            </div>
 
-      <div class='change-email' id='change-email' style='display:none;'>
-      <form id='change-email-form'>
-          <p class='form-message'></p>
-          <ul class='reset-list'>
-              <li><input id='change-email-input' type='text' placeholder='New email' class='form-control' aria-label='small' data-toggle='tooltip' title='Enter your new email'></li>
-              <li><input id='change-email2-input' type='text' placeholder='Re-type new email' class='form-control' aria-label='small' data-toggle='tooltip' title='Re-type your new email'></li>
-          </ul>
-          <button id='change-email-submit' type='submit' class='reset-btn btn btn-danger main-btn'>Reset email</button>
-      </form>
-      </div>
+            <div class='change-email' id='change-email' style='display:none;'>
+            <form id='change-email-form'>
+                <p class='form-message'></p>
+                <ul class='reset-list'>
+                    <li><input id='change-email-input' type='text' placeholder='New email' class='form-control' aria-label='small' data-toggle='tooltip' title='Enter your new email'></li>
+                    <li><input id='change-email2-input' type='text' placeholder='Re-type new email' class='form-control' aria-label='small' data-toggle='tooltip' title='Re-type your new email'></li>
+                </ul>
+                <button id='change-email-submit' type='submit' class='reset-btn btn btn-danger main-btn'>Reset email</button>
+            </form>
+            </div>
 
-      <div class='change-sector-section' id='change-sector-section' style='display:none;'>
-      <h3>Check the sectors that apply to your job search.</h3>
-      <form id='change-sector-form'>
-          <p class='form-message'></p>
-          <ul class='reset-list'>
-              <li>
-              <div class='form-check'>
-                <input class='form-check-input' type='checkbox' value='TRUE' id='change-sector-med'>
-                <label class='form-check-label' for='change-sector-med'>Medical</label>
-            <br/>
-                <input class='form-check-input' type='checkbox' value='TRUE' id='change-sector-it'>
-                <label class='form-check-label' for='change-sector-it'>IT</label>
-            <br/>
-                <input class='form-check-input' type='checkbox' value='TRUE' id='change-sector-bus'>
-                <label class='form-check-label' for='change-sector-bus'>Business</label>
-            <br/>
-                <input class='form-check-input' type='checkbox' value='TRUE' id='change-sector-health'>
-                <label class='form-check-label' for='change-sector-health'>Health care</label>
-            <br/>
-                <input class='form-check-input' type='checkbox' value='TRUE' id='change-sector-food'>
-                <label class='form-check-label' for='change-sector-food'>Food service</label>
-            <br/>
-                <input class='form-check-input' type='checkbox' value='TRUE' id='change-sector-hosp'>
-                <label class='form-check-label' for='change-sector-hosp'>Hospitality</label>
-            <br/>
-                <input class='form-check-input' type='checkbox' value='TRUE' id='change-sector-cul'>
-                <label class='form-check-label' for='change-sector-cul'>Culinary</label>
-              </div>
-              </li>
-          </ul>
-          <button id='change-sector-submit' type='submit' class='reset-btn btn btn-danger main-btn'>Change sectors</button>
-      </form>
-      </div>
+            <div class='change-sector-section' id='change-sector-section' style='display:none;'>
+            <h3>Check the sectors that apply to your job search.</h3>
+            <form id='change-sector-form'>
+                <p class='form-message'></p>
+                <ul class='reset-list'>
+                    <li>
+                    <div class='form-check'>
+                      <input class='form-check-input' type='checkbox' value='TRUE' id='change-sector-med'>
+                      <label class='form-check-label' for='change-sector-med'>Medical</label>
+                  <br/>
+                      <input class='form-check-input' type='checkbox' value='TRUE' id='change-sector-it'>
+                      <label class='form-check-label' for='change-sector-it'>IT</label>
+                  <br/>
+                      <input class='form-check-input' type='checkbox' value='TRUE' id='change-sector-bus'>
+                      <label class='form-check-label' for='change-sector-bus'>Business</label>
+                  <br/>
+                      <input class='form-check-input' type='checkbox' value='TRUE' id='change-sector-health'>
+                      <label class='form-check-label' for='change-sector-health'>Health care</label>
+                  <br/>
+                      <input class='form-check-input' type='checkbox' value='TRUE' id='change-sector-food'>
+                      <label class='form-check-label' for='change-sector-food'>Food service</label>
+                  <br/>
+                      <input class='form-check-input' type='checkbox' value='TRUE' id='change-sector-hosp'>
+                      <label class='form-check-label' for='change-sector-hosp'>Hospitality</label>
+                  <br/>
+                      <input class='form-check-input' type='checkbox' value='TRUE' id='change-sector-cul'>
+                      <label class='form-check-label' for='change-sector-cul'>Culinary</label>
+                    </div>
+                    </li>
+                </ul>
+                <button id='change-sector-submit' type='submit' class='reset-btn btn btn-danger main-btn'>Change sectors</button>
+            </form>
+            </div>
 
-      </div>
-      </div>
-      ");
+            </div>
+            </div>
+            ");
         echo("</div>");
         echo("</div>");
 
-        echo("</div>");
+        echo("</div>");/*Control area end*/
 
-        echo("</div>");
-        echo("<script src='formhelper/js/bootstrap-formhelpers-phone.js'></script>");
-        echo("<script src='formhelper/js/bootstrap-formhelpers.js'></script>");
+        echo("</div>");/*grid area end*/
     } else {
         echo("<link href='styles/home-user.css' rel='stylesheet'>");
         echo("<link href='formhelper/css/bootstrap-formhelpers.css' rel='stylesheet'/>");
@@ -1076,10 +1014,10 @@ if (isset($_SESSION['user_uid'])) {
                 var allEventCount = 2;
                 var ownEventCount = 2;
                 $('#more-job-rec-button').click(function(){
-                  jobRecCount += 2;
-                  $('#job-rec-list-section').load('php/load-job-rec-events.php', {
-                    jobRecNewCount: jobRecCount
-                  });
+                    jobRecCount += 2;
+                    $('#job-rec-list-section').load('php/load-job-rec-events.php', {
+                      jobRecNewCount: jobRecCount
+                    });
                 });
                 $(document).on('click','.all-btn',function(){
                     $('#all-events-list-section').load('php/load-all-events.php', {
@@ -1095,31 +1033,31 @@ if (isset($_SESSION['user_uid'])) {
                     $('#own-events-list-section').load('php/load-own-events.php', {
                         ownEventNewCount: ownEventCount
                     });
-                  $('#all-events-list').hide();
-                  $('#change-info').hide();
-                  $('#work-rec-list').hide();
-                  $('#job-rec-list').hide();
-                  $('#own-events-list').show();
+                    $('#all-events-list').hide();
+                    $('#change-info').hide();
+                    $('#work-rec-list').hide();
+                    $('#job-rec-list').hide();
+                    $('#own-events-list').show();
                 });
                 $(document).on('click','.work-rec-btn',function(){
                     $('#work-rec-list-section').load('php/load-work-rec-events.php', {
                       workRecNewCount: workRecCount
                     });
-                  $('#all-events-list').hide();
-                  $('#change-info').hide();
-                  $('#own-events-list').hide();
-                  $('#job-rec-list').hide();
-                  $('#work-rec-list').show();
+                    $('#all-events-list').hide();
+                    $('#change-info').hide();
+                    $('#own-events-list').hide();
+                    $('#job-rec-list').hide();
+                    $('#work-rec-list').show();
                 });
                 $(document).on('click','.job-rec-btn',function(){
-                  $('#job-rec-list-section').load('php/load-job-rec-events.php', {
-                    jobRecNewCount: jobRecCount
-                  });
-                  $('#all-events-list').hide();
-                  $('#change-info').hide();
-                  $('#own-events-list').hide();
-                  $('#work-rec-list').hide();
-                  $('#job-rec-list').show();
+                    $('#job-rec-list-section').load('php/load-job-rec-events.php', {
+                      jobRecNewCount: jobRecCount
+                    });
+                    $('#all-events-list').hide();
+                    $('#change-info').hide();
+                    $('#own-events-list').hide();
+                    $('#work-rec-list').hide();
+                    $('#job-rec-list').show();
                 });
                 $(document).on('click','.change-btn',function(){
                     $('#all-events-list').hide();
@@ -1181,7 +1119,6 @@ if (isset($_SESSION['user_uid'])) {
                     if(confirm(x))
                     {
                         event.preventDefault();
-
                         $.ajax({
                         url: 'php/upload-resume.php', // Url to which the request is send
                         type: 'POST',             // Type of request to be send, called as method
@@ -1299,7 +1236,6 @@ if (isset($_SESSION['user_uid'])) {
         echo("<h2 class='dash-header'>Jobs for you: </h2><hr>");
         echo("<div id='job-rec-list-section' class='container'>");
         /* javascript will load list of rec jobs here when work-job-btn is pressed */
-
         echo("</div>");
         echo("<div class='show-more-container'>");
         echo('<button id="more-job-rec-button" class="btn btn-primary more-btn">Show more</button>');
@@ -1439,12 +1375,12 @@ if (isset($_SESSION['user_uid'])) {
         echo("</div>");
         echo("</div>");
 
-        echo("</div>");
+        echo("</div>");/*Control area end*/
 
-        echo("</div>");
-        echo("<script src='formhelper/js/bootstrap-formhelpers-phone.js'></script>");
-        echo("<script src='formhelper/js/bootstrap-formhelpers.js'></script>");
+        echo("</div>");/*grid area end*/
     }
+    echo("<script src='formhelper/js/bootstrap-formhelpers-phone.js'></script>");
+    echo("<script src='formhelper/js/bootstrap-formhelpers.js'></script>");
     include 'footer.php';
 } else {
     header("Location: index.php?error=signIn");

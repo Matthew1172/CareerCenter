@@ -1,5 +1,5 @@
 <footer>
-	<div class="footer-grid">
+	<div class="footer-grid pb-0 mb-0">
 	<div class="footerOne">
 	<h5 class="footer-head"><b>Contact</b></h5>
 	<ul>
@@ -25,8 +25,7 @@
 
 	<div class="footerTwo">
 	<h5 class="footer-head"><b>About</b></h5>
-
-<ul>
+        <ul>
 	<li><a href="about.php">About us</a></li>
 	<li><a href="calendar.php">Calendar</a></li>
 	<li><a href="contact.php">Contact</a></li>
@@ -35,8 +34,7 @@
 	<li><a href="home.php">Profile</a></li>
 	<li><a href="sign-in-page.php">Sign in</a></li>
 	<li><a href="sign-up-page.php">Sign up</a></li>
-</ul>
-
+        </ul>
 	</div>
 
 	<div class="footerThree">
@@ -45,7 +43,7 @@
 	</div>
 
 	<div class="footerCopy">
-		<p>Rockland County Career Center 2019 &copy;</p>
+            <p>Rockland County Career Center 2019 &copy;</p>
 	</div>
 
 	</div>
