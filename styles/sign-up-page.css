@@ -1,69 +1,74 @@
+#selector
+{
+    font-size: 22px;
+}
+
 .main
 {
-		grid-area: m;
-        background-color: white;
-		text-align: center;
-		padding: 30px;
+    grid-area: m;
+    background-color: white;
+    text-align: center;
+    padding: 30px;
 }
 
 .main button
 {
-        width: 50%;
-        margin-top: 40px;
+    width: 50%;
+    margin-top: 40px;
 }
 
 .main ul
 {
-	padding: 0px;
-	list-style-type: none;
+    padding: 0px;
+    list-style-type: none;
 }
 
 .main ul li
 {
-	padding-top: 40px;
+    padding-top: 40px;
 }
 
 .form-check
 {
-	text-align: left;
+    text-align: left;
 }
 
 .grid
 {
-		background-color: #fafafa;
-		display: grid;
-		grid-template-columns: 1fr 1fr 1fr 1fr;
-		grid-template-rows: 100px auto 100px;
-		grid-template-areas:
-		". . . ."
-		"m m m m"
-		". . . .";
+    background-color: #fafafa;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 100px auto 100px;
+    grid-template-areas:
+        ". . . ."
+        "m m m m"
+        ". . . .";
 }
 
 @media screen and (min-width: 500px)
 {
-		.grid
-		{
-				display: grid;
-				grid-template-columns: 1fr 1fr 1fr 1fr;
-				grid-template-rows: 100px auto 100px;
-				grid-template-areas:
-				". . . ."
-				". m m ."
-				". . . .";
-		}
+    .grid
+    {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-template-rows: 100px auto 100px;
+        grid-template-areas:
+            ". . . ."
+            ". m m ."
+            ". . . .";
+    }
 }
 
 @media screen and (min-width: 1000px)
 {
-        .grid
-        {
-        	display: grid;
-        	grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-        	grid-template-rows: 100px auto 100px;
-        	grid-template-areas:
-			". . . . . . . ."
+    .grid
+    {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+        grid-template-rows: 100px auto 100px;
+        grid-template-areas:
+            ". . . . . . . ."
             ". . . m m . . ."
-			". . . . . . . .";
-        }
+            ". . . . . . . .";
+    }
 }

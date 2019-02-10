@@ -50,6 +50,6 @@
 </footer>
     <!--Query first, then Popper.js??, then Bootstrap JS
 	<script src="js/jquery.min.js"></script>-->
-	<script src="bootstrap/js/bootstrap.bundle.min.js"></script>
+    	<script src="bootstrap/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

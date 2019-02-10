@@ -1,7 +1,7 @@
 <?php
 session_start();
 require 'header.php';
-include 'php/connect.php';
+//include 'php/connect.php';
 
 echo('<link href="styles/job-list.css" rel="stylesheet" />');
 

@@ -1,4 +1,5 @@
 <?php
+
 session_start();
 require 'header.php';
 echo("<link href='styles/sign-up-page.css' rel='stylesheet'>");

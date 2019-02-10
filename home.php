@@ -1,9 +1,10 @@
 <?php
+
 session_start();
 if (isset($_SESSION['user_uid'])) {
     include 'php/user-class.php';
     include 'header.php';
-    include 'php/connect.php';
+    //include 'php/connect.php';
     //get PDO of user info
     $sql = $conn->prepare("SELECT * FROM users WHERE user_uid=?");
     $sql->execute([$_SESSION['user_uid']]);
@@ -169,7 +170,36 @@ if (isset($_SESSION['user_uid'])) {
                       submit: submit
                   });
               }
-          });
+            });
+            $(window).on('resize', function(){
+            var win = $(this);
+            if (win.width() > 1000)
+            {
+                $('.dash-control-drp').hide();
+                $('.dash-control-btns').show();
+            }else{
+                $('.dash-control-btns').hide();
+                $('.dash-control-drp').show();
+            }
+            });
+            var win = $(this);
+            if (win.width() > 1000)
+            {
+                $('.dash-control-drp').hide();
+                $('.dash-control-btns').show();
+            }else{
+                $('.dash-control-btns').hide();
+                $('.dash-control-drp').show();
+            }
+            $(function () {
+                $('#drop-selector').selectpicker({
+                    container: 'body'   
+                });
+
+                if( /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {
+                    $('#drop-selector').selectpicker('mobile');
+                }
+            });
         });
         ");
     echo('</script>');
@@ -187,8 +217,10 @@ if (isset($_SESSION['user_uid'])) {
                             var title = $('#work-title').val();
                             var description = $('#work-desc').val();
                             var location = $('#work-loc').val();
-                            var start = $('#work-start').val();
-                            var end = $('#work-end').val();
+                            var start_date = $('#work-start-date').val();
+                            var start_time = $('#work-start-time').val() + ':00';
+                            var end_date = $('#work-end-date').val();
+                            var end_time = $('#work-end-time').val() + ':00';
 
                             var med = $('#add-work-med');
                             var it = $('#add-work-it');
@@ -204,8 +236,10 @@ if (isset($_SESSION['user_uid'])) {
                                 title: title,
                                 description: description,
                                 location: location,
-                                start: start,
-                                end: end,
+                                start_date: start_date,
+                                start_time: start_time,
+                                end_date: end_date,
+                                end_time: end_time,
                                 med: med.prop('checked'),
                                 it: it.prop('checked'),
                                 bus: bus.prop('checked'),
@@ -213,6 +247,21 @@ if (isset($_SESSION['user_uid'])) {
                                 food: food.prop('checked'),
                                 hosp: hosp.prop('checked'),
                                 cul: cul.prop('checked'),
+                                submit: submit
+                            });
+                        }
+                    });
+                    $('#add-announ-form').submit(function(event){
+                        var x = 'Are you sure you want to add this announcement?'
+                        if(confirm(x))
+                        {
+                            event.preventDefault();
+                            var title = $('#announ-title').val();
+                            var description = $('#announ-desc').val();
+                            var submit = $('#submit-announ').val();
+                            $('.form-message').load('php/add-announ.php', {
+                                title: title,
+                                description: description,
                                 submit: submit
                             });
                         }
@@ -346,6 +395,38 @@ if (isset($_SESSION['user_uid'])) {
                                 submit: submit
                             });
                         }
+                    });         
+                    $('#drop-selector').on('change',function(){
+                        var selection = $(this).val();
+                        switch(selection)
+                        {
+                            case 'current':
+                                $('#change-info').hide();
+                                $('#mod-event-list').hide();
+                                $('#current-event-list').show();
+                                break;
+                            case 'mod':
+                                $('#change-info').hide();
+                                $('#current-event-list').hide();
+                                $('#mod-event-list').show();
+                                break;
+                            case 'add-work':
+                                $('#add-workshop').modal('show');
+                                break;
+                            case 'add-announ':
+                                $('#add-announ').modal('show');
+                                break;
+                            case 'reset-user-pw':
+                                $('#reset').modal('show');
+                                break;
+                            case 'update-acc':
+                                $('#current-event-list').hide();
+                                $('#mod-event-list').hide();
+                                $('#change-info').show();
+                                break;
+                            default:
+                                break;
+                        }
                     });
                 });
                 ");
@@ -360,22 +441,23 @@ if (isset($_SESSION['user_uid'])) {
         echo("</div>");
 
         echo("<div class='dashboard-control'>");
-        echo('
-            <nav class="navbar navbar-expand-lg navbar-light bg-white py-3">
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar2">
-                <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse justify-content-stretch" id="navbar2">
-                <ul class="navbar-nav ml-auto">
-                    <li class="main-btn"><button class="btn-outline-secondary btn nav-link current-btn">Current Workshops</button></li>
-                    <li class="main-btn"><button class="btn-outline-secondary btn nav-link mod-work-btn">Modify workshops</button></li>
-                    <li class="main-btn"><button class="btn-outline-secondary btn nav-link" data-toggle="modal" data-target="#add-workshop">Add workshop</button></li>
-                    <li class="main-btn"><button class="btn-outline-secondary btn nav-link" data-toggle="modal" data-target="#reset">Reset password</button></li>
-                    <li class="main-btn"><button class="btn-outline-secondary btn nav-link change-btn">Update account</button></li>
-                </ul>
-                </div>
-            </nav>
-            ');
+        echo('<div class="dash-control-btns btn-group btn-group-justified">'
+                . '<button class="btn-outline-secondary btn nav-link current-btn">Current Workshops</button>'
+                . '<button class="btn-outline-secondary btn nav-link mod-work-btn">Modify workshops</button>'
+                . '<button class="btn-outline-secondary btn nav-link" data-toggle="modal" data-target="#add-workshop">Add workshop</button>'
+                . '<button class="btn-outline-secondary btn nav-link" data-toggle="modal" data-target="#add-announ">Make announcement</button>'
+                . '<button class="btn-outline-secondary btn nav-link" data-toggle="modal" data-target="#reset">Reset password</button>'
+                . '<button class="btn-outline-secondary btn nav-link change-btn">Update account</button>'
+                . '</div>');
+        echo('<div class="dash-control-drp" style="display: none;">
+            <select class="form-control" id="drop-selector" style="height: 100%;">
+                <option value="current">Current workshops</option>
+                <option value="mod">Modify workshops</option>
+                <option value="add-work">Add workshop</option>
+                <option value="add-announ">Add announcement</option>
+                <option value="reset-user-pw">Reset a user password</option>
+                <option value="update-acc">Update account</option>
+            </select></div>');
         echo("</div>");
 
         echo("<div class='control-area'>");
@@ -485,8 +567,8 @@ if (isset($_SESSION['user_uid'])) {
             <form id='change-pw-form'>
                 <p class='form-message'></p>
                 <ul class='reset-list'>
-                    <li><input id='change-pw-input' type='text' placeholder='New password' class='form-control' aria-label='small' data-toggle='tooltip' title='Enter your new password (must be 8 characters long, ! ? @ $ % & * allowed)'></li>
-                    <li><input id='change-pw2-input' type='text' placeholder='Re-type new password' class='form-control' aria-label='small' data-toggle='tooltip' title='Re-type your new password (must be 8 characters long, ! ? @ $ % & * allowed)'></li>
+                    <li><input id='change-pw-input' type='password' placeholder='New password' class='form-control' aria-label='small' data-toggle='tooltip' title='Enter your new password (must be 8 characters long, ! ? @ $ % & * allowed)'></li>
+                    <li><input id='change-pw2-input' type='password' placeholder='Re-type new password' class='form-control' aria-label='small' data-toggle='tooltip' title='Re-type your new password (must be 8 characters long, ! ? @ $ % & * allowed)'></li>
                 </ul>
                 <button id='change-pw-submit' type='submit' class='reset-btn btn btn-danger main-btn'>Reset password</button>
             </form>
@@ -520,9 +602,9 @@ if (isset($_SESSION['user_uid'])) {
         echo("</div>");
         echo("</div>");
 
-        echo("</div>");/*Control area end*/
+        echo("</div>"); /* Control area end */
 
-        echo("</div>");/*grid area end*/
+        echo("</div>"); /* grid area end */
         //MODAL FOR RESET USER PASSWORD
         echo('
             <div class="modal fade" id="reset" tabindex="-1" role="dialog" aria-labelledby="resetLabel">
@@ -534,8 +616,8 @@ if (isset($_SESSION['user_uid'])) {
                             <p class="form-message"></p>
                                 <ul>
                                     <li><input id="reset-email" type="text" placeholder="User email" class="form-control" aria-label="small"></li>
-                                    <li><input id="reset-pw" type="text" placeholder="New user password" class="form-control" aria-label="small"></li>
-                                    <li><input id="reset-pw2" type="text" placeholder="Re-type new user password" class="form-control" aria-label="small"></li>
+                                    <li><input id="reset-pw" type="password" placeholder="New user password" class="form-control" aria-label="small"></li>
+                                    <li><input id="reset-pw2" type="password" placeholder="Re-type new user password" class="form-control" aria-label="small"></li>
                                 </ul>
                                 <button id="submit" type="submit" class="btn btn-primary main-btn"><b>Reset Password</b></button>
                             </form>
@@ -558,8 +640,12 @@ if (isset($_SESSION['user_uid'])) {
                                     <li><input id="work-title" type="text" placeholder="Workshop title" class="form-control" aria-label="small"></li>
                                     <li><input id="work-desc" type="text" placeholder="Workshop description" class="form-control" aria-label="small"></li>
                                     <li><input id="work-loc" type="text" placeholder="Workshop location" class="form-control" aria-label="small"></li>
-                                    <li><input id="work-start" type="text" placeholder="Workshop starting time (YYYY-MM-DD 00:00:00)" class="form-control" aria-label="small"></li>
-                                    <li><input id="work-end" type="text" placeholder="Workshop ending time (YYYY-MM-DD 00:00:00)" class="form-control" aria-label="small"></li>
+                                    <!--<li><input id="work-start" type="text" placeholder="Workshop starting time (YYYY-MM-DD 00:00:00)" class="form-control" aria-label="small"></li>-->
+                                    <li><input id="work-start-date" type="date" class="form-control" aria-label="small"></li>
+                                    <li><input id="work-start-time" type="time" class="form-control" aria-label="small"></li>
+                                    <!--<li><input id="work-end" type="text" placeholder="Workshop ending time (YYYY-MM-DD 00:00:00)" class="form-control" aria-label="small"></li>-->
+                                    <li><input id="work-end-date" type="date" class="form-control" aria-label="small"></li>
+                                    <li><input id="work-end-time" type="time" class="form-control" aria-label="small"></li>
                                     <li>
                                     <ul class="reset-list">
                                         <li>
@@ -590,6 +676,27 @@ if (isset($_SESSION['user_uid'])) {
                                     </li>
                                 </ul>
                                 <button id="submit-workshop" type="submit" class="btn btn-primary main-btn"><b>Add</b></button>
+                            </form>
+                        </div>
+                        <div class="modal-footer"><button type="button" class="btn btn-default" data-dismiss="modal">Close</button></div>
+                    </div>
+                </div>
+            </div>
+            ');
+        //MODAL FOR ADD ANNOUNCEMENT
+        echo('
+            <div class="modal fade" id="add-announ" tabindex="-1" role="dialog" aria-labelledby="resetLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header"><h4 class="modal-title" id="resetLabel">Add an announcement</h4></div>
+                        <div class="modal-body">
+                            <form id="add-announ-form">
+                                <p class="form-message"></p>
+                                <ul>
+                                    <li><input id="announ-title" type="text" placeholder="Announcement title" class="form-control" aria-label="small"></li>
+                                    <li><input id="announ-desc" type="text" placeholder="Announcement description" class="form-control" aria-label="small"></li>
+                                </ul>
+                                <button id="submit-announ" type="submit" class="btn btn-primary main-btn"><b>Add</b></button>
                             </form>
                         </div>
                         <div class="modal-footer"><button type="button" class="btn btn-default" data-dismiss="modal">Close</button></div>
@@ -746,6 +853,74 @@ if (isset($_SESSION['user_uid'])) {
                 $('#change-email').hide();
                 $('#change-sector-section').show();
             });
+            $('#drop-selector').on('change',function(){
+                var selection = $(this).val();
+                switch(selection)
+                {
+                    case 'all':
+                        $('#all-events-list-section').load('php/load-all-events.php', {
+                          allEventNewCount: allEventCount
+                        });
+                        $('#own-events-list').hide();
+                        $('#change-info').hide();
+                        $('#job-list').hide();
+                        $('#post-job').hide();
+                        $('#work-rec-list').hide();
+                        $('#all-events-list').show();
+                        break;
+                    case 'own-work':
+                        $('#own-events-list-section').load('php/load-own-events.php', {
+                            ownEventNewCount: ownEventCount
+                        });
+                        $('#all-events-list').hide();
+                        $('#change-info').hide();
+                        $('#job-list').hide();
+                        $('#post-job').hide();
+                        $('#work-rec-list').hide();
+                        $('#own-events-list').show();
+                        break;
+                    case 'rec-work':
+                        $('#work-rec-list-section').load('php/load-work-rec-events.php', {
+                            workRecNewCount: workRecCount
+                        });
+                        $('#all-events-list').hide();
+                        $('#change-info').hide();
+                        $('#own-events-list').hide();
+                        $('#post-job').hide();
+                        $('#job-list').hide();
+                        $('#work-rec-list').show();
+                        break;
+                    case 'own-job':
+                        $('#job-list-section').load('php/load-own-jobs.php', {
+                            jobNewCount: jobCount
+                        });
+                        $('#all-events-list').hide();
+                        $('#change-info').hide();
+                        $('#own-events-list').hide();
+                        $('#post-job').hide();
+                        $('#work-rec-list').hide();
+                        $('#job-list').show();
+                        break;
+                    case 'post-job':
+                        $('#all-events-list').hide();
+                        $('#own-events-list').hide();
+                        $('#job-list').hide();
+                        $('#change-info').hide();
+                        $('#work-rec-list').hide();
+                        $('#post-job').show();
+                        break;
+                    case 'update-acc':
+                        $('#all-events-list').hide();
+                        $('#own-events-list').hide();
+                        $('#job-list').hide();
+                        $('#post-job').hide();
+                        $('#work-rec-list').hide();
+                        $('#change-info').show();
+                        break;
+                    default:
+                        break;
+                }
+            });
         });
         ");
         echo('</script>');
@@ -758,25 +933,23 @@ if (isset($_SESSION['user_uid'])) {
         echo("</div>");
 
         echo("<div class='dashboard-control'>");
-
-        echo('
-            <nav class="navbar navbar-expand-lg navbar-light bg-white py-3">
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar2">
-                <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse justify-content-stretch" id="navbar2">
-                <ul class="navbar-nav m-auto">
-                    <li class="main-btn"><button class="btn-sm btn-outline-secondary btn nav-link all-btn">All Workshops</button></li>
-                    <li class="main-btn"><button class="btn-sm btn-outline-secondary btn nav-link own-btn">Your Workshops</button></li>
-                    <li class="main-btn"><button class="btn-sm btn-outline-secondary btn nav-link work-rec-btn">Workshops for you</button></li>
-                    <li class="main-btn"><button class="btn-sm btn-outline-secondary btn nav-link job-list-btn">Your Jobs</button></li>
-                    <li class="main-btn"><button class="btn-sm btn-outline-secondary btn nav-link post-job-btn">Post Job</button></li>
-                    <li class="main-btn"><button class="btn-sm btn-outline-secondary btn nav-link change-btn">Update account</button></li>
-                </ul>
-                </div>
-            </nav>
-            ');
-
+        echo('<div class="dash-control-btns btn-group btn-group-justified">'
+        . '<button class="btn-lg btn-outline-secondary btn nav-link all-btn">All Workshops</button>'
+        . '<button class="btn-lg btn-outline-secondary btn nav-link own-btn">Your Workshops</button>'
+        . '<button class="btn-lg btn-outline-secondary btn nav-link work-rec-btn">Workshops for you</button>'
+        . '<button class="btn-lg btn-outline-secondary btn nav-link job-list-btn">Your Jobs</button>'
+        . '<button class="btn-lg btn-outline-secondary btn nav-link post-job-btn">Post Job</button>'
+        . '<button class="btn-lg btn-outline-secondary btn nav-link change-btn">Update account</button>'
+        . '</div>');
+        echo('<div class="dash-control-drp" style="display: none;">
+            <select class="form-control" id="drop-selector">
+                <option value="all">All Workshops</option>
+                <option value="own-work">Your Workshops</option>
+                <option value="rec-work">Workshops for you</option>
+                <option value="own-job">Your Jobs</option>
+                <option value="post-job">Post Jobs</option>
+                <option value="update-acc">Update account</option>
+            </select></div>');
         echo("</div>");
 
         echo("<div class='control-area'>");
@@ -931,8 +1104,8 @@ if (isset($_SESSION['user_uid'])) {
             <form id='change-pw-form'>
                 <p class='form-message'></p>
                 <ul class='reset-list'>
-                    <li><input id='change-pw-input' type='text' placeholder='New password' class='form-control' aria-label='small' data-toggle='tooltip' title='Enter your new password (must be 8 characters long, ! ? @ $ % & * allowed)'></li>
-                    <li><input id='change-pw2-input' type='text' placeholder='Re-type new password' class='form-control' aria-label='small' data-toggle='tooltip' title='Re-type your new password (must be 8 characters long, ! ? @ $ % & * allowed)'></li>
+                    <li><input id='change-pw-input' type='password' placeholder='New password' class='form-control' aria-label='small' data-toggle='tooltip' title='Enter your new password (must be 8 characters long, ! ? @ $ % & * allowed)'></li>
+                    <li><input id='change-pw2-input' type='password' placeholder='Re-type new password' class='form-control' aria-label='small' data-toggle='tooltip' title='Re-type your new password (must be 8 characters long, ! ? @ $ % & * allowed)'></li>
                 </ul>
                 <button id='change-pw-submit' type='submit' class='reset-btn btn btn-danger main-btn'>Reset password</button>
             </form>
@@ -1000,9 +1173,9 @@ if (isset($_SESSION['user_uid'])) {
         echo("</div>");
         echo("</div>");
 
-        echo("</div>");/*Control area end*/
+        echo("</div>"); /* Control area end */
 
-        echo("</div>");/*grid area end*/
+        echo("</div>"); /* grid area end */
     } else {
         echo("<link href='styles/home-user.css' rel='stylesheet'>");
         echo("<link href='formhelper/css/bootstrap-formhelpers.css' rel='stylesheet'/>");
@@ -1144,6 +1317,61 @@ if (isset($_SESSION['user_uid'])) {
                       });
                   }
                 });
+                $('#drop-selector').on('change',function(){
+                    var selection = $(this).val();
+                    switch(selection)
+                    {
+                        case 'all':
+                            $('#all-events-list-section').load('php/load-all-events.php', {
+                              allEventNewCount: allEventCount
+                            });
+                            $('#own-events-list').hide();
+                            $('#change-info').hide();
+                            $('#work-rec-list').hide();
+                            $('#job-rec-list').hide();
+                            $('#all-events-list').show();
+                            break;
+                        case 'own-work':
+                            $('#own-events-list-section').load('php/load-own-events.php', {
+                                ownEventNewCount: ownEventCount
+                            });
+                            $('#all-events-list').hide();
+                            $('#change-info').hide();
+                            $('#work-rec-list').hide();
+                            $('#job-rec-list').hide();
+                            $('#own-events-list').show();      
+                            break;
+                        case 'rec-work':
+                            $('#work-rec-list-section').load('php/load-work-rec-events.php', {
+                              workRecNewCount: workRecCount
+                            });
+                            $('#all-events-list').hide();
+                            $('#change-info').hide();
+                            $('#own-events-list').hide();
+                            $('#job-rec-list').hide();
+                            $('#work-rec-list').show();
+                            break;
+                        case 'rec-job':
+                            $('#job-rec-list-section').load('php/load-job-rec-events.php', {
+                              jobRecNewCount: jobRecCount
+                            });
+                            $('#all-events-list').hide();
+                            $('#change-info').hide();
+                            $('#own-events-list').hide();
+                            $('#work-rec-list').hide();
+                            $('#job-rec-list').show();
+                            break;
+                        case 'update-acc':
+                            $('#all-events-list').hide();
+                            $('#own-events-list').hide();
+                            $('#work-rec-list').hide();
+                            $('#job-rec-list').hide();
+                            $('#change-info').show();
+                            break;
+                        default:
+                            break;
+                    }
+                });
             });
             </script>
             ");
@@ -1156,22 +1384,21 @@ if (isset($_SESSION['user_uid'])) {
         echo("</div>");
 
         echo("<div class='dashboard-control'>");
-        echo('
-            <nav class="navbar navbar-expand-lg navbar-light bg-white py-3">
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar2">
-                <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse justify-content-stretch" id="navbar2">
-                <ul class="navbar-nav ml-auto">
-                    <li class="main-btn"><button class="btn-outline-secondary btn nav-link all-btn">All Workshops</button></li>
-                    <li class="main-btn"><button class="btn-outline-secondary btn nav-link own-btn">Your Workshops</button></li>
-                    <li class="main-btn"><button class="btn-outline-secondary btn nav-link work-rec-btn">Workshops for you</button></li>
-                    <li class="main-btn"><button class="btn-outline-secondary btn nav-link job-rec-btn">Jobs for you</button></li>
-                    <li class="main-btn"><button class="btn-outline-secondary btn nav-link change-btn">Update account</button></li>
-                </ul>
-                </div>
-            </nav>
-            ');
+        echo('<div class="dash-control-btns btn-group btn-group-justified">'
+            . '<button class="btn-lg btn-outline-secondary btn nav-link all-btn">All Workshops</button>'
+            . '<button class="btn-lg btn-outline-secondary btn nav-link own-btn">Your Workshops</button>'
+            . '<button class="btn-lg btn-outline-secondary btn nav-link work-rec-btn">Workshops for you</button>'
+            . '<button class="btn-lg btn-outline-secondary btn nav-link job-rec-btn">Jobs for you</button>'
+            . '<button class="btn-lg btn-outline-secondary btn nav-link change-btn">Update account</button>'
+            . '</div>');
+        echo('<div class="dash-control-drp" style="display: none;">
+            <select class="form-control" id="drop-selector">
+                <option value="all">All Workshops</option>
+                <option value="own-work">Your Workshops</option>
+                <option value="rec-work">Workshops for you</option>
+                <option value="rec-job">Jobs for you</option>
+                <option value="update-acc">Update account</option>
+            </select></div>');
         echo("</div>");
 
         echo("<div class='control-area'>");
@@ -1285,8 +1512,8 @@ if (isset($_SESSION['user_uid'])) {
             <form id='change-pw-form'>
                 <p class='form-message'></p>
                 <ul class='reset-list'>
-                    <li><input id='change-pw-input' type='text' placeholder='New password' class='form-control' aria-label='small' data-toggle='tooltip' title='Enter your new password (must be 8 characters long, ! ? @ $ % & * allowed)'></li>
-                    <li><input id='change-pw2-input' type='text' placeholder='Re-type new password' class='form-control' aria-label='small' data-toggle='tooltip' title='Re-type your new password (must be 8 characters long, ! ? @ $ % & * allowed)'></li>
+                    <li><input id='change-pw-input' type='password' placeholder='New password' class='form-control' aria-label='small' data-toggle='tooltip' title='Enter your new password (must be 8 characters long, ! ? @ $ % & * allowed)'></li>
+                    <li><input id='change-pw2-input' type='password' placeholder='Re-type new password' class='form-control' aria-label='small' data-toggle='tooltip' title='Re-type your new password (must be 8 characters long, ! ? @ $ % & * allowed)'></li>
                 </ul>
                 <button id='change-pw-submit' type='submit' class='reset-btn btn btn-danger main-btn'>Reset password</button>
             </form>
@@ -1375,9 +1602,9 @@ if (isset($_SESSION['user_uid'])) {
         echo("</div>");
         echo("</div>");
 
-        echo("</div>");/*Control area end*/
+        echo("</div>"); /* Control area end */
 
-        echo("</div>");/*grid area end*/
+        echo("</div>"); /* grid area end */
     }
     echo("<script src='formhelper/js/bootstrap-formhelpers-phone.js'></script>");
     echo("<script src='formhelper/js/bootstrap-formhelpers.js'></script>");

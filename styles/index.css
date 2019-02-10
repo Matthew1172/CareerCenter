@@ -20,7 +20,7 @@
 .google-maps
 {
         position: relative;
-		padding-bottom: 50%; // This is the aspect ratio
+        padding-bottom: 50%;
 }
 
 .google-maps iframe

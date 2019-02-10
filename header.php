@@ -40,7 +40,7 @@
 
     </head>
     <body>
-<a class="navbar-brand p-3" href="index.php"><img src="pics/career-center-rockland-logo.png" height="100%" width="100%" alt="Rockland County career center logo"/></a>
+        <a class="navbar-brand p-3" href="index.php"><img src="pics/career-center-rockland-logo.png" height="100%" width="100%" alt="Rockland County career center logo"/></a>
 
         <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-white" id="nav1">
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar1"><span class="navbar-toggler-icon"></span></button>
@@ -51,22 +51,24 @@
                     <li class="nav-item"><a class="nav-link" href="contact.php">Contact</a></li>
                     <li class="nav-item"><a class="nav-link" href="job-list.php">Job board</a></li>
                     <li class="nav-item"><a class="nav-link" href="wdb-page.php">WDB</a></li>
-                        <?php
-                        if (isset($_SESSION['user_uid'])) {
-                            echo'
+                    <?php
+                    session_start();
+                    include 'php/connect.php';
+                    if (isset($_SESSION['user_uid'])) {
+                        echo'
                         <li class="nav-item"><a class="nav-link" href="home.php">Profile</a></li>
                         <li>
-                        <form id="logout-form" action="php/sign-out.php" method="POST">
-                        <ul class="navbar-nav ml-auto">
-                        <li><button id="logout-btn" type="submit" name="logout" class="btn btn-outline-secondary my-5">Log out</button></li>
-                        </ul>
-                        </form>
+                            <form id="logout-form" action="php/sign-out.php" method="POST">
+                            <ul class="navbar-nav ml-auto">
+                                <li><button id="logout-btn" type="submit" name="logout" class="btn btn-outline-secondary my-5">Log out</button></li>
+                            </ul>
+                            </form>
                         </li>
-                ';
-                        } else {
-                            echo'<li class="nav-item"><a class="nav-link" href="sign-in-page.php">Sign up or sign in</a></li>';
-                        }
-                        ?>
+                        ';
+                    } else {
+                        echo'<li class="nav-item"><a class="nav-link" href="sign-in-page.php">Sign up or sign in</a></li>';
+                    }
+                    ?>
                 </ul>
             </div>
         </nav>

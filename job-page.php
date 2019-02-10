@@ -3,7 +3,7 @@ session_start();
 if (isset($_SESSION['user_uid']))
 {
     require 'header.php';
-    include 'php/connect.php';
+    //include 'php/connect.php';
 
     echo('<link href="styles/job-page.css" rel="stylesheet" />');
 

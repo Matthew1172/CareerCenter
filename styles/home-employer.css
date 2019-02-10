@@ -50,17 +50,19 @@
     grid-area: d;
 }
 
-.dashboard-control ul
+.dash-control-btns
 {
     width: 100%;
 }
 
-.dashboard-control ul li button
+.dash-control-drp
 {
     width: 100%;
-    height: 100px;
-    margin-top: 10px;
-    margin-bottom: 10px;
+}
+
+.dash-control-drp select
+{
+    font-size: 22px;
 }
 
 .dash-header
