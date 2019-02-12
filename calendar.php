@@ -14,32 +14,37 @@ echo('
 
 echo("
 <script>
-  $(document).ready(function() {
-   var calendar = $('#calendar').fullCalendar({
+$(document).ready(function() {
+  var calendar = $('#calendar').fullCalendar({
     editable:false,
     header:{
-     left:'prev,next today',
-     center:'title',
-     right:'month,agendaWeek,agendaDay'
+      left:'prev,next today',
+      center:'title',
+      right:'month,agendaWeek,agendaDay'
     },
     events: 'php/load.php',
     selectable:true,
     selectHelper:true,
     eventClick:function(event)
     {
-        var title = 'Event name: ' + event.title;
-        var location = 'Event location: ' + event.location;
-        var type = 'Type of event: ' + event.type;
-        var datePosted = 'Date posted: ' + event.dateStamp;
+      var title = 'Name: ' + event.title;
+      var location = 'Location: ' + event.location;
 
-        var x = title + '\\n' + '\\n' + location + '\\n' + '\\n' + type + '\\n' + '\\n' + datePosted + '\\n' + '\\n' + '\\n' + '\\n' + 'press OK to learn more about this event.';
-        if(confirm(x))
+      var x = '<br/>' + title + '<br/>' + '<br/>' + location + '<br/>' + '<br/>' + '<br/>' + '<br/>' + 'press OK to learn more about this event.';
+
+      bootbox.confirm({
+        size: 'small',
+        message: x,
+      callback: function(result){
+        if(result)
         {
-            window.location.assign('event-page.php?event-btn-value=' + event.id);
+          window.location.assign('event-page.php?event-btn-value=' + event.id);
         }
-    }
-   });
-  });
+      }
+    });
+  }
+});
+});
 </script>
 ");
 
@@ -59,6 +64,18 @@ echo("
 
 </div>
 ");
+
+//MODAL FOR RESET USER PASSWORD
+echo('
+<div class="modal fade" id="reset" tabindex="-1" role="dialog" aria-labelledby="resetLabel">
+<div class="modal-dialog" role="document">
+<div id="workshop-body" class="modal-content">
+
+
+</div>
+</div>
+</div>
+');
 
 require 'footer.php';
 

@@ -35,7 +35,10 @@ echo('
                         success: function(response){
                             if(response == "failed")
                             {
-                                alert("Invalid username or password.");
+                              bootbox.alert({
+                                size: "small",
+                                message: "Invalid username or password."
+                              });
                             }
                             else if(response == "success")
                             {
