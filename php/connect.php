@@ -1,6 +1,7 @@
 <?php
 include 'event-class.php';
 include 'job-class.php';
+include 'announcement-class.php';
 
 $conn;
 $host = 'localhost';
@@ -131,3 +132,15 @@ function getWorkRecList($conn, $user_id)
 			}
 			return $jobListRecArray;
 		}
+
+	function getAnnounList($conn)
+	{
+		$stm = $conn->prepare('SELECT * FROM announcements');
+		$stm->execute();
+		$announList = array();
+		while($result = $stm->fetch(PDO::FETCH_ASSOC))
+		{
+			$announList[] = new Announcement($result['id'], $result['title'], $result['description'], $result['dateStamp']);
+		}
+		return $announList;
+	}

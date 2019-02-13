@@ -31,17 +31,22 @@ $(document).ready(function () {
   $('#logout-form').submit(function (event) {
     event.preventDefault();
     var x = "Do you really want to logout?"
-    if (confirm(x))
-    {
-      $.ajax({
-        type: 'POST',
-        url: 'php/sign-out.php',
-        success: function (html) {
-          window.location.assign("index.php");
+    bootbox.confirm({
+      size: 'small',
+      message: x,
+      callback: function(result){
+        if(result)
+        {
+          $.ajax({
+            type: 'POST',
+            url: 'php/sign-out.php',
+            success: function (html) {
+              window.location.assign("index.php");
+            }
+          });
         }
-      });
-    }
-
+      }
+    });
   });
 });
 </script>
