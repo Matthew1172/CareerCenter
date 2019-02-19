@@ -14,9 +14,10 @@ if (sizeof($jobList) == 0) {
 } else if ($check == 0) {
     if ($jobNewCount <= sizeof($jobList)) {
         for ($i = 0; $i < $jobNewCount; $i++) {
+            $dt = new DateTime($jobList[$i]->getDate());
             echo('<tr>');
             echo('
-                <td><p>' . $jobList[$i]->getPos() . '</p></td>
+                <td><p>' . $dt->format('Y-m-d') . '</p></td>
                 <td><p>' . $jobList[$i]->getTitle() . '</p></td>
                 <td><p>' . $jobList[$i]->getLoc() . '</p></td>
                 ');
@@ -29,9 +30,10 @@ if (sizeof($jobList) == 0) {
         }
     } else {
         foreach ($jobList as $j) {
+            $dt = new DateTime($j->getDate());
             echo('<tr>');
             echo('
-                <td><p>' . $j->getPos() . '</p></td>
+                <td><p>' . $dt->format('Y-m-d') . '</p></td>
                 <td><p>' . $j->getTitle() . '</p></td>
                 <td><p>' . $j->getLoc() . '</p></td>
                 ');
@@ -49,9 +51,10 @@ if (sizeof($jobList) == 0) {
 } else {
     if ($jobNewCount - 1 <= sizeof($jobList)) {
         for ($i = 0; $i < $jobNewCount - 1; $i++) {
+            $dt = new DateTime($jobList[$i]->getDate());
             echo('<tr>');
             echo('
-                <td><p>' . $jobList[$i]->getPos() . '</p></td>
+                <td><p>' . $dt->format('Y-m-d') . '</p></td>
                 <td><p>' . $jobList[$i]->getTitle() . '</p></td>
                 <td><p>' . $jobList[$i]->getLoc() . '</p></td>
                 ');
@@ -64,9 +67,10 @@ if (sizeof($jobList) == 0) {
         }
     } else {
         foreach ($jobList as $j) {
+            $dt = new DateTime($j->getDate());
             echo('<tr>');
             echo('
-                <td><p>' . $j->getPos() . '</p></td>
+                <td><p>' . $dt->format('Y-m-d') . '</p></td>
                 <td><p>' . $j->getTitle() . '</p></td>
                 <td><p>' . $j->getLoc() . '</p></td>
                 ');
