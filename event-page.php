@@ -1,8 +1,8 @@
 <?php
+include 'header.php';
 session_start();
 if(isset($_SESSION['user_uid']))
 {
-  require 'header.php';
   //include 'php/connect.php';
 
   echo('<link href="styles/event-page.css" rel="stylesheet" />');
@@ -150,21 +150,24 @@ if(isset($_SESSION['user_uid']))
 
     echo('</div>');
   }
-  require 'footer.php';
+  include 'footer.php';
 }
 else
 {
+  include 'footer.php';
   echo('<script>');
   echo('
-  var x = "Sorry, you must be logged in first! \\n \\nWould you like to make an account now?"
-  if(confirm(x))
-  {
-    window.location.assign("sign-up-page.php");
-  }
-  else
-  {
-    window.location.assign("calendar.php");
-  }
+  bootbox.confirm({
+    size: "small",
+    message: "Sorry, you must be logged in first!<br/><br/>Would you like to make an account now?",
+    callback: function(response){
+      if(response){
+        window.location.assign("sign-up-page.php");
+      }else{
+        window.location.assign("calendar.php");
+      }
+    }
+  });
   ');
   echo('</script>');
 }
