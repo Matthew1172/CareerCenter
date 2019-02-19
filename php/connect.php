@@ -81,7 +81,7 @@ function getWorkRecList($conn, $user_id)
 		$sql->execute();
 		while($result = $sql->fetch(PDO::FETCH_ASSOC))
 		{
-			$jobListArray[] = new Job($result['job_id'], $result['employer_id'], $result['job_title'], $result['job_description'], $result['job_position'], $result['job_location'], $result['isMedical'], $result['isIT'], $result['isHealthcare'], $result['isBusiness'], $result['isFoodservice'], $result['isHospitality'], $result['isCulinary'], $result['dateStamp']);
+			$jobListArray[] = new Job($result['job_id'], $result['employer_id'], $result['job_title'], $result['job_description'], $result['job_location'], $result['isMedical'], $result['isIT'], $result['isHealthcare'], $result['isBusiness'], $result['isFoodservice'], $result['isHospitality'], $result['isCulinary'], $result['dateStamp']);
 		}
 		return $jobListArray;
 	}
@@ -99,7 +99,7 @@ function getWorkRecList($conn, $user_id)
 		$sql3->execute([$employerResult['employer_id']]);
 		while($result = $sql3->fetch(PDO::FETCH_ASSOC))
 		{
-			$jobOwnListArray[] = new Job($result['job_id'], $result['employer_id'], $result['job_title'], $result['job_description'], $result['job_position'], $result['job_location'], $result['isMedical'], $result['isIT'], $result['isHealthcare'], $result['isBusiness'], $result['isFoodservice'], $result['isHospitality'], $result['isCulinary'], $result['dateStamp']);
+			$jobOwnListArray[] = new Job($result['job_id'], $result['employer_id'], $result['job_title'], $result['job_description'], $result['job_location'], $result['isMedical'], $result['isIT'], $result['isHealthcare'], $result['isBusiness'], $result['isFoodservice'], $result['isHospitality'], $result['isCulinary'], $result['dateStamp']);
 		}
 		return $jobOwnListArray;
 	}
@@ -127,7 +127,7 @@ function getWorkRecList($conn, $user_id)
 				($e->getCul() == 'true' && $userOccupation['culinary'] == 'true')
 				)
 				{
-					$jobListRecArray[] = new Job($e->getID(), $e->getEmployerID(), $e->getTitle(), $e->getDesc(), $e->getPos(), $e->getLoc(), $e->getMed(), $e->getIT(), $e->getHealth(), $e->getBus(), $e->getFood(), $e->getHosp(), $e->getCul(), $e->getDate());
+					$jobListRecArray[] = new Job($e->getID(), $e->getEmployerID(), $e->getTitle(), $e->getDesc(), $e->getLoc(), $e->getMed(), $e->getIT(), $e->getHealth(), $e->getBus(), $e->getFood(), $e->getHosp(), $e->getCul(), $e->getDate());
 				}
 			}
 			return $jobListRecArray;

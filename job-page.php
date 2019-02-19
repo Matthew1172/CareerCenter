@@ -12,6 +12,7 @@ if (isset($_SESSION['user_uid']))
   if($sql->rowCount() > 0)
   {
     $jobListing = $sql->fetch();
+    $dt = new DateTime($jobListing['dateStamp']);
 
     echo('<div class="grid">');
 
@@ -31,13 +32,13 @@ if (isset($_SESSION['user_uid']))
 
     echo('<div class="section py-3 px-3">');
     echo('<h3>'. $jobListing['job_title'] .'</h3>');
-    echo('<p>'. $jobListing['job_position'] .'</p>');
     echo('</div>');
 
     echo('<div class="section">');
     echo('<p>'. $jobListing['job_description'] .'</p>');
     echo('<p><b>Location:</b> '. $jobListing['job_location'] .'</p>');
     echo('<p><b>Contact:</b> '. $userInfo['user_email'] .'</p>');
+    echo('<p><b>Date posted: </b>'. $dt->format('Y-m-d') .'</p>');
 
     if(isset($employerInfo['employer_web']))
     {

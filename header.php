@@ -24,10 +24,12 @@
 <script src="https://cloud.tinymce.com/5/tinymce.min.js"></script>
 <script>tinymce.init({ selector:'textarea' });</script>
 
+
 <title>Career Center</title>
 
 <script>
 $(document).ready(function () {
+  $("[data-toggle=\"tooltip\"]").tooltip();
   $('#logout-form').submit(function (event) {
     event.preventDefault();
     var x = "Do you really want to logout?"

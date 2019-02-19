@@ -17,7 +17,6 @@ $(document).ready(function() {
 });
 </script>
 ");
-
 echo('
 <div class="grid">
 

@@ -38,7 +38,7 @@ echo('
   <table class="table table-hover">
     <thead>
       <tr>
-        <th>Position</th>
+        <th>Date Posted</th>
         <th>Title</th>
         <th>Location</th>
         <th>Contact</th>
@@ -51,9 +51,10 @@ $sql = $conn->prepare('SELECT * FROM jobs ORDER BY dateStamp DESC LIMIT 2');
 $sql->execute();
 while($jobResult = $sql->fetch(PDO::FETCH_ASSOC))
 {
+    $dt = new DateTime($jobResult['dateStamp']);
     echo('<tr>');
     echo('
-    <td><p>'. $jobResult['job_position']   .'</p></td>
+    <td><p>'. $dt->format('Y-m-d')   .'</p></td>
     <td><p>'. $jobResult['job_title']      .'</p></td>
     <td><p>'. $jobResult['job_location']   .'</p></td>
     ');

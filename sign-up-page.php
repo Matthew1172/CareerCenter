@@ -8,8 +8,6 @@ echo("<link href='formhelper/css/bootstrap-formhelpers.css' rel='stylesheet'/>")
 echo('
 <script>
     $(document).ready(function(){
-        $("[data-toggle=\"tooltip\"]").tooltip();
-
         $("#selector").on("change",function(){
             var selection = $(this).val();
             switch(selection)
@@ -17,12 +15,12 @@ echo('
                 case "seeker":
                     $("#employerPartB").hide();
                     $("#seekerPartB").show();
-                    
+
                     break;
                 case "employer":
                     $("#seekerPartB").hide();
                     $("#employerPartB").show();
-                    
+
                     break;
                 default:
                     $("#employerPartB, #seekerPartB").hide();

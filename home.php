@@ -654,20 +654,76 @@ if (isset($_SESSION['user_uid'])) {
     echo("<div id='current-event-list' class='event-list p-2'>");
     echo("<h2 class='dash-header'>Current Workshops: </h2><hr>");
     echo("<div id='current-event-list-section' class='container'>");
-    if(sizeof($eventList) > 0)
-    {
-      for ($i = 0; $i < 2; $i++) {
-        echo(
-          "<div id='event" . $eventList[$i]->getID() . "' class='event my-4'>" .
-          "<h3>" . $eventList[$i]->getTitle() . "</h3>" .
-          "<p>" . $eventList[$i]->getDesc() . "</p><br/><br/>" .
-          "<b>Location: </b>" . $eventList[$i]->getLoc() . "<br/>" .
-          "<b>Date: </b>" . $eventList[$i]->getStart() . "<br/>" .
-          "<b>Date Posted: </b>" . $eventList[$i]->getDateStamp() . "<br/>");
-          echo("</div><hr>");
-        }
-      }else{
+
+      $check = sizeof($eventList) % 2;
+
+      if(sizeof($eventList) == 0)
+      {
         echo("<div class='my-4'><h3>There are no events yet.</h3></div>");
+      }
+      else if($check == 0)
+      {
+        if(2 <= sizeof($eventList))
+        {
+          for($i = 0; $i < 2; $i++)
+          {
+            echo(
+              "<div id='event" . $eventList[$i]->getID() . "' class='event my-4'>" .
+              "<h3>" . $eventList[$i]->getTitle() . "</h3>" .
+              "<p>" . $eventList[$i]->getDesc() . "</p><br/><br/>" .
+              "<b>Location: </b>" . $eventList[$i]->getLoc() . "<br/>" .
+              "<b>Date: </b>" . $eventList[$i]->getStart() . "<br/>" .
+              "<b>Date Posted: </b>" . $eventList[$i]->getDateStamp() . "<br/>");
+              echo("</div><hr>");
+          }
+        }
+        else
+        {
+          foreach($eventList as $c)
+          {
+            echo(
+              "<div id='event" . $c->getID() . "' class='event my-4'>" .
+              "<h3>" . $c->getTitle() . "</h3>" .
+              "<p>" . $c->getDesc() . "</p><br/><br/>" .
+              "<b>Location: </b>" . $c->getLoc() . "<br/>" .
+              "<b>Date: </b>" . $c->getStart() . "<br/>" .
+              "<b>Date Posted: </b>" . $c->getDateStamp() . "<br/>");
+              echo("</div><hr>");
+          }
+          echo("<div>There are no more events</div>");
+        }
+      }
+      else
+      {
+        if(2 - 1 <= sizeof($eventList))
+        {
+          for($i = 0; $i < 2 - 1; $i++)
+          {
+            echo(
+              "<div id='event" . $eventList[$i]->getID() . "' class='event my-4'>" .
+              "<h3>" . $eventList[$i]->getTitle() . "</h3>" .
+              "<p>" . $eventList[$i]->getDesc() . "</p><br/><br/>" .
+              "<b>Location: </b>" . $eventList[$i]->getLoc() . "<br/>" .
+              "<b>Date: </b>" . $eventList[$i]->getStart() . "<br/>" .
+              "<b>Date Posted: </b>" . $eventList[$i]->getDateStamp() . "<br/>");
+              echo("</div><hr>");
+          }
+        }
+        else
+        {
+          foreach($eventList as $c)
+          {
+            echo(
+              "<div id='event" . $c->getID() . "' class='event my-4'>" .
+              "<h3>" . $c->getTitle() . "</h3>" .
+              "<p>" . $c->getDesc() . "</p><br/><br/>" .
+              "<b>Location: </b>" . $c->getLoc() . "<br/>" .
+              "<b>Date: </b>" . $c->getStart() . "<br/>" .
+              "<b>Date Posted: </b>" . $c->getDateStamp() . "<br/>");
+              echo("</div><hr>");
+          }
+          echo("<div>There are no more events</div>");
+        }
       }
       echo("</div>");
       echo("<div class='show-more-container'>");
@@ -858,6 +914,7 @@ if (isset($_SESSION['user_uid'])) {
         var ownEventCount = 2;
         var jobCount = 2;
         $('#postJob-form').submit(function(event){
+          event.preventDefault();
           var x = 'Are you sure you want to post this job?'
           bootbox.confirm({
             size: 'small',
@@ -865,11 +922,9 @@ if (isset($_SESSION['user_uid'])) {
             callback: function(result){
               if(result)
               {
-                event.preventDefault();
 
                 var title = $('#postJob-title').val();
                 var description = $('#postJob-description').val();
-                var position = $('#postJob-position').val();
                 var location = $('#postJob-location').val();
 
                 var med = $('#postJob-med');
@@ -885,7 +940,6 @@ if (isset($_SESSION['user_uid'])) {
                 $('.form-message').load('php/post-job.php', {
                   title: title,
                   description: description,
-                  position: position,
                   location: location,
                   med: med.prop('checked'),
                   it: it.prop('checked'),
@@ -1097,7 +1151,7 @@ if (isset($_SESSION['user_uid'])) {
       . '<button class="btn-outline-secondary btn nav-link change-btn">Update account</button>'
       . '</div>');
       echo('<div class="dash-control-drp" style="display: none;">
-      <select class="form-control" id="drop-selector">
+      <select class="form-control" id="drop-selector" style="height: 100%;">
       <option value="all">All Workshops</option>
       <option value="own-work">Your Workshops</option>
       <option value="rec-work">Workshops for you</option>
@@ -1187,11 +1241,9 @@ if (isset($_SESSION['user_uid'])) {
         <form id='postJob-form'>
         <p class='form-message'></p>
         <ul>
-        <li><input id='postJob-title' type='text' placeholder='Job title' class='form-control' aria-label='small'></li>
-        <li><input id='postJob-position' type='text' placeholder='Job position' class='form-control' aria-label='small'></li>
-        <li><input id='postJob-location' type='text' placeholder='Job location' class='form-control' aria-label='small'></li>
-        <li><textarea id='postJob-description' type='text' placeholder='Job description' class='form-control' aria-label='small' rows='3'></textarea></li>
-
+        <li><input id='postJob-title' type='text' placeholder='Job title' class='form-control' aria-label='small' data-toggle='tooltip' title='Job title (must be less than 250 characters)'></li>
+        <li><input id='postJob-location' type='text' placeholder='Job location' class='form-control' aria-label='small' data-toggle='tooltip' title='Job location (must be less than 50 characters)'></li>
+        <li><textarea id='postJob-description' type='text' placeholder='Job description' class='form-control' aria-label='small' rows='8'>Job description here</textarea></li>
         <li class='py-3'><h6>What sections is your job involved with? <br/>(check all that apply)</h6></li>
         <li>
         <div class='form-check'>
@@ -1564,7 +1616,7 @@ if (isset($_SESSION['user_uid'])) {
         . '<button class="btn-outline-secondary btn nav-link change-btn">Update account</button>'
         . '</div>');
         echo('<div class="dash-control-drp" style="display: none;">
-        <select class="form-control" id="drop-selector">
+        <select class="form-control" id="drop-selector" style="height: 100%;">
         <option value="all">All Workshops</option>
         <option value="own-work">Your Workshops</option>
         <option value="rec-work">Workshops for you</option>

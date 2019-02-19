@@ -15,14 +15,13 @@ class Job
     var $job_hosp;
     var $job_cul;
     var $job_date;
-    
-    public function __construct($job_id, $job_employer_id, $job_title, $job_desc, $job_pos, $job_loc, $job_med, $job_it, $job_health, $job_bus, $job_food, $job_hosp, $job_cul, $job_date) 
+
+    public function __construct($job_id, $job_employer_id, $job_title, $job_desc, $job_loc, $job_med, $job_it, $job_health, $job_bus, $job_food, $job_hosp, $job_cul, $job_date)
     {
         $this->job_id = $job_id;
         $this->job_employer_id = $job_employer_id;
         $this->job_title = $job_title;
         $this->job_desc = $job_desc;
-        $this->job_pos = $job_pos;
         $this->job_loc = $job_loc;
         $this->job_med = $job_med;
         $this->job_it = $job_it;
@@ -33,7 +32,7 @@ class Job
         $this->job_cul = $job_cul;
         $this->job_date = $job_date;
     }
-    
+
     public function getID()
     {
         return $this->job_id;
@@ -49,10 +48,6 @@ class Job
     public function getDesc()
     {
         return $this->job_desc;
-    }
-    public function getPos()
-    {
-        return $this->job_pos;
     }
     public function getLoc()
     {
@@ -89,7 +84,7 @@ class Job
     public function getDate()
     {
         return $this->job_date;
-    }   
+    }
     public function setID($x)
     {
         $this->job_id = $x;
@@ -105,10 +100,6 @@ class Job
     public function setDesc($x)
     {
         $this->job_desc = $x;
-    }
-    public function setPos($x)
-    {
-        $this->job_pos = $x;
     }
     public function setLoc($x)
     {
