@@ -367,6 +367,7 @@ if (isset($_SESSION['user_uid'])) {
         $('#add-work').hide();
         $('#add-announ').hide();
         $('#reset-user-pw').hide();
+        $('#user-list').hide();
         $('#current-event-list').show();
       });
       $(document).on('click','.mod-work-btn',function(){
@@ -378,6 +379,7 @@ if (isset($_SESSION['user_uid'])) {
         $('#add-work').hide();
         $('#add-announ').hide();
         $('#reset-user-pw').hide();
+        $('#user-list').hide();
         $('#mod-event-list').show();
       });
       $(document).on('click','.add-work-btn',function(){
@@ -386,7 +388,17 @@ if (isset($_SESSION['user_uid'])) {
         $('#mod-event-list').hide();
         $('#add-announ').hide();
         $('#reset-user-pw').hide();
+        $('#user-list').hide();
         $('#add-work').show();
+      });
+      $(document).on('click','.user-btn',function(){
+        $('#change-info').hide();
+        $('#current-event-list').hide();
+        $('#mod-event-list').hide();
+        $('#add-announ').hide();
+        $('#reset-user-pw').hide();
+        $('#add-work').hide();
+        $('#user-list').show();
       });
       $(document).on('click','.add-announ-btn',function(){
         $('#announ-list-section').load('php/load-announcements-admin.php', {
@@ -397,6 +409,7 @@ if (isset($_SESSION['user_uid'])) {
         $('#mod-event-list').hide();
         $('#add-work').hide();
         $('#reset-user-pw').hide();
+        $('#user-list').hide();
         $('#add-announ').show();
       });
       $(document).on('click','.reset-user-pw-btn',function(){
@@ -405,6 +418,7 @@ if (isset($_SESSION['user_uid'])) {
         $('#mod-event-list').hide();
         $('#add-work').hide();
         $('#add-announ').hide();
+        $('#user-list').hide();
         $('#reset-user-pw').show();
       });
       $(document).on('click','.change-btn',function(){
@@ -413,6 +427,7 @@ if (isset($_SESSION['user_uid'])) {
         $('#add-work').hide();
         $('#add-announ').hide();
         $('#reset-user-pw').hide();
+        $('#user-list').hide();
         $('#change-info').show();
       });
       $(document).on('click','.change-pw-btn',function(){
@@ -546,6 +561,7 @@ if (isset($_SESSION['user_uid'])) {
           $('#add-work').hide();
           $('#add-announ').hide();
           $('#reset-user-pw').hide();
+          $('#user-list').hide();
           $('#current-event-list').show();
           break;
           case 'mod':
@@ -557,6 +573,7 @@ if (isset($_SESSION['user_uid'])) {
           $('#add-work').hide();
           $('#add-announ').hide();
           $('#reset-user-pw').hide();
+          $('#user-list').hide();
           $('#mod-event-list').show();
           break;
           case 'add-work':
@@ -565,7 +582,17 @@ if (isset($_SESSION['user_uid'])) {
           $('#mod-event-list').hide();
           $('#add-announ').hide();
           $('#reset-user-pw').hide();
+          $('#user-list').hide();
           $('#add-work').show();
+          break;
+          case 'user-list':
+          $('#change-info').hide();
+          $('#current-event-list').hide();
+          $('#mod-event-list').hide();
+          $('#add-announ').hide();
+          $('#reset-user-pw').hide();
+          $('#add-work').hide();
+          $('#user-list').show();
           break;
           case 'add-announ':
           $('#announ-list-section').load('php/load-announcements-admin.php', {
@@ -576,6 +603,7 @@ if (isset($_SESSION['user_uid'])) {
           $('#mod-event-list').hide();
           $('#add-work').hide();
           $('#reset-user-pw').hide();
+          $('#user-list').hide();
           $('#add-announ').show();
           break;
           case 'reset-user-pw':
@@ -584,6 +612,7 @@ if (isset($_SESSION['user_uid'])) {
           $('#mod-event-list').hide();
           $('#add-work').hide();
           $('#add-announ').hide();
+          $('#user-list').hide();
           $('#reset-user-pw').show();
           break;
           case 'update-acc':
@@ -592,6 +621,7 @@ if (isset($_SESSION['user_uid'])) {
           $('#add-work').hide();
           $('#add-announ').hide();
           $('#reset-user-pw').hide();
+          $('#user-list').hide();
           $('#change-info').show();
           break;
           default:
@@ -616,6 +646,24 @@ if (isset($_SESSION['user_uid'])) {
           modNewCount: modCount
         });
       });
+      $('#search-user').keyup(function(){
+        var txt = $(this).val();
+        if(txt != '')
+        {
+          $.ajax({
+            url: 'php/search-user.php',
+            method: 'POST',
+            data: {txt: txt},
+            dataType: 'text',
+            success: function(response){
+              $('#user-list-section').html(response);
+            }
+          });
+        }
+        else{
+          $('#user-list-section').html('');
+        }
+      });
     });
     ");
     echo('</script>');
@@ -633,6 +681,7 @@ if (isset($_SESSION['user_uid'])) {
     . '<button class="btn-outline-secondary btn nav-link current-btn">Current Workshops</button>'
     . '<button class="btn-outline-secondary btn nav-link mod-work-btn">Modify workshops</button>'
     . '<button class="btn-outline-secondary btn nav-link add-work-btn">Add workshop</button>'
+    . '<button class="btn-outline-secondary btn nav-link user-btn">User list</button>'
     . '<button class="btn-outline-secondary btn nav-link add-announ-btn">Announcements</button>'
     . '<button class="btn-outline-secondary btn nav-link reset-user-pw-btn">Reset password</button>'
     . '<button class="btn-outline-secondary btn nav-link change-btn">Update account</button>'
@@ -642,6 +691,7 @@ if (isset($_SESSION['user_uid'])) {
     <option value="current">Current workshops</option>
     <option value="mod">Modify workshops</option>
     <option value="add-work">Add workshop</option>
+    <option value="user-list">User list</option>
     <option value="add-announ">Add announcement</option>
     <option value="reset-user-pw">Reset a user password</option>
     <option value="update-acc">Update account</option>
@@ -731,11 +781,23 @@ if (isset($_SESSION['user_uid'])) {
       echo("</div>");
       echo("</div>");
 
+      //list to modify users
+      echo("<div id='user-list' class='event-list p-2' style='display: none;'>");
+      echo("<h2 class='dash-header'>User list: </h2><hr>");
+      echo("<input type='text' name='search-user' id='search-user' placeholder='search user' class='form-control'/>");
+      echo("<div id='user-list-section' class='container'>");
+      /*javascript will populate this*/
+      echo("</div>");
+      echo("<div class='show-more-container'>");
+      echo('<button id="more-user-button" class="btn btn-primary more-btn">Show more</button>');
+      echo("</div>");
+      echo("</div>");
+
       //list to modify workshops
       echo("<div id='mod-event-list' class='event-list p-2' style='display: none;'>");
       echo("<h2 class='dash-header'>Modify Workshops: </h2><hr>");
       echo("<div id='mod-event-list-section' class='container'>");
-
+      /*javascript will populate this*/
       echo("</div>");
       echo("<div class='show-more-container'>");
       echo('<button id="more-mod-button" class="btn btn-primary more-btn">Show more</button>');
@@ -806,11 +868,7 @@ if (isset($_SESSION['user_uid'])) {
       </form>
       ');
       echo("<div id='announ-list-section' class='container'>");
-
-
       /*javascript will load announcements here when add-announ-btn is pressed*/
-
-
       echo("</div>");
       echo("<div class='show-more-container'>");
       echo('<button id="more-announ-button" class="btn btn-primary more-btn">Show more</button>');
