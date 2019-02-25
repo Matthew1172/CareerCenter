@@ -31,6 +31,30 @@ if (isset($_SESSION['user_uid']))
         }
       });
     });
+    $('#reset-form').submit(function(event){
+      event.preventDefault();
+      var x = 'Are you sure you want to reset this users password?'
+      var ID = $('.rem-user-btn').attr('id');
+      bootbox.confirm({
+        size: 'small',
+        message: x,
+        callback: function(result){
+          if(result)
+          {
+            var reset_email = $('#reset-email').val();
+            var reset_pw = $('#reset-pw').val();
+            var reset_pw2 = $('#reset-pw2').val();
+            var submit = 1;
+            $('.form-message').load('php/reset-pw-admin.php', {
+              ID: ID,
+              reset_pw: reset_pw,
+              reset_pw2: reset_pw2,
+              submit: submit
+            });
+          }
+        }
+      });
+    });
   });
   </script>");
   $sql = $conn->prepare('SELECT * FROM users WHERE user_uid = ?');
@@ -80,15 +104,28 @@ if (isset($_SESSION['user_uid']))
           echo('<p><b>unemployment number:</b> '. $empResult['employer_unemployNum'] .'</p>');
           echo('<p><b>website:</b> '. $empResult['employer_web'] .'</p>');
           break;
-          case 'seeker':
+          case 'user':
           $seekSql = $conn->prepare('SELECT * FROM seekers WHERE user_id = ?');
-          $seekSql->execute($user['user_id']);
+          $seekSql->execute([$user['user_id']]);
           $seekResult = $seekSql->fetch();
-          echo('<p><b>company:</b> '. $seekResult['seeker_stateNum'] .'</p>');
+          echo('<p><b>State number:</b> '. $seekResult['user_stateNum'] .'</p>');
           break;
         }
-        echo('</div>');
         echo("<button id='" . $user['user_id'] . "' class='btn btn-primary rem-user-btn'>Delete user</button>");
+        echo('</div>');
+
+        echo('<div class="section">');
+        echo('
+        <form id="reset-form">
+        <p class="form-message"></p>
+        <ul class="reset-list">
+        <li><input id="reset-pw" type="password" placeholder="New user password" class="form-control" aria-label="small"></li>
+        <li><input id="reset-pw2" type="password" placeholder="Re-type new user password" class="form-control" aria-label="small"></li>
+        </ul>
+        <button id="'. $user['user_id'] .'" type="submit" class="btn btn-primary main-btn"><b>Reset Password</b></button>
+        </form>
+        ');
+        echo('</div>');
         echo('</div>');
 
         echo('</div>');
