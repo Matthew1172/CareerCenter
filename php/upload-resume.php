@@ -12,6 +12,14 @@ if($_SESSION['user_uid'])
   $stm2->execute([$result['user_id']]);
   $seekerResult = $stm2->fetch();
 
+  $stm3 = $conn->prepare('SELECT * FROM resume WHERE seeker_id = ?');
+  $stm3->execute([$seekerResult['seeker_id']]);
+  if($stm3->rowCount() > 0)
+  {
+    $stm4 = $conn->prepare('DELETE FROM resume WHERE seeker_id = ?');
+    $stm4->execute([$seekerResult['seeker_id']]);
+  }
+
   $name = $_FILES["resume"]["name"];
   $type = $_FILES["resume"]["type"];
   $data = file_get_contents($_FILES["resume"]["tmp_name"]);
@@ -20,3 +28,9 @@ if($_SESSION['user_uid'])
   $stm->execute([$seekerResult['seeker_id'], $data, $type, $name]);
 }
 ?>
+<script>
+  /*var error = <?php echo $error ?>;
+
+  window.location.reload();
+*/
+</script>

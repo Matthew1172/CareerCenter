@@ -1485,7 +1485,7 @@ if (isset($_SESSION['user_uid'])) {
                 $('#upload-form').submit(function(event){
                   event.preventDefault();
                   var formData = new FormData(this);
-                  var x = 'Are you sure you want to upload this resume?'
+                  var x = 'Are you sure you want to upload this resume? (This will override your previous resume.)'
                   bootbox.confirm({
                     size: 'small',
                     message: x,
@@ -1498,7 +1498,7 @@ if (isset($_SESSION['user_uid'])) {
                           data: formData,               // Data sent to server, a set of key/value pairs (i.e. form fields and values)
                           contentType: false,           // The content type used when sending data to the server.
                           cache: false,                 // To unable request pages to be cached
-                          processData:false             // To send DOMDocument or non processed data file it is set to false
+                          processData:false            // To send DOMDocument or non processed data file it is set to false
                         });
                       }
                     }
@@ -1755,8 +1755,9 @@ if (isset($_SESSION['user_uid'])) {
                 </div>
                 ");
 
+
+                echo("<div class='upload-section' id='upload-section' style='display:none;'>");
                 echo("
-                <div class='upload-section' id='upload-section' style='display:none;'>
                 <form action='php/upload-resume.php' method='post' id='upload-form' enctype='multipart/form-data'>
                 <p class='form-message'></p>
                 <ul class='reset-list'>
@@ -1764,17 +1765,18 @@ if (isset($_SESSION['user_uid'])) {
                 </ul>
                 <button id='upload-submit' type='submit' class='reset-btn btn btn-danger main-btn'>Upload</button>
                 </form>
+                <div class='py-5'>
                 ");
                 $stm5 = $conn->prepare("SELECT * FROM resume");
                 $stm5->execute();
                 if($stm5->rowCount() > 0){
                   while($row = $stm5->fetch()){
-                    echo("<a target='_blank' href='viewResume.php?id=".$row['seeker_id']."'>".$row['file_name']."</a>");
+                    echo("<p>Your resume: <a target='_blank' href='viewResume.php?id=".$row['seeker_id']."'>".$row['file_name']."</a></p>");
                   }
                 }else{
                   echo("<p>You have not uploaded a resume.</p>");
                 }
-                echo("</div>");
+                echo("</div></div>");
 
                 echo("
                 <div class='change-sector-section' id='change-sector-section' style='display:none;'>
