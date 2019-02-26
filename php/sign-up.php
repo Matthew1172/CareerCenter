@@ -237,7 +237,7 @@ if(isset($_POST['submit']))
 
               $stm = $conn->prepare('INSERT INTO seekers(user_id, user_stateNum) VALUES (?, ?)');
               $stm->execute([$result['user_id'], $seeker_stateNum]);
-              
+
               $stm = $conn->prepare('INSERT INTO user_occupations(user_id, medical, IT, business, foodservice, healthcare, hospitality, culinary) VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
               $stm->execute([$result['user_id'], $user_med, $user_it, $user_bus, $user_food, $user_health, $user_hosp, $user_cul]);
 

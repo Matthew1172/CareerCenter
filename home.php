@@ -1484,6 +1484,7 @@ if (isset($_SESSION['user_uid'])) {
                 });
                 $('#upload-form').submit(function(event){
                   event.preventDefault();
+                  var formData = new FormData(this);
                   var x = 'Are you sure you want to upload this resume?'
                   bootbox.confirm({
                     size: 'small',
@@ -1493,11 +1494,11 @@ if (isset($_SESSION['user_uid'])) {
                       {
                         $.ajax({
                           url: 'php/upload-resume.php', // Url to which the request is send
-                          type: 'POST',             // Type of request to be send, called as method
-                          data: new FormData(this), // Data sent to server, a set of key/value pairs (i.e. form fields and values)
-                          contentType: false,       // The content type used when sending data to the server.
-                          cache: false,             // To unable request pages to be cached
-                          processData:false        // To send DOMDocument or non processed data file it is set to false
+                          type: 'POST',                 // Type of request to be send, called as method
+                          data: formData,               // Data sent to server, a set of key/value pairs (i.e. form fields and values)
+                          contentType: false,           // The content type used when sending data to the server.
+                          cache: false,                 // To unable request pages to be cached
+                          processData:false             // To send DOMDocument or non processed data file it is set to false
                         });
                       }
                     }
@@ -1752,17 +1753,30 @@ if (isset($_SESSION['user_uid'])) {
                 <button id='change-email-submit' type='submit' class='reset-btn btn btn-danger main-btn'>Reset email</button>
                 </form>
                 </div>
+                ");
 
+                echo("
                 <div class='upload-section' id='upload-section' style='display:none;'>
-                <form id='upload-form' enctype='multipart/form-data'>
+                <form action='php/upload-resume.php' method='post' id='upload-form' enctype='multipart/form-data'>
                 <p class='form-message'></p>
                 <ul class='reset-list'>
-                <li><input type='file' name='fileToUpload' id='fileToUpload'></li>
+                <li><input type='file' name='resume' id='fileToUpload'></li>
                 </ul>
                 <button id='upload-submit' type='submit' class='reset-btn btn btn-danger main-btn'>Upload</button>
                 </form>
-                </div>
+                ");
+                $stm5 = $conn->prepare("SELECT * FROM resume");
+                $stm5->execute();
+                if($stm5->rowCount() > 0){
+                  while($row = $stm5->fetch()){
+                    echo("<a target='_blank' href='viewResume.php?id=".$row['seeker_id']."'>".$row['file_name']."</a>");
+                  }
+                }else{
+                  echo("<p>You have not uploaded a resume.</p>");
+                }
+                echo("</div>");
 
+                echo("
                 <div class='change-sector-section' id='change-sector-section' style='display:none;'>
                 <h3>Check the sectors that apply to your job search.</h3>
                 <form id='change-sector-form'>
