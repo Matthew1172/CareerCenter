@@ -22,7 +22,7 @@ $(document).ready(function() {
       center:'title',
       right:'month,agendaWeek,agendaDay'
     },
-    events: 'php/load.php',
+    events: 'php/load-cal.php',
     selectable:true,
     selectHelper:true,
     eventClick:function(event)

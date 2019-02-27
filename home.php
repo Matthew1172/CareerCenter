@@ -178,7 +178,7 @@ if (isset($_SESSION['user_uid'])) {
             $('.form-message').load('php/reset-phone.php', {
               change_phone: change_phone,
               change_phone2: change_phone2,
-              submit: submit
+              submit: 1
             });
           }
         }
@@ -504,69 +504,6 @@ if (isset($_SESSION['user_uid'])) {
         $('#change-email').hide();
         $('#upload-section').hide();
         $('#change-sector-section').show();
-      });
-      $('#change-pw-form').submit(function(event){
-        event.preventDefault();
-        var x = 'Are you sure you want to change your password?'
-        bootbox.confirm({
-          size: 'small',
-          message: x,
-          callback: function(result){
-            if(result)
-            {
-              var change_pw = $('#change-pw-input').val();
-              var change_pw2 = $('#change-pw2-input').val();
-              var submit = $('#change-pw-submit').val();
-              $('.form-message').load('php/reset-pw.php', {
-                change_pw: change_pw,
-                change_pw2: change_pw2,
-                submit: submit
-              });
-            }
-          }
-        });
-      });
-      $('#change-phone-form').submit(function(event){
-        event.preventDefault();
-        var x = 'Are you sure you want to change your phone number?'
-        bootbox.confirm({
-          size: 'small',
-          message: x,
-          callback: function(result){
-            if(result)
-            {
-              var change_phone = $('#change-phone-input').val();
-              var change_phone2 = $('#change-phone2-input').val();
-              var submit = $('#change-phone-submit').val();
-              $('.form-message').load('php/reset-phone.php', {
-                change_phone: change_phone,
-                change_phone2: change_phone2,
-                submit: submit
-              });
-            }
-          }
-        });
-      });
-      $('#change-email-form').submit(function(event){
-        event.preventDefault();
-        var x = 'Are you sure you want to change your email?'
-        bootbox.confirm({
-          size: 'small',
-          message: x,
-          callback: function(result){
-            if(result)
-            {
-              var change_email = $('#change-email-input').val();
-              var change_email2 = $('#change-email2-input').val();
-              var submit = $('#change-email-submit').val();
-              $('.form-message').load('php/reset-email.php', {
-                change_email: change_email,
-                change_email2: change_email2,
-                submit: submit
-              });
-            }
-          }
-        });
       });
       $('#drop-selector').on('change',function(){
         var selection = $(this).val();
