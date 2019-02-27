@@ -25,7 +25,7 @@ if (isset($_SESSION['user_uid']))
         echo("<br />");
         echo("<b>Date posted: </b>" . $announList[$i]->getDate());
         echo("<br />");
-        echo("<button id='" . $announList[$i]->getID() . "' class='btn btn-primary rem-announ-btn'>Remove</button>");
+        echo("<button id='" . $announList[$i]->getID() . "' class='btn btn-danger rem-announ-btn'>Remove</button>");
         echo("</p></div><hr>");
       }
     }
@@ -40,7 +40,7 @@ if (isset($_SESSION['user_uid']))
         echo("<br />");
         echo("<b>Date posted: </b>" . $a->getDate());
         echo("<br />");
-        echo("<button id='" . $a->getID() . "' class='btn btn-primary rem-announ-btn'>Remove</button>");
+        echo("<button id='" . $a->getID() . "' class='btn btn-danger rem-announ-btn'>Remove</button>");
         echo("</p></div><hr>");
       }
       echo("<div>There are no more announcements</div>");
@@ -59,7 +59,7 @@ if (isset($_SESSION['user_uid']))
         echo("<br />");
         echo("<b>Date posted: </b>" . $announList[$i]->getDate());
         echo("<br />");
-        echo("<button id='" . $announList[$i]->getID() . "' class='btn btn-primary rem-announ-btn'>Remove</button>");
+        echo("<button id='" . $announList[$i]->getID() . "' class='btn btn-danger rem-announ-btn'>Remove</button>");
         echo("</p></div><hr>");
       }
     }
@@ -74,7 +74,7 @@ if (isset($_SESSION['user_uid']))
         echo("<br />");
         echo("<b>Date posted: </b>" . $a->getDate());
         echo("<br />");
-        echo("<button id='" . $a->getID() . "' class='btn btn-primary rem-announ-btn'>Remove</button>");
+        echo("<button id='" . $a->getID() . "' class='btn btn-danger rem-announ-btn'>Remove</button>");
         echo("</p></div><hr>");
       }
       echo("<div>There are no more announcements</div>");

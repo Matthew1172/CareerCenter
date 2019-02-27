@@ -11,11 +11,7 @@ if (isset($_SESSION['user_uid']))
   if($result['user_type'] == 'admin')
   {
     $btnSubData = $_POST['ID'];
-
-    $stm = $conn->prepare('DELETE FROM user_event WHERE event_id = ?');
+    $stm = $conn->prepare('DELETE FROM timesheets WHERE sheet_id = ?');
     $stm->execute([$btnSubData]);
-
-    $stm2 = $conn->prepare('DELETE FROM events WHERE event_id = ?');
-    $stm2->execute([$btnSubData]);
   }
 }

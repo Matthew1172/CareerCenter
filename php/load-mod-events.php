@@ -56,7 +56,7 @@ if (isset($_SESSION['user_uid']))
           } else {
             echo("<p>There are no users going to this event</p>");
           }
-          echo("<button id='" . $modList[$i]->getID() . "' class='btn btn-primary rem-event-btn'>Remove</button>");
+          echo("<button id='" . $modList[$i]->getID() . "' class='btn btn-danger rem-event-btn'>Remove</button>");
           echo("</div><hr>");
       }
     }
@@ -102,7 +102,7 @@ if (isset($_SESSION['user_uid']))
           } else {
             echo("<p>There are no users going to this event</p>");
           }
-          echo("<button id='" . $m->getID() . "' class='btn btn-primary rem-event-btn'>Remove</button>");
+          echo("<button id='" . $m->getID() . "' class='btn btn-danger rem-event-btn'>Remove</button>");
           echo("</div><hr>");
       }
       echo("<div>There are no more events</div>");
@@ -152,7 +152,7 @@ if (isset($_SESSION['user_uid']))
           } else {
             echo("<p>There are no users going to this event</p>");
           }
-          echo("<button id='" . $modList[$i]->getID() . "' class='btn btn-primary rem-event-btn'>Remove</button>");
+          echo("<button id='" . $modList[$i]->getID() . "' class='btn btn-danger rem-event-btn'>Remove</button>");
           echo("</div><hr>");
       }
     }
@@ -198,7 +198,7 @@ if (isset($_SESSION['user_uid']))
           } else {
             echo("<p>There are no users going to this event</p>");
           }
-          echo("<button id='" . $m->getID() . "' class='btn btn-primary rem-event-btn'>Remove</button>");
+          echo("<button id='" . $m->getID() . "' class='btn btn-danger rem-event-btn'>Remove</button>");
           echo("</div><hr>");
       }
       echo("<div>There are no more events</div>");

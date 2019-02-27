@@ -17,50 +17,14 @@ $dsn = "mysql:host=$host;dbname=$db;charset=utf8";
 	}
 
   $stm = $conn->prepare("
-    CREATE TABLE `user_occupations` (
-      `user_id` int(11) NOT NULL,
-      `medical` tinytext NOT NULL,
-      `IT` tinytext NOT NULL,
-      `healthcare` tinytext NOT NULL,
-      `business` tinytext NOT NULL,
-      `foodservice` tinytext NOT NULL,
-      `hospitality` tinytext NOT NULL,
-      `culinary` tinytext NOT NULL,
-      KEY `user_id` (`user_id`),
-      FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`)
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+    CREATE TABLE timesheets(
+			sheet_id int(11) AUTO_INCREMENT PRIMARY KEY NOT NULL,
+			sheet_dateStamp DATETIME NOT NULL,
+			sheet_data blob NOT NULL,
+			sheet_type varchar(255) NOT NULL,
+			sheet_name varchar(255) NOT NULL)
+ ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
   ");
   $stm->execute();
 
-  $stm = $conn->prepare("
-    CREATE TABLE `job_occupations` (
-      `job_id` int(11) NOT NULL,
-      `medical` tinytext NOT NULL,
-      `IT` tinytext NOT NULL,
-      `healthcare` tinytext NOT NULL,
-      `business` tinytext NOT NULL,
-      `foodservice` tinytext NOT NULL,
-      `hospitality` tinytext NOT NULL,
-      `culinary` tinytext NOT NULL,
-      KEY `job_id` (`job_id`),
-      FOREIGN KEY (`job_id`) REFERENCES `jobs` (`job_id`)
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-  ");
-  $stm->execute();
-
-  $stm = $conn->prepare("
-    CREATE TABLE `event_occupations` (
-      `event_id` int(11) NOT NULL,
-      `medical` tinytext NOT NULL,
-      `IT` tinytext NOT NULL,
-      `healthcare` tinytext NOT NULL,
-      `business` tinytext NOT NULL,
-      `foodservice` tinytext NOT NULL,
-      `hospitality` tinytext NOT NULL,
-      `culinary` tinytext NOT NULL,
-      KEY `event_id` (`event_id`),
-      FOREIGN KEY (`event_id`) REFERENCES `events` (`event_id`)
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-  ");
-  $stm->execute();
 ?>

@@ -33,7 +33,7 @@ if (isset($_SESSION['user_uid']))
                       "<p>"                    . $jobList[$i]->getDesc()  . "<br/><br/>" .
                       "<b>Location: </b>"      . htmlspecialchars($jobList[$i]->getLoc())     . "<br/>" .
                       "<b>Contact: </b>"       . htmlspecialchars($result['user_email'])     . "<br/>");
-                      echo("<button id='" . $jobList[$i]->getID() . "' class='btn btn-primary rem-btn'>Remove</button>");
+                      echo("<button id='" . $jobList[$i]->getID() . "' class='btn btn-danger rem-btn'>Remove</button>");
                       echo("</div><hr>");
                 }
             }
@@ -47,7 +47,7 @@ if (isset($_SESSION['user_uid']))
                       "<p>"                    . $j->getDesc()  . "<br/><br/>" .
                       "<b>Location: </b>"      . htmlspecialchars($j->getLoc())     . "<br/>" .
                       "<b>Contact: </b>"       . htmlspecialchars($result['user_email'])     . "<br/>");
-                      echo("<button id='" . $j->getID() . "' class='btn btn-primary rem-btn'>Remove</button>");
+                      echo("<button id='" . $j->getID() . "' class='btn btn-danger rem-btn'>Remove</button>");
                       echo("</div><hr>");
                 }
                 echo("<div>There are no more events</div>");
@@ -65,7 +65,7 @@ if (isset($_SESSION['user_uid']))
                       "<p>"                    . $jobList[$i]->getDesc()  . "<br/><br/>" .
                       "<b>Location: </b>"      . htmlspecialchars($jobList[$i]->getLoc())     . "<br/>" .
                       "<b>Contact: </b>"       . htmlspecialchars($result['user_email'])     . "<br/>");
-                      echo("<button id='" . $jobList[$i]->getID() . "' class='btn btn-primary rem-btn'>Remove</button>");
+                      echo("<button id='" . $jobList[$i]->getID() . "' class='btn btn-danger rem-btn'>Remove</button>");
                       echo("</div><hr>");
                 }
             }
@@ -79,7 +79,7 @@ if (isset($_SESSION['user_uid']))
                       "<p>"                    . $j->getDesc()  . "<br/><br/>" .
                       "<b>Location: </b>"      . htmlspecialchars($j->getLoc())     . "<br/>" .
                       "<b>Contact: </b>"       . htmlspecialchars($result['user_email'])     . "<br/>");
-                      echo("<button id='" . $j->getID() . "' class='btn btn-primary rem-btn'>Remove</button>");
+                      echo("<button id='" . $j->getID() . "' class='btn btn-danger rem-btn'>Remove</button>");
                       echo("</div><hr>");
                 }
                 echo("<div>There are no more events</div>");

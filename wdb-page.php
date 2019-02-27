@@ -64,12 +64,22 @@ echo('
     <li><p>The Rockland County WDB provides oversight and monitoring of Workforce Innovation and Opportunity Act System. Rockland County Career Center is the one stop employment center as part of this system.The WDB of Rockland County receives funding through WIOA and oversees the Rockland County Career Center. The Career Center is operated by Rockland Community College.</p></li>
 </ul>
 </div>
+');
 
-<div class="download">
-<a href="#"><p><b>2018 WDB Meeting Schedule*</b></p></a>
-<p><b>Date: </b>September 13th 2018 @ 8:30<p>
-<p><b>Location: </b>37 West Broad Street<br/>Haverstraw, NY 10927<p>
-</div>');
+echo('<div class="download">');
+$sql2 = $conn->prepare('SELECT * FROM timesheets ORDER BY sheet_dateStamp DESC LIMIT 1');
+$sql2->execute();
+if($sql2->rowCount() > 0)
+{
+  while ($timesheetResults = $sql2->fetch()) {
+    $dt = new DateTime($timesheetResults['sheet_dateStamp']);
+    echo("<p><a target='_blank' href='viewTimesheet.php?id=".$timesheetResults['sheet_id']."'><b>Latest Meeting Schedule*</b></a></p>");
+    echo("<p><b>Date: </b>". $dt->format('Y-m-d') ."<p>");
+  }
+}else{
+  echo("<td><p>There is no timesheet available at this time.</p></td>");
+}
+echo('</div>');
 
 echo('<div class="wdb-board">');
 echo('<h3>Rockland County Workforce Development Board.</h3>');

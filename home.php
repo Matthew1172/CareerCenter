@@ -286,28 +286,6 @@ if (isset($_SESSION['user_uid'])) {
           }
         });
       });
-      $('#add-announ-form').submit(function(event){
-        event.preventDefault();
-        var x = 'Are you sure you want to add this announcement?'
-        bootbox.confirm({
-          size: 'small',
-          message: x,
-          callback: function(result){
-            if(result)
-            {
-              var title = $('#announ-title').val();
-              var description = $('#announ-desc').cleanHtml();
-              alert(description);
-              var submit = $('#submit-announ').val();
-              $('.form-message').load('php/add-announ.php', {
-                title: title,
-                description: description,
-                submit: submit
-              });
-            }
-          }
-        });
-      });
       $(document).on('click','.rem-event-btn',function(){
         var x = 'Are you sure you want to remove this event?'
         var ID = $(this).attr('id');
@@ -327,6 +305,28 @@ if (isset($_SESSION['user_uid'])) {
                 success: function(html){
                   $('#event'+ID).remove();
                 }
+              });
+            }
+          }
+        });
+      });
+      $('#add-announ-form').submit(function(event){
+        event.preventDefault();
+        var x = 'Are you sure you want to add this announcement?'
+        bootbox.confirm({
+          size: 'small',
+          message: x,
+          callback: function(result){
+            if(result)
+            {
+              var title = $('#announ-title').val();
+              var description = $('#announ-desc').cleanHtml();
+              alert(description);
+              var submit = $('#submit-announ').val();
+              $('.form-message').load('php/add-announ.php', {
+                title: title,
+                description: description,
+                submit: submit
               });
             }
           }
@@ -356,12 +356,59 @@ if (isset($_SESSION['user_uid'])) {
           }
         });
       });
+      $('#timesheet-form').submit(function(event){
+        event.preventDefault();
+        var formData = new FormData(this);
+        var x = 'Are you sure you want to upload this timesheet?'
+        bootbox.confirm({
+          size: 'small',
+          message: x,
+          callback: function(result){
+            if(result)
+            {
+              $.ajax({
+                url: 'php/upload-timesheet.php', // Url to which the request is send
+                type: 'POST',                 // Type of request to be send, called as method
+                data: formData,               // Data sent to server, a set of key/value pairs (i.e. form fields and values)
+                contentType: false,           // The content type used when sending data to the server.
+                cache: false,                 // To unable request pages to be cached
+                processData:false            // To send DOMDocument or non processed data file it is set to false
+              });
+            }
+          }
+        });
+      });
+      $(document).on('click','.rem-time-btn',function(){
+        var x = 'Are you sure you want to remove this timesheet?'
+        var ID = $(this).attr('id');
+        bootbox.confirm({
+          size: 'small',
+          message: x,
+          callback: function(result){
+            if(result)
+            {
+              $('#time'+ID).hide();
+              $.ajax({
+                type: 'POST',
+                url: 'php/remove-time.php',
+                data: {
+                  ID: ID
+                },
+                success: function(html){
+                  $('#time'+ID).remove();
+                }
+              });
+            }
+          }
+        });
+      });
       $(document).on('click','.current-btn',function(){
         $('#change-info').hide();
         $('#mod-event-list').hide();
         $('#add-work').hide();
         $('#add-announ').hide();
         $('#user-list').hide();
+        $('#timesheet-list').hide();
         $('#current-event-list').show();
       });
       $(document).on('click','.mod-work-btn',function(){
@@ -373,6 +420,7 @@ if (isset($_SESSION['user_uid'])) {
         $('#add-work').hide();
         $('#add-announ').hide();
         $('#user-list').hide();
+        $('#timesheet-list').hide();
         $('#mod-event-list').show();
       });
       $(document).on('click','.add-work-btn',function(){
@@ -381,6 +429,7 @@ if (isset($_SESSION['user_uid'])) {
         $('#mod-event-list').hide();
         $('#add-announ').hide();
         $('#user-list').hide();
+        $('#timesheet-list').hide();
         $('#add-work').show();
       });
       $(document).on('click','.user-btn',function(){
@@ -389,6 +438,7 @@ if (isset($_SESSION['user_uid'])) {
         $('#mod-event-list').hide();
         $('#add-announ').hide();
         $('#add-work').hide();
+        $('#timesheet-list').hide();
         $('#user-list').show();
       });
       $(document).on('click','.add-announ-btn',function(){
@@ -400,7 +450,17 @@ if (isset($_SESSION['user_uid'])) {
         $('#mod-event-list').hide();
         $('#add-work').hide();
         $('#user-list').hide();
+        $('#timesheet-list').hide();
         $('#add-announ').show();
+      });
+      $(document).on('click','.timesheet-btn',function(){
+        $('#current-event-list').hide();
+        $('#mod-event-list').hide();
+        $('#add-work').hide();
+        $('#add-announ').hide();
+        $('#user-list').hide();
+        $('#change-info').hide();
+        $('#timesheet-list').show();
       });
       $(document).on('click','.change-btn',function(){
         $('#current-event-list').hide();
@@ -408,6 +468,7 @@ if (isset($_SESSION['user_uid'])) {
         $('#add-work').hide();
         $('#add-announ').hide();
         $('#user-list').hide();
+        $('#timesheet-list').hide();
         $('#change-info').show();
       });
       $(document).on('click','.change-pw-btn',function(){
@@ -518,6 +579,7 @@ if (isset($_SESSION['user_uid'])) {
           $('#add-work').hide();
           $('#add-announ').hide();
           $('#user-list').hide();
+          $('#timesheet-list').hide();
           $('#current-event-list').show();
           break;
           case 'mod':
@@ -529,6 +591,7 @@ if (isset($_SESSION['user_uid'])) {
           $('#add-work').hide();
           $('#add-announ').hide();
           $('#user-list').hide();
+          $('#timesheet-list').hide();
           $('#mod-event-list').show();
           break;
           case 'add-work':
@@ -537,6 +600,7 @@ if (isset($_SESSION['user_uid'])) {
           $('#mod-event-list').hide();
           $('#add-announ').hide();
           $('#user-list').hide();
+          $('#timesheet-list').hide();
           $('#add-work').show();
           break;
           case 'user-list':
@@ -545,6 +609,7 @@ if (isset($_SESSION['user_uid'])) {
           $('#mod-event-list').hide();
           $('#add-announ').hide();
           $('#add-work').hide();
+          $('#timesheet-list').hide();
           $('#user-list').show();
           break;
           case 'add-announ':
@@ -556,6 +621,7 @@ if (isset($_SESSION['user_uid'])) {
           $('#mod-event-list').hide();
           $('#add-work').hide();
           $('#user-list').hide();
+          $('#timesheet-list').hide();
           $('#add-announ').show();
           break;
           case 'update-acc':
@@ -564,7 +630,17 @@ if (isset($_SESSION['user_uid'])) {
           $('#add-work').hide();
           $('#add-announ').hide();
           $('#user-list').hide();
+          $('#timesheet-list').hide();
           $('#change-info').show();
+          break;
+          case 'timesheet':
+          $('#current-event-list').hide();
+          $('#mod-event-list').hide();
+          $('#add-work').hide();
+          $('#add-announ').hide();
+          $('#user-list').hide();
+          $('#change-info').hide();
+          $('#timesheet-list').show();
           break;
           default:
           break;
@@ -626,6 +702,7 @@ if (isset($_SESSION['user_uid'])) {
     . '<button class="btn-outline-secondary btn nav-link user-btn">User list</button>'
     . '<button class="btn-outline-secondary btn nav-link add-announ-btn">Announcements</button>'
     . '<button class="btn-outline-secondary btn nav-link change-btn">Update account</button>'
+    . '<button class="btn-outline-secondary btn nav-link timesheet-btn">Manage timesheets</button>'
     . '</div>');
     echo('<div class="dash-control-drp" style="display: none;">
     <select class="form-control" id="drop-selector" style="height: 100%;">
@@ -635,6 +712,7 @@ if (isset($_SESSION['user_uid'])) {
     <option value="user-list">User list</option>
     <option value="add-announ">Add announcement</option>
     <option value="update-acc">Update account</option>
+    <option value="timesheet">Manage timesheets</option>
     </select></div>');
     echo("</div>");
 
@@ -932,6 +1010,42 @@ if (isset($_SESSION['user_uid'])) {
             </div>
             </div>
             ");
+            echo("</div>");
+            echo("</div>");
+
+            //Manage timesheets
+            echo("<div id='timesheet-list' class='event-list p-2' style='display: none;'>");
+            echo("<h2 class='dash-header hTwo'>Timesheets: </h2><hr>");
+            echo("<form action='php/upload-timesheet.php' method='post' id='timesheet-form' enctype='multipart/form-data'>
+            <p class='form-message'></p>
+            <ul class='reset-list'>
+            <li><input type='file' name='timesheet' id='timesheetToUpload'></li>
+            </ul>
+            <button id='timesheet-submit' type='submit' class='reset-btn btn btn-danger main-btn'>Upload</button>
+            </form>");
+            echo("<div id='timesheet-section' class='container'>");
+            echo('<table class="table table-hover">
+            <thead>
+            <tr>
+            <th>date</th>
+            <th>view</th>
+            <th>remove</th>
+            </tr>
+            </thead>
+            <tbody>
+            ');
+            $sql2 = $conn->prepare('SELECT * FROM timesheets ORDER BY sheet_dateStamp DESC');
+            $sql2->execute();
+            while ($timesheetResults = $sql2->fetch()) {
+              echo("<tr id='time" . $timesheetResults['sheet_id'] . "'>");
+              echo("<td><p>" . $timesheetResults['sheet_dateStamp'] . "</p></td>");
+              echo("<td><p><a target='_blank' href='viewTimesheet.php?id=".$timesheetResults['sheet_id']."'>".$timesheetResults['sheet_name']."</a></p></td>");
+              echo("<td><button id='" . $timesheetResults['sheet_id'] . "' class='btn btn-danger rem-time-btn'>Remove</button></td>");
+              echo("</tr>");
+            }
+            echo("
+            </tbody>
+            </table>");
             echo("</div>");
             echo("</div>");
 

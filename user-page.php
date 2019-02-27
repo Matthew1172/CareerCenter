@@ -123,7 +123,7 @@ if(isset($_SESSION['user_uid']))
       <li><input id="reset-pw" type="password" placeholder="New user password" class="form-control" aria-label="small"></li>
       <li><input id="reset-pw2" type="password" placeholder="Re-type new user password" class="form-control" aria-label="small"></li>
       </ul>
-      <button id="'. $user['user_id'] .'" type="submit" class="btn btn-primary main-btn">Reset Password</button>
+      <button id="'. $user['user_id'] .'" type="submit" class="btn btn-warning main-btn">Reset Password</button>
       </form>
       ');
       echo('</div>');
