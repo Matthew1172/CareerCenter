@@ -182,14 +182,4 @@ footer
         ". . . . . . . ."
         "c c c c c c c c";
     }
-
-    .navbar-nav ul li
-    {
-        padding: 10px;
-    }
-
-    .nav-item
-    {
-        padding: 10px;
-    }
 }

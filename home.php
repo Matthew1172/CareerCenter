@@ -321,7 +321,6 @@ if (isset($_SESSION['user_uid'])) {
             {
               var title = $('#announ-title').val();
               var description = $('#announ-desc').cleanHtml();
-              alert(description);
               var submit = $('#submit-announ').val();
               $('.form-message').load('php/add-announ.php', {
                 title: title,
@@ -813,7 +812,71 @@ if (isset($_SESSION['user_uid'])) {
 
             //list to modify workshops
             echo("<div id='mod-event-list' class='event-list p-2' style='display: none;'>");
-            echo("<h2 class='dash-header hTwo'>Modify Workshops: </h2><hr>");
+            echo("<h2 class='dash-header hTwo'>Add workshop: </h2><hr>");
+            echo('
+            <form id="add-work-form">
+            <p class="form-message"></p>
+            <ul class="reset-list">
+            <li><input id="work-title" type="text" placeholder="Workshop title" class="form-control" aria-label="small"></li>
+            <li><div class="btn-toolbar" data-role="editor-toolbar" data-target="#work-desc">
+            <div class="btn-group">
+            <a class="btn" data-edit="bold" title="" data-original-title="Bold (Ctrl/Cmd+B)"><img src="open-iconic-master/svg/bold.svg" alt="icon bold"></a>
+            <a class="btn" data-edit="italic" title="" data-original-title="Italic (Ctrl/Cmd+I)"><img src="open-iconic-master/svg/italic.svg" alt="icon italic"></a>
+            <a class="btn" data-edit="underline" title="" data-original-title="Underline (Ctrl/Cmd+U)"><img src="open-iconic-master/svg/underline.svg" alt="icon underline"></a>
+            </div>
+            <div class="btn-group">
+            <a class="btn" data-edit="insertunorderedlist" title="" data-original-title="Bullet list"><img src="open-iconic-master/svg/list.svg" alt="icon list"></a>
+            </div>
+            <div class="btn-group">
+            <a class="btn btn-info" data-edit="justifyleft" title="" data-original-title="Align Left (Ctrl/Cmd+L)"><img src="open-iconic-master/svg/align-left.svg" alt="icon align left"></a>
+            <a class="btn" data-edit="justifycenter" title="" data-original-title="Center (Ctrl/Cmd+E)"><img src="open-iconic-master/svg/align-center.svg" alt="icon align center"></a>
+            <a class="btn" data-edit="justifyright" title="" data-original-title="Align Right (Ctrl/Cmd+R)"><img src="open-iconic-master/svg/align-right.svg" alt="icon align right"></a>
+            <a class="btn" data-edit="justifyfull" title="" data-original-title="Justify (Ctrl/Cmd+J)"><img src="open-iconic-master/svg/justify-center.svg" alt="icon justify"></a>
+            </div>
+            <div class="btn-group">
+            <a class="btn" data-edit="undo" title="" data-original-title="Undo (Ctrl/Cmd+Z)"><img src="open-iconic-master/svg/action-undo.svg" alt="icon action undo"></a>
+            <a class="btn" data-edit="redo" title="" data-original-title="Redo (Ctrl/Cmd+Y)"><img src="open-iconic-master/svg/action-redo.svg" alt="icon action redo"></a>
+            </div>
+            </div></li>
+            <li><div id="work-desc" class="wysiwyg">Enter description here</div></li>
+            <li><input id="work-loc" type="text" placeholder="Workshop location" class="form-control" aria-label="small"></li>
+            <li><input id="work-start-date" type="date" class="form-control" aria-label="small"></li>
+            <li><input id="work-start-time" type="time" class="form-control" aria-label="small"></li>
+            <li><input id="work-end-date" type="date" class="form-control" aria-label="small"></li>
+            <li><input id="work-end-time" type="time" class="form-control" aria-label="small"></li>
+            <li>
+            <ul class="reset-list">
+            <li>
+            <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="TRUE" id="add-work-med">
+            <label class="form-check-label" for="add-work-med">Medical</label>
+            <br/>
+            <input class="form-check-input" type="checkbox" value="TRUE" id="add-work-it">
+            <label class="form-check-label" for="add-work-it">IT</label>
+            <br/>
+            <input class="form-check-input" type="checkbox" value="TRUE" id="add-work-bus">
+            <label class="form-check-label" for="add-work-bus">Business</label>
+            <br/>
+            <input class="form-check-input" type="checkbox" value="TRUE" id="add-work-health">
+            <label class="form-check-label" for="add-work-health">Health care</label>
+            <br/>
+            <input class="form-check-input" type="checkbox" value="TRUE" id="add-work-food">
+            <label class="form-check-label" for="add-work-food">Food service</label>
+            <br/>
+            <input class="form-check-input" type="checkbox" value="TRUE" id="add-work-hosp">
+            <label class="form-check-label" for="add-work-hosp">Hospitality</label>
+            <br/>
+            <input class="form-check-input" type="checkbox" value="TRUE" id="add-work-cul">
+            <label class="form-check-label" for="add-work-cul">Culinary</label>
+            </div>
+            </li>
+            </ul>
+            </li>
+            </ul>
+            <button id="submit-workshop" type="submit" class="btn btn-primary main-btn"><b>Add</b></button>
+            </form>
+            ');
+            echo("<h2 class='dash-header hTwo pt-5'>Modify Workshops: </h2><hr>");
             echo("<div id='mod-event-list-section' class='container'>");
             /*javascript will populate this*/
             echo("</div>");
@@ -845,14 +908,6 @@ if (isset($_SESSION['user_uid'])) {
             <a class="btn" data-edit="justifycenter" title="" data-original-title="Center (Ctrl/Cmd+E)"><img src="open-iconic-master/svg/align-center.svg" alt="icon align center"></a>
             <a class="btn" data-edit="justifyright" title="" data-original-title="Align Right (Ctrl/Cmd+R)"><img src="open-iconic-master/svg/align-right.svg" alt="icon align right"></a>
             <a class="btn" data-edit="justifyfull" title="" data-original-title="Justify (Ctrl/Cmd+J)"><img src="open-iconic-master/svg/justify-center.svg" alt="icon justify"></a>
-            </div>
-            <div class="btn-group">
-            <a class="btn dropdown-toggle" data-toggle="dropdown" title="" data-original-title="Hyperlink"><img src="open-iconic-master/svg/link-intact.svg" alt="icon create hyperlink"></a>
-            <div class="dropdown-menu input-append">
-            <input class="span2" placeholder="URL" type="text" data-edit="createLink">
-            <button class="btn" type="button">Add</button>
-            </div>
-            <a class="btn" data-edit="unlink" title="" data-original-title="Remove Hyperlink"><img src="open-iconic-master/svg/link-broken.svg" alt="icon break hyperlink"></a>
             </div>
             <div class="btn-group">
             <a class="btn" data-edit="undo" title="" data-original-title="Undo (Ctrl/Cmd+Z)"><img src="open-iconic-master/svg/action-undo.svg" alt="icon action undo"></a>
@@ -924,14 +979,6 @@ if (isset($_SESSION['user_uid'])) {
             <a class="btn" data-edit="justifyfull" title="" data-original-title="Justify (Ctrl/Cmd+J)"><img src="open-iconic-master/svg/justify-center.svg" alt="icon justify"></a>
             </div>
             <div class="btn-group">
-            <a class="btn dropdown-toggle" data-toggle="dropdown" title="" data-original-title="Hyperlink"><img src="open-iconic-master/svg/link-intact.svg" alt="icon create hyperlink"></a>
-            <div class="dropdown-menu input-append">
-            <input class="span2" placeholder="URL" type="text" data-edit="createLink">
-            <button class="btn" type="button">Add</button>
-            </div>
-            <a class="btn" data-edit="unlink" title="" data-original-title="Remove Hyperlink"><img src="open-iconic-master/svg/link-broken.svg" alt="icon break hyperlink"></a>
-            </div>
-            <div class="btn-group">
             <a class="btn" data-edit="undo" title="" data-original-title="Undo (Ctrl/Cmd+Z)"><img src="open-iconic-master/svg/action-undo.svg" alt="icon action undo"></a>
             <a class="btn" data-edit="redo" title="" data-original-title="Redo (Ctrl/Cmd+Y)"><img src="open-iconic-master/svg/action-redo.svg" alt="icon action redo"></a>
             </div>
@@ -941,6 +988,7 @@ if (isset($_SESSION['user_uid'])) {
             <button id="submit-announ" type="submit" class="btn btn-primary main-btn"><b>Add</b></button>
             </form>
             ');
+            echo("<h2 class='dash-header hTwo pt-5'>Modify announcements: </h2><hr>");
             echo("<div id='announ-list-section' class='container'>");
             /*javascript will load announcements here when add-announ-btn is pressed*/
             echo("</div>");
@@ -1015,14 +1063,15 @@ if (isset($_SESSION['user_uid'])) {
 
             //Manage timesheets
             echo("<div id='timesheet-list' class='event-list p-2' style='display: none;'>");
-            echo("<h2 class='dash-header hTwo'>Timesheets: </h2><hr>");
+            echo("<h2 class='dash-header hTwo'>Upload timesheet: </h2><hr>");
             echo("<form action='php/upload-timesheet.php' method='post' id='timesheet-form' enctype='multipart/form-data'>
             <p class='form-message'></p>
             <ul class='reset-list'>
             <li><input type='file' name='timesheet' id='timesheetToUpload'></li>
             </ul>
-            <button id='timesheet-submit' type='submit' class='reset-btn btn btn-danger main-btn'>Upload</button>
+            <button id='timesheet-submit' type='submit' class='btn btn-primary main-btn'>Upload</button>
             </form>");
+            echo("<h2 class='dash-header hTwo pt-5'>Timesheets: </h2><hr>");
             echo("<div id='timesheet-section' class='container'>");
             echo('<table class="table table-hover">
             <thead>
@@ -1415,14 +1464,6 @@ if (isset($_SESSION['user_uid'])) {
               <a class='btn' data-edit='justifycenter' title='' data-original-title='Center (Ctrl/Cmd+E)'><img src='open-iconic-master/svg/align-center.svg' alt='icon align center'></a>
               <a class='btn' data-edit='justifyright' title='' data-original-title='Align Right (Ctrl/Cmd+R)'><img src='open-iconic-master/svg/align-right.svg' alt='icon align right'></a>
               <a class='btn' data-edit='justifyfull' title='' data-original-title='Justify (Ctrl/Cmd+J)'><img src='open-iconic-master/svg/justify-center.svg' alt='icon justify'></a>
-              </div>
-              <div class='btn-group'>
-              <a class='btn dropdown-toggle' data-toggle='dropdown' title='' data-original-title='Hyperlink'><img src='open-iconic-master/svg/link-intact.svg' alt='icon create hyperlink'></a>
-              <div class='dropdown-menu input-append'>
-              <input class='span2' placeholder='URL' type='text' data-edit='createLink'>
-              <button class='btn' type='button'>Add</button>
-              </div>
-              <a class='btn' data-edit='unlink' title='' data-original-title='Remove Hyperlink'><img src='open-iconic-master/svg/link-broken.svg' alt='icon break hyperlink'></a>
               </div>
               <div class='btn-group'>
               <a class='btn' data-edit='undo' title='' data-original-title='Undo (Ctrl/Cmd+Z)'><img src='open-iconic-master/svg/action-undo.svg' alt='icon action undo'></a>

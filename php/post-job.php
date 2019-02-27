@@ -1,7 +1,7 @@
 <?php
 session_start();
-//if(isset($_POST['submit']))
-//{
+if(isset($_POST['submit']))
+{
   require 'connect.php';
   include '../htmlpurifier-4.10.0/library/HTMLPurifier.auto.php';
   $config = HTMLPurifier_Config::createDefault();
@@ -47,11 +47,11 @@ session_start();
     $sql->execute([$resultEmployer['employer_id'], $job_title, $job_description, $job_location, $job_med, $job_it, $job_health, $job_bus, $job_food, $job_hosp, $job_cul, date('Y-m-d H:i:s')]);
     echo("<span class='form-success'>Success~!</span>");
   }
-//}
-//else
-//{
-//  header("Location: ../sign-up-page.php?error=invaliduid");
-//}
+}
+else
+{
+  header("Location: ../sign-up-page.php?error=invaliduid");
+}
 ?>
 <script>
 $("#postJob-title, #postJob-description, #postJob-location").removeClass("input-error");

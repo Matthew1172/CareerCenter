@@ -13,7 +13,7 @@
 
 .main-btn
 {
-    width: 100%;
+    width: 50%;
 }
 
 .reset-btn
@@ -118,14 +118,6 @@
         ". . . .";
 }
 
-@media screen and (min-width: 500px)
-{
-    .main-btn
-    {
-        width: 50%;
-    }
-}
-
 @media screen and (min-width: 1000px)
 {
     .grid
@@ -140,10 +132,5 @@
             ". . . . . . . ."
             ". a a a a a a ."
             ". . . . . . . .";
-    }
-
-    .main-btn
-    {
-        width: 100%;
     }
 }

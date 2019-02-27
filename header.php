@@ -52,8 +52,8 @@ $(document).ready(function () {
 
 </head>
 <body>
-  <a class="navbar-brand p-3" href="index.php"><img src="pics/career-center-rockland-logo.png" height="100%" width="100%" alt="Rockland County career center logo"/></a>
 
+  <a class="navbar-brand p-3" href="index.php"><img src="pics/career-center-rockland-logo.png" height="45%" width="45%" alt="Rockland County career center logo"/></a>
   <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-white" id="nav1">
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar1"><span class="navbar-toggler-icon"></span></button>
     <div class="navbar-collapse collapse justify-content-stretch" id="navbar1">
@@ -72,7 +72,7 @@ $(document).ready(function () {
           <li>
           <form id="logout-form" action="php/sign-out.php" method="POST">
           <ul class="navbar-nav ml-auto">
-          <li><button id="logout-btn" type="submit" name="logout" class="btn btn-outline-secondary my-5">Log out<span class="icon pl-2"><img src="open-iconic-master/svg/account-logout.svg" alt="icon logout"></span></button></li>
+          <li><button id="logout-btn" type="submit" name="logout" class="btn btn-outline-secondary my-2">Log out<span class="icon pl-2"><img src="open-iconic-master/svg/account-logout.svg" alt="icon logout"></span></button></li>
           </ul>
           </form>
           </li>
