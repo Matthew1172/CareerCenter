@@ -40,7 +40,7 @@ else
 ?>
 
 <script>
-    $("#change-phone-input, #change-phone2-input").removeClass("input-error");
+    $(".rPhone").removeClass("input-error");
 
     var errorEmpty = "<?php echo $errorEmpty ?>";
     var errorPhoneMatch = "<?php echo $errorPhoneMatch ?>";
@@ -48,18 +48,18 @@ else
 
     if(errorEmpty == true)
     {
-        $("#change-phone-input, #change-phone2-input").addClass("input-error");
+        $(".rPhone").addClass("input-error");
     }
     if(errorPhoneMatch == true)
     {
-        $("#change-phone-input, #change-phone2-input").addClass("input-error");
+        $(".rPhone").addClass("input-error");
     }
     if(errorPhone == true)
     {
-        $("#change-phone-input, #change-phone2-input").addClass("input-error");
+        $(".rPhone").addClass("input-error");
     }
     if(errorEmpty == false && errorPhoneMatch == false && errorPhone == false)
     {
-        $("#change-phone-input, #change-phone2-input").val("+1");
+        $("#.rPhone").val("+1");
     }
 </script>

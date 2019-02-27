@@ -20,6 +20,8 @@ if (isset($_SESSION['user_uid'])) {
   $ownEventList = getOwnEventList($conn, $result['user_id']);
   //get a list of all jobs
   $jobList = getJobList($conn);
+  echo('<script src="js/reset-controls.js"></script>');
+
   echo('<script>');
   echo("
   $(document).ready(function(){
@@ -104,105 +106,6 @@ if (isset($_SESSION['user_uid'])) {
       workRecCount += 2;
       $('#work-rec-list-section').load('php/load-work-rec-events.php', {
         workRecNewCount: workRecCount
-      });
-    });
-    $('#change-sector-form').submit(function(event){
-      event.preventDefault();
-      var x = 'Are you sure you want to change your sectors?'
-      bootbox.confirm({
-        size: 'small',
-        message: x,
-        callback: function(result){
-          if(result)
-          {
-            var med = $('#change-sector-med');
-            var it = $('#change-sector-it');
-            var bus = $('#change-sector-bus');
-            var health = $('#change-sector-health');
-            var food = $('#change-sector-food');
-            var hosp = $('#change-sector-hosp');
-            var cul = $('#change-sector-cul');
-
-            var submit = $('#change-sector-submit').val();
-
-            $('.form-message').load('php/reset-sectors.php', {
-              med: med.prop('checked'),
-              it: it.prop('checked'),
-              bus: bus.prop('checked'),
-              health: health.prop('checked'),
-              food: food.prop('checked'),
-              hosp: hosp.prop('checked'),
-              cul: cul.prop('checked'),
-              submit: submit,
-              success: function(response){
-                console.log(response);
-              }
-            });
-          }
-        }
-      });
-    });
-    $('#change-pw-form').submit(function(event){
-      event.preventDefault();
-      var x = 'Are you sure you want to change your password?'
-      bootbox.confirm({
-        size: 'small',
-        message: x,
-        callback: function(result){
-          if(result)
-          {
-            var change_pw = $('#change-pw-input').val();
-            var change_pw2 = $('#change-pw2-input').val();
-            var submit = $('#change-pw-submit').val();
-            $('.form-message').load('php/reset-pw.php', {
-              change_pw: change_pw,
-              change_pw2: change_pw2,
-              submit: submit
-            });
-          }
-        }
-      });
-    });
-    $('#change-phone-form').submit(function(event){
-      event.preventDefault();
-      var x = 'Are you sure you want to change your phone number?'
-      bootbox.confirm({
-        size: 'small',
-        message: x,
-        callback: function(result){
-          if(result)
-          {
-            var change_phone = $('#change-phone-input').val();
-            var change_phone2 = $('#change-phone2-input').val();
-            var submit = $('#change-phone-submit').val();
-            $('.form-message').load('php/reset-phone.php', {
-              change_phone: change_phone,
-              change_phone2: change_phone2,
-              submit: 1
-            });
-          }
-        }
-      });
-    });
-    $('#change-email-form').submit(function(event){
-      event.preventDefault();
-      var x = 'Are you sure you want to change your email?'
-      bootbox.confirm({
-        size: 'small',
-        message: x,
-        callback: function(result){
-          if(result)
-          {
-            var change_email = $('#change-email-input').val();
-            var change_email2 = $('#change-email2-input').val();
-            var submit = $('#change-email-submit').val();
-            $('.form-message').load('php/reset-email.php', {
-              change_email: change_email,
-              change_email2: change_email2,
-              submit: submit
-            });
-          }
-        }
       });
     });
     $(window).on('resize', function(){
@@ -785,7 +688,7 @@ if (isset($_SESSION['user_uid'])) {
               <a class='btn' data-edit='redo' title='' data-original-title='Redo (Ctrl/Cmd+Y)'><img src='open-iconic-master/svg/action-redo.svg' alt='icon action redo'></a>
               </div>
               </div></li>
-              <li><div id='postJob-description' class='wysiwyg'>Enter description here (10000 character limit)</div></li>
+              <li><div id='postJob-description' class='wysiwyg'>Enter description here (500 character limit)</div></li>
 
               <li class='py-3'><h6 class='hSix'>What sections is your job involved with? <br/>(check all that apply)</h6></li>
               <li>
@@ -851,6 +754,9 @@ if (isset($_SESSION['user_uid'])) {
               <li><button class='btn-outline-primary btn nav-link change-phone-btn'>Change phone number</button></li>
               <li><button class='btn-outline-primary btn nav-link change-email-btn'>Change email</button></li>
               <li><button class='btn-outline-primary btn nav-link change-sector-btn'>Change sectors</button></li>
+              <li><button class='btn-outline-primary btn nav-link change-web-btn'>Change website</button></li>
+              <li><button class='btn-outline-primary btn nav-link change-tax-btn'>Change Tax</button></li>
+              <li><button class='btn-outline-primary btn nav-link change-unemp-btn'>Change unemployment number</button></li>
               <li></li>
               </ul>
               </div>
@@ -859,8 +765,8 @@ if (isset($_SESSION['user_uid'])) {
               <form id='change-pw-form'>
               <p class='form-message'></p>
               <ul class='reset-list'>
-              <li><input id='change-pw-input' type='password' placeholder='New password' class='form-control' aria-label='small' data-toggle='tooltip' title='Enter your new password (must be 8 characters long, ! ? @ $ % & * allowed)'></li>
-              <li><input id='change-pw2-input' type='password' placeholder='Re-type new password' class='form-control' aria-label='small' data-toggle='tooltip' title='Re-type your new password (must be 8 characters long, ! ? @ $ % & * allowed)'></li>
+              <li><input id='change-pw-input' type='password' placeholder='New password' class='rPw form-control' aria-label='small' data-toggle='tooltip' title='Enter your new password (must be 8 characters long, ! ? @ $ % & * allowed)'></li>
+              <li><input id='change-pw2-input' type='password' placeholder='Re-type new password' class='rPw form-control' aria-label='small' data-toggle='tooltip' title='Re-type your new password (must be 8 characters long, ! ? @ $ % & * allowed)'></li>
               </ul>
               <button id='change-pw-submit' type='submit' class='reset-btn btn btn-danger main-btn'>Reset password</button>
               </form>
@@ -870,10 +776,10 @@ if (isset($_SESSION['user_uid'])) {
               <form id='change-phone-form'>
               <p class='form-message'></p>
               <ul class='reset-list'>
-              <li><input id='change-phone-input' type='text' class='input-small form-control bfh-phone' data-country='US' aria-label='small' data-toggle='tooltip' title='Enter your new phone number (only digits)'></li>
-              <li><input id='change-phone2-input' type='text' class='input-small form-control bfh-phone' data-country='US' aria-label='small' data-toggle='tooltip' title='Re-type your new phone number (only digits)'></li>
+              <li><input id='change-phone-input' type='text' class='rPhone input-small form-control bfh-phone' data-country='US' aria-label='small' data-toggle='tooltip' title='Enter your new phone number (only digits)'></li>
+              <li><input id='change-phone2-input' type='text' class='rPhone input-small form-control bfh-phone' data-country='US' aria-label='small' data-toggle='tooltip' title='Re-type your new phone number (only digits)'></li>
               </ul>
-              <button id='change-phone-submit' type='submit' class='reset-btn btn btn-danger main-btn'>Reset phone</button>
+              <button id='change-phone-submit' type='submit' class='reset-btn btn btn-danger main-btn'>Update</button>
               </form>
               </div>
 
@@ -881,10 +787,43 @@ if (isset($_SESSION['user_uid'])) {
               <form id='change-email-form'>
               <p class='form-message'></p>
               <ul class='reset-list'>
-              <li><input id='change-email-input' type='text' placeholder='New email' class='form-control' aria-label='small' data-toggle='tooltip' title='Enter your new email'></li>
-              <li><input id='change-email2-input' type='text' placeholder='Re-type new email' class='form-control' aria-label='small' data-toggle='tooltip' title='Re-type your new email'></li>
+              <li><input id='change-email-input' type='text' placeholder='New email' class='rEmail form-control' aria-label='small' data-toggle='tooltip' title='Enter your new email'></li>
+              <li><input id='change-email2-input' type='text' placeholder='Re-type new email' class='rEmail form-control' aria-label='small' data-toggle='tooltip' title='Re-type your new email'></li>
               </ul>
-              <button id='change-email-submit' type='submit' class='reset-btn btn btn-danger main-btn'>Reset email</button>
+              <button id='change-email-submit' type='submit' class='reset-btn btn btn-danger main-btn'>Update</button>
+              </form>
+              </div>
+
+              <div class='change-web' id='change-web' style='display:none;'>
+              <form id='change-web-form'>
+              <p class='form-message'></p>
+              <ul class='reset-list'>
+              <li><input id='change-web-input' type='text' placeholder='New URL' class='rWeb form-control' aria-label='small' data-toggle='tooltip' title='Enter your new company URL'></li>
+              <li><input id='change-web2-input' type='text' placeholder='Re-type new URL' class='rWeb form-control' aria-label='small' data-toggle='tooltip' title='Re-type your new company URL'></li>
+              </ul>
+              <button id='change-web-submit' type='submit' class='reset-btn btn btn-danger main-btn'>Update</button>
+              </form>
+              </div>
+
+              <div class='change-unemp' id='change-unemp' style='display:none;'>
+              <form id='change-unemp-form'>
+              <p class='form-message'></p>
+              <ul class='reset-list'>
+              <li><input id='change-unemp-input' type='text' placeholder='New state unemployment number' class='rUnemp form-control' aria-label='small' data-toggle='tooltip' title='Enter your state unemployment number'/></li>
+              <li><input id='change-unemp2-input' type='text' placeholder='Re-type new state unemployment number' class='rUnemp form-control' aria-label='small' data-toggle='tooltip' title='Re-type your state unemployment number'/></li>
+              </ul>
+              <button id='change-unemp-submit' type='submit' class='reset-btn btn btn-danger main-btn'>Submit</button>
+              </form>
+              </div>
+
+              <div class='change-tax' id='change-tax' style='display:none;'>
+              <form id='change-tax-form'>
+              <p class='form-message'></p>
+              <ul class='reset-list'>
+              <li><input id='change-tax-input' type='text' placeholder='New tax number' class='rTax form-control' aria-label='small' data-toggle='tooltip' title='Enter your tax number'/></li>
+              <li><input id='change-tax2-input' type='text' placeholder='Re-type new tax number' class='rTax form-control' aria-label='small' data-toggle='tooltip' title='Re-type your tax number'/></li>
+              </ul>
+              <button id='change-tax-submit' type='submit' class='reset-btn btn btn-danger main-btn'>Submit</button>
               </form>
               </div>
 
@@ -895,30 +834,30 @@ if (isset($_SESSION['user_uid'])) {
               <ul class='reset-list'>
               <li>
               <div class='form-check'>
-              <input class='form-check-input' type='checkbox' value='TRUE' id='change-sector-med'>
+              <input class='form-check-input rSec' type='checkbox' value='TRUE' id='change-sector-med'>
               <label class='form-check-label' for='change-sector-med'>Medical</label>
               <br/>
-              <input class='form-check-input' type='checkbox' value='TRUE' id='change-sector-it'>
+              <input class='form-check-input rSec' type='checkbox' value='TRUE' id='change-sector-it'>
               <label class='form-check-label' for='change-sector-it'>IT</label>
               <br/>
-              <input class='form-check-input' type='checkbox' value='TRUE' id='change-sector-bus'>
+              <input class='form-check-input rSec' type='checkbox' value='TRUE' id='change-sector-bus'>
               <label class='form-check-label' for='change-sector-bus'>Business</label>
               <br/>
-              <input class='form-check-input' type='checkbox' value='TRUE' id='change-sector-health'>
+              <input class='form-check-input rSec' type='checkbox' value='TRUE' id='change-sector-health'>
               <label class='form-check-label' for='change-sector-health'>Health care</label>
               <br/>
-              <input class='form-check-input' type='checkbox' value='TRUE' id='change-sector-food'>
+              <input class='form-check-input rSec' type='checkbox' value='TRUE' id='change-sector-food'>
               <label class='form-check-label' for='change-sector-food'>Food service</label>
               <br/>
-              <input class='form-check-input' type='checkbox' value='TRUE' id='change-sector-hosp'>
+              <input class='form-check-input rSec' type='checkbox' value='TRUE' id='change-sector-hosp'>
               <label class='form-check-label' for='change-sector-hosp'>Hospitality</label>
               <br/>
-              <input class='form-check-input' type='checkbox' value='TRUE' id='change-sector-cul'>
+              <input class='form-check-input rSec' type='checkbox' value='TRUE' id='change-sector-cul'>
               <label class='form-check-label' for='change-sector-cul'>Culinary</label>
               </div>
               </li>
               </ul>
-              <button id='change-sector-submit' type='submit' class='reset-btn btn btn-danger main-btn'>Change sectors</button>
+              <button id='change-sector-submit' type='submit' class='reset-btn btn btn-danger main-btn'>Update</button>
               </form>
               </div>
 
@@ -1068,7 +1007,7 @@ if (isset($_SESSION['user_uid'])) {
                 <li><button class='btn-outline-primary btn nav-link change-email-btn'>Change email</button></li>
                 <li><button class='btn-outline-primary btn nav-link upload-btn'>Upload Resume</button></li>
                 <li><button class='btn-outline-primary btn nav-link change-sector-btn'>Change sectors</button></li>
-                <li><button class='btn-outline-primary btn nav-link change-unemp-btn'>Update state unemployment number</button></li>
+                <li><button class='btn-outline-primary btn nav-link change-stateNum-btn'>Update state unemployment number</button></li>
                 <li></li>
                 </ul>
                 </div>
@@ -1166,14 +1105,14 @@ if (isset($_SESSION['user_uid'])) {
                 </form>
                 </div>
 
-                <div class='change-unemp-section' id='change-unemp-section' style='display:none;'>
-                <form id='change-unemp-form'>
+                <div class='change-stateNum-section' id='change-stateNum-section' style='display:none;'>
+                <form id='change-stateNum-form'>
                 <p class='form-message'></p>
                 <ul class='reset-list'>
-                <li><input id='change-unemp-input' type='text' placeholder='New state unemployment number' class='form-control' aria-label='small' data-toggle='tooltip' title='Enter your state unemployment number'/></li>
-                <li><input id='change-unemp2-input' type='text' placeholder='Re-type new state unemployment number' class='form-control' aria-label='small' data-toggle='tooltip' title='Re-type your state unemployment number'/></li>
+                <li><input id='change-stateNum-input' type='text' placeholder='New state unemployment number' class='rState form-control' aria-label='small' data-toggle='tooltip' title='Enter your state unemployment number'/></li>
+                <li><input id='change-stateNum2-input' type='text' placeholder='Re-type new state unemployment number' class='rState form-control' aria-label='small' data-toggle='tooltip' title='Re-type your state unemployment number'/></li>
                 </ul>
-                <button id='change-unemp-submit' type='submit' class='reset-btn btn btn-danger main-btn'>Submit</button>
+                <button id='change-stateNum-submit' type='submit' class='reset-btn btn btn-danger main-btn'>Update</button>
                 </form>
                 </div>
 

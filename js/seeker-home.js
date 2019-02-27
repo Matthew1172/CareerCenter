@@ -61,7 +61,7 @@ $(document).ready(function() {
     $('#change-email').hide();
     $('#upload-section').hide();
     $('#change-sector-section').hide();
-    $('#change-unemp-section').hide();
+    $('#change-stateNum-section').hide();
     $('#change-pw').show();
   });
   $(document).on('click','.change-phone-btn',function(){
@@ -69,7 +69,7 @@ $(document).ready(function() {
     $('#change-pw').hide();
     $('#upload-section').hide();
     $('#change-sector-section').hide();
-    $('#change-unemp-section').hide();
+    $('#change-stateNum-section').hide();
     $('#change-phone').show();
   });
   $(document).on('click','.change-email-btn',function(){
@@ -77,7 +77,7 @@ $(document).ready(function() {
     $('#change-pw').hide();
     $('#upload-section').hide();
     $('#change-sector-section').hide();
-    $('#change-unemp-section').hide();
+    $('#change-stateNum-section').hide();
     $('#change-email').show();
   });
   $(document).on('click','.upload-btn',function(){
@@ -85,7 +85,7 @@ $(document).ready(function() {
     $('#change-pw').hide();
     $('#change-email').hide();
     $('#change-sector-section').hide();
-    $('#change-unemp-section').hide();
+    $('#change-stateNum-section').hide();
     $('#upload-section').show();
   });
   $(document).on('click','.change-sector-btn',function(){
@@ -93,59 +93,16 @@ $(document).ready(function() {
     $('#change-pw').hide();
     $('#change-email').hide();
     $('#upload-section').hide();
-    $('#change-unemp-section').hide();
+    $('#change-stateNum-section').hide();
     $('#change-sector-section').show();
   });
-  $(document).on('click','.change-unemp-btn',function(){
+  $(document).on('click','.change-stateNum-btn',function(){
     $('#change-phone').hide();
     $('#change-pw').hide();
     $('#change-email').hide();
     $('#upload-section').hide();
     $('#change-sector-section').hide();
-    $('#change-unemp-section').show();
-  });
-  $('#upload-form').submit(function(event){
-    event.preventDefault();
-    var formData = new FormData(this);
-    var x = 'Are you sure you want to upload this resume? (This will override your previous resume.)'
-    bootbox.confirm({
-      size: 'small',
-      message: x,
-      callback: function(result){
-        if(result)
-        {
-          $.ajax({
-            url: 'php/upload-resume.php', // Url to which the request is send
-            type: 'POST',                 // Type of request to be send, called as method
-            data: formData,               // Data sent to server, a set of key/value pairs (i.e. form fields and values)
-            contentType: false,           // The content type used when sending data to the server.
-            cache: false,                 // To unable request pages to be cached
-            processData:false            // To send DOMDocument or non processed data file it is set to false
-          });
-        }
-      }
-    });
-  });
-  $('#change-unemp-form').submit(function(event){
-    event.preventDefault();
-    var x = 'Are you sure you want to change your state unemployment number?'
-    bootbox.confirm({
-      size: 'small',
-      message: x,
-      callback: function(result){
-        if(result)
-        {
-          var change_unemp = $('#change-unemp-input').val();
-          var change_unemp2 = $('#change-unemp2-input').val();
-          var submit = $('#change-unemp-submit').val();
-          $('.form-message').load('php/reset-unemp.php', {
-            change_unemp: change_unemp,
-            change_unemp2: change_unemp2,
-            submit: submit
-          });
-        }
-      }
-    });
+    $('#change-stateNum-section').show();
   });
   $('#drop-selector').on('change',function(){
     var selection = $(this).val();

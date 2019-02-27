@@ -37,18 +37,18 @@ else
 ?>
 
 <script>
-    $("#change-sector-med, #change-sector-it, #change-sector-food, #change-sector-health, #change-sector-hosp, #change-sector-cul, #change-sector-bus").removeClass("input-error");
+    $(".rSec").removeClass("input-error");
 
     var errorEmpty = "<?php echo $errorEmpty ?>";
 
     if(errorEmpty == true)
     {
-      $("#change-sector-med, #change-sector-it, #change-sector-food, #change-sector-health, #change-sector-hosp, #change-sector-cul, #change-sector-bus").addClass("input-error");
+      $(".rSec").addClass("input-error");
     }
     if(errorEmpty == false)
     {
-      $("#change-sector-med, #change-sector-it, #change-sector-food, #change-sector-health, #change-sector-hosp, #change-sector-cul, #change-sector-bus").removeClass("input-error");
-      $("#change-sector-med, #change-sector-it, #change-sector-food, #change-sector-health, #change-sector-hosp, #change-sector-cul, #change-sector-bus").prop("checked", false);
+      $(".rSec").removeClass("input-error");
+      $(".rSec").prop("checked", false);
       window.location.reload();
     }
 </script>

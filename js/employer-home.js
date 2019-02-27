@@ -139,25 +139,64 @@ $(document).ready(function(){
     $('#change-phone').hide();
     $('#change-email').hide();
     $('#change-sector-section').hide();
+    $('#change-web').hide();
+    $('#change-unemp').hide();
+    $('#change-tax').hide();
     $('#change-pw').show();
   });
   $(document).on('click','.change-phone-btn',function(){
     $('#change-email').hide();
     $('#change-pw').hide();
     $('#change-sector-section').hide();
+    $('#change-web').hide();
+    $('#change-unemp').hide();
+    $('#change-tax').hide();
     $('#change-phone').show();
   });
   $(document).on('click','.change-email-btn',function(){
     $('#change-phone').hide();
     $('#change-pw').hide();
     $('#change-sector-section').hide();
+    $('#change-web').hide();
+    $('#change-unemp').hide();
+    $('#change-tax').hide();
     $('#change-email').show();
   });
   $(document).on('click','.change-sector-btn',function(){
     $('#change-phone').hide();
     $('#change-pw').hide();
     $('#change-email').hide();
+    $('#change-web').hide();
+    $('#change-unemp').hide();
+    $('#change-tax').hide();
     $('#change-sector-section').show();
+  });
+  $(document).on('click','.change-web-btn',function(){
+    $('#change-phone').hide();
+    $('#change-pw').hide();
+    $('#change-email').hide();
+    $('#change-sector-section').hide();
+    $('#change-unemp').hide();
+    $('#change-tax').hide();
+    $('#change-web').show();
+  });
+  $(document).on('click','.change-tax-btn',function(){
+    $('#change-phone').hide();
+    $('#change-pw').hide();
+    $('#change-email').hide();
+    $('#change-sector-section').hide();
+    $('#change-web').hide();
+    $('#change-unemp').hide();
+    $('#change-tax').show();
+  });
+  $(document).on('click','.change-unemp-btn',function(){
+    $('#change-phone').hide();
+    $('#change-pw').hide();
+    $('#change-email').hide();
+    $('#change-sector-section').hide();
+    $('#change-web').hide();
+    $('#change-tax').hide();
+    $('#change-unemp').show();
   });
   $('#drop-selector').on('change',function(){
     var selection = $(this).val();

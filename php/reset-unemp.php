@@ -8,40 +8,40 @@ if(isset($_POST['submit']))
     $sql->execute([$_SESSION['user_uid']]);
     //$sql->execute(['jsmith123']);
     $userResult = $sql->fetch(PDO::FETCH_ASSOC);
-    
+
     $reset_unemp = $_POST['change_unemp'];
     $reset_unemp2 = $_POST['change_unemp2'];
 
     $errorEmpty = false;
-    $errorUnempMatch = false;
+    $errorMatch = false;
     $errorUnemp = false;
     $errorNum = false;
 
     if(!is_numeric($reset_unemp))
     {
-        echo("<span class='form-error'>please enter only the 10 digit number</span>");
-        $errorNum = true;        
+        echo("<span class='form-error'>Please enter only the 10 digit number</span>");
+        $errorNum = true;
     }
     else if(empty($reset_unemp) || empty($reset_unemp2))
     {
-        echo("<span class='form-error'>please fill in all fields.</span>");
+        echo("<span class='form-error'>Please fill in all fields.</span>");
         $errorEmpty = true;
     }
     else if($reset_unemp != $reset_unemp2)
     {
-        echo("<span class='form-error'>state unemployment numbers do not match.</span>");
-        $errorUnempMatch = true;
+        echo("<span class='form-error'>State unemployment numbers do not match.</span>");
+        $errorMatch = true;
     }
     else if(strlen($reset_unemp) != 10)
     {
-        echo("<span class='form-error'>please put a valid state unemployment number.</span>");
+        echo("<span class='form-error'>Please put a valid state unemployment number.</span>");
         $errorUnemp = true;
     }
     else
     {
-            $sql2 = $conn->prepare('UPDATE seekers SET user_stateNum = ? WHERE user_id = ?');
+            $sql2 = $conn->prepare('UPDATE employers SET employer_unemployNum = ? WHERE user_id = ?');
             $sql2->execute([$reset_unemp, $userResult['user_id']]);
-            echo("<span class='form-success'>successfully changed state unemployment number.</span>");
+            echo("<span class='form-success'>Successfully changed state unemployment number.</span>");
     }
 }
 else
@@ -51,31 +51,31 @@ else
 ?>
 
 <script>
-    $("#change-unemp-input, #change-unemp2-input").removeClass("input-error");
+    $(".rUnemp").removeClass("input-error");
 
     var errorEmpty = "<?php echo $errorEmpty ?>";
-    var errorUnempMatch = "<?php echo $errorUnempMatch ?>";
+    var errorMatch = "<?php echo $errorMatch ?>";
     var errorUnemp = "<?php echo $errorUnemp ?>";
     var errorNum = "<?php echo $errorNum ?>";
 
     if(errorEmpty == true)
     {
-        $("#change-unemp-input, #change-unemp2-input").addClass("input-error");
+        $(".rUnemp").addClass("input-error");
     }
-    if(errorUnempMatch == true)
+    if(errorMatch == true)
     {
-        $("#change-unemp-input, #change-unemp2-input").addClass("input-error");
+        $(".rUnemp").addClass("input-error");
     }
     if(errorUnemp == true)
     {
-        $("#change-unemp-input, #change-unemp2-input").addClass("input-error");
+        $(".rUnemp").addClass("input-error");
     }
     if(errorNum == true)
     {
-        $("#change-unemp-input, #change-unemp2-input").addClass("input-error");
+        $(".rUnemp").addClass("input-error");
     }
-    if(errorUnemp == false && errorUnempMatch == false && errorUnemp == false && errorNum == false)
+    if(errorEmpty == false && errorMatch == false && errorUnemp == false && errorNum == false)
     {
-        $("#change-unemp-input, #change-unemp2-input").val("");
+        $(".rUnemp").val("");
     }
 </script>
