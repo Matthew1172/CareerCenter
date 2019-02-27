@@ -1,3 +1,16 @@
+.wysiwyg
+{
+  overflow: scroll;
+  height: 300px;
+  padding: 10px;
+}
+
+.icon img
+{
+  width: 16px;
+  height: 16px;
+}
+
 body
 {
     background-color: white;
@@ -14,10 +27,34 @@ footer
     font-size: 12px;
 }
 
-h1, h2, h3, h4, h6
+.hOne
 {
-    font-family: 'Muli', sans-serif;
-    color: #016ba9;
+  font-family: 'Muli', sans-serif;
+  color: #016ba9;
+}
+.hTwo
+{
+  font-family: 'Muli', sans-serif;
+  color: #016ba9;
+}
+.hThree
+{
+  font-family: 'Muli', sans-serif;
+  color: #016ba9;
+}
+.hFour
+{
+  font-family: 'Muli', sans-serif;
+  color: #016ba9;
+}
+.hSix
+{
+  font-family: 'Muli', sans-serif;
+  color: #016ba9;
+}
+.pBlue
+{
+  color: #016ba9;
 }
 
 .event-btn
@@ -120,7 +157,7 @@ h1, h2, h3, h4, h6
 }
 
 .footer-grid
-{   
+{
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-template-rows: 100px auto auto auto 100px;

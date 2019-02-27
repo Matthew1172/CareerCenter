@@ -236,6 +236,8 @@ if (isset($_SESSION['user_uid'])) {
       var announCount = 2;
       var modCount = 2;
       var currentCount = 2;
+      $('#announ-desc').wysiwyg();
+      $('#work-desc').wysiwyg();
       $('#add-work-form').submit(function(event){
         event.preventDefault();
         var x = 'Are you sure you want to add this event?'
@@ -294,7 +296,8 @@ if (isset($_SESSION['user_uid'])) {
             if(result)
             {
               var title = $('#announ-title').val();
-              var description = $('#announ-desc').val();
+              var description = $('#announ-desc').cleanHtml();
+              alert(description);
               var submit = $('#submit-announ').val();
               $('.form-message').load('php/add-announ.php', {
                 title: title,
@@ -612,7 +615,7 @@ if (isset($_SESSION['user_uid'])) {
     echo("<div class='hero1'></div>");
 
     echo("<div class='greet py-5'>");
-    echo("<h1 style='color: white' id='demo'>Welcome, " . $result['user_first'] . "</h1>");
+    echo("<h1 class='hOne' style='color: white' id='demo'>Welcome, " . $result['user_first'] . "</h1>");
     echo("</div>");
 
     echo("<div class='dashboard-control'>");
@@ -639,14 +642,14 @@ if (isset($_SESSION['user_uid'])) {
 
     //list of current events
     echo("<div id='current-event-list' class='event-list p-2'>");
-    echo("<h2 class='dash-header'>Current Workshops: </h2><hr>");
+    echo("<h2 class='dash-header hTwo'>Current Workshops: </h2><hr>");
     echo("<div id='current-event-list-section' class='container'>");
 
     $check = sizeof($eventList) % 2;
 
     if(sizeof($eventList) == 0)
     {
-      echo("<div class='my-4'><h3>There are no events yet.</h3></div>");
+      echo("<div class='my-4'><h3 class='hThree'>There are no events yet.</h3></div>");
     }
     else if($check == 0)
     {
@@ -656,7 +659,7 @@ if (isset($_SESSION['user_uid'])) {
         {
           echo(
             "<div id='event" . $eventList[$i]->getID() . "' class='event my-4'>" .
-            "<h3>" . $eventList[$i]->getTitle() . "</h3>" .
+            "<h3 class='hThree'>" . $eventList[$i]->getTitle() . "</h3>" .
             "<p>" . $eventList[$i]->getDesc() . "</p><br/><br/>" .
             "<b>Location: </b>" . $eventList[$i]->getLoc() . "<br/>" .
             "<b>Date: </b>" . $eventList[$i]->getStart() . "<br/>" .
@@ -670,7 +673,7 @@ if (isset($_SESSION['user_uid'])) {
           {
             echo(
               "<div id='event" . $c->getID() . "' class='event my-4'>" .
-              "<h3>" . $c->getTitle() . "</h3>" .
+              "<h3 class='hThree'>" . $c->getTitle() . "</h3>" .
               "<p>" . $c->getDesc() . "</p><br/><br/>" .
               "<b>Location: </b>" . $c->getLoc() . "<br/>" .
               "<b>Date: </b>" . $c->getStart() . "<br/>" .
@@ -688,7 +691,7 @@ if (isset($_SESSION['user_uid'])) {
             {
               echo(
                 "<div id='event" . $eventList[$i]->getID() . "' class='event my-4'>" .
-                "<h3>" . $eventList[$i]->getTitle() . "</h3>" .
+                "<h3 class='hThree'>" . $eventList[$i]->getTitle() . "</h3>" .
                 "<p>" . $eventList[$i]->getDesc() . "</p><br/><br/>" .
                 "<b>Location: </b>" . $eventList[$i]->getLoc() . "<br/>" .
                 "<b>Date: </b>" . $eventList[$i]->getStart() . "<br/>" .
@@ -702,7 +705,7 @@ if (isset($_SESSION['user_uid'])) {
               {
                 echo(
                   "<div id='event" . $c->getID() . "' class='event my-4'>" .
-                  "<h3>" . $c->getTitle() . "</h3>" .
+                  "<h3 class='hThree'>" . $c->getTitle() . "</h3>" .
                   "<p>" . $c->getDesc() . "</p><br/><br/>" .
                   "<b>Location: </b>" . $c->getLoc() . "<br/>" .
                   "<b>Date: </b>" . $c->getStart() . "<br/>" .
@@ -720,7 +723,7 @@ if (isset($_SESSION['user_uid'])) {
 
             //list to modify users
             echo("<div id='user-list' class='event-list p-2' style='display: none;'>");
-            echo("<h2 class='dash-header'>User list: </h2><hr>");
+            echo("<h2 class='dash-header hTwo'>User list: </h2><hr>");
             echo("<input type='text' name='search-user' id='search-user' placeholder='search user' class='form-control'/>");
             echo("<div id='user-list-section' class='container'>");
             /*javascript will populate this*/
@@ -732,7 +735,7 @@ if (isset($_SESSION['user_uid'])) {
 
             //list to modify workshops
             echo("<div id='mod-event-list' class='event-list p-2' style='display: none;'>");
-            echo("<h2 class='dash-header'>Modify Workshops: </h2><hr>");
+            echo("<h2 class='dash-header hTwo'>Modify Workshops: </h2><hr>");
             echo("<div id='mod-event-list-section' class='container'>");
             /*javascript will populate this*/
             echo("</div>");
@@ -743,14 +746,42 @@ if (isset($_SESSION['user_uid'])) {
 
             //add a workshop form
             echo("<div id='add-work' class='event-list p-2' style='display: none;'>");
-            echo("<h2 class='dash-header'>Add a workshop: </h2><hr>");
+            echo("<h2 class='dash-header hTwo'>Add a workshop: </h2><hr>");
             echo("<div id='add-workshop-section' class='container'>");
             echo('
             <form id="add-work-form">
             <p class="form-message"></p>
             <ul class="reset-list">
             <li><input id="work-title" type="text" placeholder="Workshop title" class="form-control" aria-label="small"></li>
-            <li><textarea id="work-desc">Next, get a free Tiny Cloud API key!</textarea></li>
+            <li><div class="btn-toolbar" data-role="editor-toolbar" data-target="#work-desc">
+            <div class="btn-group">
+            <a class="btn" data-edit="bold" title="" data-original-title="Bold (Ctrl/Cmd+B)"><img src="open-iconic-master/svg/bold.svg" alt="icon bold"></a>
+            <a class="btn" data-edit="italic" title="" data-original-title="Italic (Ctrl/Cmd+I)"><img src="open-iconic-master/svg/italic.svg" alt="icon italic"></a>
+            <a class="btn" data-edit="underline" title="" data-original-title="Underline (Ctrl/Cmd+U)"><img src="open-iconic-master/svg/underline.svg" alt="icon underline"></a>
+            </div>
+            <div class="btn-group">
+            <a class="btn" data-edit="insertunorderedlist" title="" data-original-title="Bullet list"><img src="open-iconic-master/svg/list.svg" alt="icon list"></a>
+            </div>
+            <div class="btn-group">
+            <a class="btn btn-info" data-edit="justifyleft" title="" data-original-title="Align Left (Ctrl/Cmd+L)"><img src="open-iconic-master/svg/align-left.svg" alt="icon align left"></a>
+            <a class="btn" data-edit="justifycenter" title="" data-original-title="Center (Ctrl/Cmd+E)"><img src="open-iconic-master/svg/align-center.svg" alt="icon align center"></a>
+            <a class="btn" data-edit="justifyright" title="" data-original-title="Align Right (Ctrl/Cmd+R)"><img src="open-iconic-master/svg/align-right.svg" alt="icon align right"></a>
+            <a class="btn" data-edit="justifyfull" title="" data-original-title="Justify (Ctrl/Cmd+J)"><img src="open-iconic-master/svg/justify-center.svg" alt="icon justify"></a>
+            </div>
+            <div class="btn-group">
+            <a class="btn dropdown-toggle" data-toggle="dropdown" title="" data-original-title="Hyperlink"><img src="open-iconic-master/svg/link-intact.svg" alt="icon create hyperlink"></a>
+            <div class="dropdown-menu input-append">
+            <input class="span2" placeholder="URL" type="text" data-edit="createLink">
+            <button class="btn" type="button">Add</button>
+            </div>
+            <a class="btn" data-edit="unlink" title="" data-original-title="Remove Hyperlink"><img src="open-iconic-master/svg/link-broken.svg" alt="icon break hyperlink"></a>
+            </div>
+            <div class="btn-group">
+            <a class="btn" data-edit="undo" title="" data-original-title="Undo (Ctrl/Cmd+Z)"><img src="open-iconic-master/svg/action-undo.svg" alt="icon action undo"></a>
+            <a class="btn" data-edit="redo" title="" data-original-title="Redo (Ctrl/Cmd+Y)"><img src="open-iconic-master/svg/action-redo.svg" alt="icon action redo"></a>
+            </div>
+            </div></li>
+            <li><div id="work-desc" class="wysiwyg">Enter description here</div></li>
             <li><input id="work-loc" type="text" placeholder="Workshop location" class="form-control" aria-label="small"></li>
             <li><input id="work-start-date" type="date" class="form-control" aria-label="small"></li>
             <li><input id="work-start-time" type="time" class="form-control" aria-label="small"></li>
@@ -793,13 +824,41 @@ if (isset($_SESSION['user_uid'])) {
 
             //add an announcement form
             echo("<div id='add-announ' class='event-list p-2' style='display: none;'>");
-            echo("<h2 class='dash-header'>Add an announcement: </h2><hr>");
+            echo("<h2 class='dash-header hTwo'>Add an announcement: </h2><hr>");
             echo('
             <form id="add-announ-form">
             <p class="form-message"></p>
             <ul class="reset-list">
             <li><input id="announ-title" type="text" placeholder="Announcement title" class="form-control" aria-label="small"></li>
-            <li><input id="announ-desc" type="text" placeholder="Announcement description" class="form-control" aria-label="small"></li>
+            <li><div class="btn-toolbar" data-role="editor-toolbar" data-target="#announ-desc">
+            <div class="btn-group">
+            <a class="btn" data-edit="bold" title="" data-original-title="Bold (Ctrl/Cmd+B)"><img src="open-iconic-master/svg/bold.svg" alt="icon bold"></a>
+            <a class="btn" data-edit="italic" title="" data-original-title="Italic (Ctrl/Cmd+I)"><img src="open-iconic-master/svg/italic.svg" alt="icon italic"></a>
+            <a class="btn" data-edit="underline" title="" data-original-title="Underline (Ctrl/Cmd+U)"><img src="open-iconic-master/svg/underline.svg" alt="icon underline"></a>
+            </div>
+            <div class="btn-group">
+            <a class="btn" data-edit="insertunorderedlist" title="" data-original-title="Bullet list"><img src="open-iconic-master/svg/list.svg" alt="icon list"></a>
+            </div>
+            <div class="btn-group">
+            <a class="btn btn-info" data-edit="justifyleft" title="" data-original-title="Align Left (Ctrl/Cmd+L)"><img src="open-iconic-master/svg/align-left.svg" alt="icon align left"></a>
+            <a class="btn" data-edit="justifycenter" title="" data-original-title="Center (Ctrl/Cmd+E)"><img src="open-iconic-master/svg/align-center.svg" alt="icon align center"></a>
+            <a class="btn" data-edit="justifyright" title="" data-original-title="Align Right (Ctrl/Cmd+R)"><img src="open-iconic-master/svg/align-right.svg" alt="icon align right"></a>
+            <a class="btn" data-edit="justifyfull" title="" data-original-title="Justify (Ctrl/Cmd+J)"><img src="open-iconic-master/svg/justify-center.svg" alt="icon justify"></a>
+            </div>
+            <div class="btn-group">
+            <a class="btn dropdown-toggle" data-toggle="dropdown" title="" data-original-title="Hyperlink"><img src="open-iconic-master/svg/link-intact.svg" alt="icon create hyperlink"></a>
+            <div class="dropdown-menu input-append">
+            <input class="span2" placeholder="URL" type="text" data-edit="createLink">
+            <button class="btn" type="button">Add</button>
+            </div>
+            <a class="btn" data-edit="unlink" title="" data-original-title="Remove Hyperlink"><img src="open-iconic-master/svg/link-broken.svg" alt="icon break hyperlink"></a>
+            </div>
+            <div class="btn-group">
+            <a class="btn" data-edit="undo" title="" data-original-title="Undo (Ctrl/Cmd+Z)"><img src="open-iconic-master/svg/action-undo.svg" alt="icon action undo"></a>
+            <a class="btn" data-edit="redo" title="" data-original-title="Redo (Ctrl/Cmd+Y)"><img src="open-iconic-master/svg/action-redo.svg" alt="icon action redo"></a>
+            </div>
+            </div></li>
+            <li><div id="announ-desc" class="wysiwyg">Enter description here</div></li>
             </ul>
             <button id="submit-announ" type="submit" class="btn btn-primary main-btn"><b>Add</b></button>
             </form>
@@ -814,7 +873,7 @@ if (isset($_SESSION['user_uid'])) {
 
             //change account info
             echo("<div id='change-info' class='p-2' style='display:none;'>");
-            echo("<h2 class='dash-header'>Update your personal information: </h2><hr>");
+            echo("<h2 class='dash-header hTwo'>Update your personal information: </h2><hr>");
             echo("<div id='change-section' class='container'>");
             echo("
             <div class='row'>
@@ -890,6 +949,7 @@ if (isset($_SESSION['user_uid'])) {
               var allEventCount = 2;
               var ownEventCount = 2;
               var jobCount = 2;
+              $('#postJob-description').wysiwyg();
               $('#postJob-form').submit(function(event){
                 event.preventDefault();
                 var x = 'Are you sure you want to post this job?'
@@ -1121,7 +1181,7 @@ if (isset($_SESSION['user_uid'])) {
             echo("<div class='hero1'></div>");
 
             echo("<div class='greet py-5'>");
-            echo("<h1 style='color: white' id='demo'>Welcome, " . $result['user_first'] . "</h1>");
+            echo("<h1 class='hOne' style='color: white' id='demo'>Welcome, " . $result['user_first'] . "</h1>");
             echo("</div>");
 
             echo("<div class='dashboard-control'>");
@@ -1147,14 +1207,14 @@ if (isset($_SESSION['user_uid'])) {
             echo("<div class='control-area'>");
 
             echo("<div id='all-events-list' class='event-list p-2'>");
-            echo("<h2 class='dash-header'>All Workshops: </h2><hr>");
+            echo("<h2 class='dash-header hTwo'>All Workshops: </h2><hr>");
             echo("<div id='all-events-list-section' class='container'>");
             if(sizeof($eventList) > 0)
             {
               for ($i = 0; $i < 2; $i++) {
                 echo(
                   "<div id='event" . getEventList($conn)[$i]->getID() . "' class='event my-4'>" .
-                  "<h3>" . getEventList($conn)[$i]->getTitle() . "</h3>" .
+                  "<h3 class='hThree'>" . getEventList($conn)[$i]->getTitle() . "</h3>" .
                   "<p>" . getEventList($conn)[$i]->getDesc() . "</p><br/><br/>" .
                   "<b>Location: </b>" . getEventList($conn)[$i]->getLoc() . "<br/>" .
                   "<b>Date: </b>" . getEventList($conn)[$i]->getStart() . "<br/>" .
@@ -1179,7 +1239,7 @@ if (isset($_SESSION['user_uid'])) {
                   echo("</div><hr>");
                 }
               }else{
-                echo("<div class='my-4'><h3>There are no events yet.</h3></div>");
+                echo("<div class='my-4'><h3 class='hThree'>There are no events yet.</h3></div>");
               }
               echo("</div>");
               echo("<div class='show-more-container'>");
@@ -1188,7 +1248,7 @@ if (isset($_SESSION['user_uid'])) {
               echo("</div>");
 
               echo("<div id='own-events-list' class='event-list p-2' style='display:none;'>");
-              echo("<h2 class='dash-header'>Your Workshops: </h2><hr>");
+              echo("<h2 class='dash-header hTwo'>Your Workshops: </h2><hr>");
               echo("<div id='own-events-list-section' class='container'>");
               /* javascript will load list of own events here when own-btn is pressed */
               echo("</div>");
@@ -1198,7 +1258,7 @@ if (isset($_SESSION['user_uid'])) {
               echo("</div>");
 
               echo("<div id='work-rec-list' class='event-list p-2' style='display:none;'>");
-              echo("<h2 class='dash-header'>Workshops for you: </h2><hr>");
+              echo("<h2 class='dash-header hTwo'>Workshops for you: </h2><hr>");
               echo("<div id='work-rec-list-section' class='container'>");
               /* javascript will load list of rec events here when work-rec-btn is pressed */
               echo("</div>");
@@ -1208,7 +1268,7 @@ if (isset($_SESSION['user_uid'])) {
               echo("</div>");
 
               echo("<div id='job-list' class='event-list p-2' style='display:none;'>");
-              echo("<h2 class='dash-header'>My jobs: </h2><hr>");
+              echo("<h2 class='dash-header hTwo'>My jobs: </h2><hr>");
               echo("<div id='job-list-section' class='container'>");
               /* javascript will load list of jobs here when job-list-btn is pressed */
               echo("</div>");
@@ -1218,7 +1278,7 @@ if (isset($_SESSION['user_uid'])) {
               echo("</div>");
 
               echo("<div id='post-job' class='p-2' style='display:none;'>");
-              echo("<h2 class='dash-header'>Post your job: </h2><hr>");
+              echo("<h2 class='dash-header hTwo'>Post your job: </h2><hr>");
               echo("<div id='post-job-section' class='container'>");
               echo("
               <form id='postJob-form'>
@@ -1226,8 +1286,38 @@ if (isset($_SESSION['user_uid'])) {
               <ul>
               <li><input id='postJob-title' type='text' placeholder='Job title' class='form-control' aria-label='small' data-toggle='tooltip' title='Job title (must be less than 250 characters)'></li>
               <li><input id='postJob-location' type='text' placeholder='Job location' class='form-control' aria-label='small' data-toggle='tooltip' title='Job location (must be less than 50 characters)'></li>
-              <li><textarea id='postJob-description' type='text' placeholder='Job description' class='form-control' aria-label='small' rows='8'>Job description here</textarea></li>
-              <li class='py-3'><h6>What sections is your job involved with? <br/>(check all that apply)</h6></li>
+
+              <li><div class='btn-toolbar' data-role='editor-toolbar' data-target='#postJob-description'>
+              <div class='btn-group'>
+              <a class='btn' data-edit='bold' title='' data-original-title='Bold (Ctrl/Cmd+B)'><img src='open-iconic-master/svg/bold.svg' alt='icon bold'></a>
+              <a class='btn' data-edit='italic' title='' data-original-title='Italic (Ctrl/Cmd+I)'><img src='open-iconic-master/svg/italic.svg' alt='icon italic'></a>
+              <a class='btn' data-edit='underline' title='' data-original-title='Underline (Ctrl/Cmd+U)'><img src='open-iconic-master/svg/underline.svg' alt='icon underline'></a>
+              </div>
+              <div class='btn-group'>
+              <a class='btn' data-edit='insertunorderedlist' title='' data-original-title='Bullet list'><img src='open-iconic-master/svg/list.svg' alt='icon list'></a>
+              </div>
+              <div class='btn-group'>
+              <a class='btn btn-info' data-edit='justifyleft' title='' data-original-title='Align Left (Ctrl/Cmd+L)'><img src='open-iconic-master/svg/align-left.svg' alt='icon align left'></a>
+              <a class='btn' data-edit='justifycenter' title='' data-original-title='Center (Ctrl/Cmd+E)'><img src='open-iconic-master/svg/align-center.svg' alt='icon align center'></a>
+              <a class='btn' data-edit='justifyright' title='' data-original-title='Align Right (Ctrl/Cmd+R)'><img src='open-iconic-master/svg/align-right.svg' alt='icon align right'></a>
+              <a class='btn' data-edit='justifyfull' title='' data-original-title='Justify (Ctrl/Cmd+J)'><img src='open-iconic-master/svg/justify-center.svg' alt='icon justify'></a>
+              </div>
+              <div class='btn-group'>
+              <a class='btn dropdown-toggle' data-toggle='dropdown' title='' data-original-title='Hyperlink'><img src='open-iconic-master/svg/link-intact.svg' alt='icon create hyperlink'></a>
+              <div class='dropdown-menu input-append'>
+              <input class='span2' placeholder='URL' type='text' data-edit='createLink'>
+              <button class='btn' type='button'>Add</button>
+              </div>
+              <a class='btn' data-edit='unlink' title='' data-original-title='Remove Hyperlink'><img src='open-iconic-master/svg/link-broken.svg' alt='icon break hyperlink'></a>
+              </div>
+              <div class='btn-group'>
+              <a class='btn' data-edit='undo' title='' data-original-title='Undo (Ctrl/Cmd+Z)'><img src='open-iconic-master/svg/action-undo.svg' alt='icon action undo'></a>
+              <a class='btn' data-edit='redo' title='' data-original-title='Redo (Ctrl/Cmd+Y)'><img src='open-iconic-master/svg/action-redo.svg' alt='icon action redo'></a>
+              </div>
+              </div></li>
+              <li><div id='postJob-description' class='wysiwyg'>Enter description here (10000 character limit)</div></li>
+
+              <li class='py-3'><h6 class='hSix'>What sections is your job involved with? <br/>(check all that apply)</h6></li>
               <li>
               <div class='form-check'>
               <input class='form-check-input' type='checkbox' value='TRUE' id='postJob-med'>
@@ -1260,7 +1350,7 @@ if (isset($_SESSION['user_uid'])) {
               echo("</div>");
 
               echo("<div id='change-info' class='p-2' style='display:none;'>");
-              echo("<h2 class='dash-header'>Update your personal information: </h2><hr>");
+              echo("<h2 class='dash-header hTwo'>Update your personal information: </h2><hr>");
               echo("<div id='change-section' class='container'>");
               echo("
               <div class='row'>
@@ -1329,7 +1419,7 @@ if (isset($_SESSION['user_uid'])) {
               </div>
 
               <div class='change-sector-section' id='change-sector-section' style='display:none;'>
-              <h3>Check the sectors that apply to your job search.</h3>
+              <h3 class='hThree'>Check the sectors that apply to your job search.</h3>
               <form id='change-sector-form'>
               <p class='form-message'></p>
               <ul class='reset-list'>
@@ -1588,7 +1678,7 @@ if (isset($_SESSION['user_uid'])) {
               echo("<div class='hero1'></div>");
 
               echo("<div class='greet py-5'>");
-              echo("<h1 style='color: white' id='demo'>Welcome, " . $result['user_first'] . "</h1>");
+              echo("<h1 class='hOne' style='color: white' id='demo'>Welcome, " . $result['user_first'] . "</h1>");
               echo("</div>");
 
               echo("<div class='dashboard-control'>");
@@ -1612,14 +1702,14 @@ if (isset($_SESSION['user_uid'])) {
               echo("<div class='control-area'>");
 
               echo("<div id='all-events-list' class='event-list p-2'>");
-              echo("<h2 class='dash-header'>All Workshops: </h2><hr>");
+              echo("<h2 class='dash-header hTwo'>All Workshops: </h2><hr>");
               echo("<div id='all-events-list-section' class='container'>");
               if(sizeof($eventList) > 0)
               {
                 for ($i = 0; $i < 2; $i++) {
                   echo(
                     "<div id='event" . getEventList($conn)[$i]->getID() . "' class='event my-4'>" .
-                    "<h3>" . getEventList($conn)[$i]->getTitle() . "</h3>" .
+                    "<h3 class='hThree'>" . getEventList($conn)[$i]->getTitle() . "</h3>" .
                     "<p>" . getEventList($conn)[$i]->getDesc() . "</p><br/><br/>" .
                     "<b>Location: </b>" . getEventList($conn)[$i]->getLoc() . "<br/>" .
                     "<b>Date: </b>" . getEventList($conn)[$i]->getStart() . "<br/>" .
@@ -1644,7 +1734,7 @@ if (isset($_SESSION['user_uid'])) {
                     echo("</div><hr>");
                   }
                 }else{
-                  echo("<div class='my-4'><h3>There are no events yet.</h3></div>");
+                  echo("<div class='my-4'><h3 class='hThree'>There are no events yet.</h3></div>");
                 }
                 echo("</div>");
                 echo("<div class='show-more-container'>");
@@ -1653,7 +1743,7 @@ if (isset($_SESSION['user_uid'])) {
                 echo("</div>");
 
                 echo("<div id='own-events-list' class='event-list p-2' style='display:none;'>");
-                echo("<h2 class='dash-header'>Your Workshops: </h2><hr>");
+                echo("<h2 class='dash-header hTwo'>Your Workshops: </h2><hr>");
                 echo("<div id='own-events-list-section' class='container'>");
                 /* javascript will load list of own events here when work-own-btn is pressed */
                 echo("</div>");
@@ -1663,7 +1753,7 @@ if (isset($_SESSION['user_uid'])) {
                 echo("</div>");
 
                 echo("<div id='work-rec-list' class='event-list p-2' style='display:none;'>");
-                echo("<h2 class='dash-header'>Workshops for you: </h2><hr>");
+                echo("<h2 class='dash-header hTwo'>Workshops for you: </h2><hr>");
                 echo("<div id='work-rec-list-section' class='container'>");
                 /* javascript will load list of rec events here when work-rec-btn is pressed */
                 echo("</div>");
@@ -1673,7 +1763,7 @@ if (isset($_SESSION['user_uid'])) {
                 echo("</div>");
 
                 echo("<div id='job-rec-list' class='event-list p-2' style='display:none;'>");
-                echo("<h2 class='dash-header'>Jobs for you: </h2><hr>");
+                echo("<h2 class='dash-header hTwo'>Jobs for you: </h2><hr>");
                 echo("<div id='job-rec-list-section' class='container'>");
                 /* javascript will load list of rec jobs here when work-job-btn is pressed */
                 echo("</div>");
@@ -1683,7 +1773,7 @@ if (isset($_SESSION['user_uid'])) {
                 echo("</div>");
 
                 echo("<div id='change-info' class='p-2' style='display:none;'>");
-                echo("<h2 class='dash-header'>Update your personal information: </h2><hr>");
+                echo("<h2 class='dash-header hTwo'>Update your personal information: </h2><hr>");
                 echo("<div id='change-section' class='container'>");
                 echo("
                 <div class='row'>
@@ -1780,7 +1870,7 @@ if (isset($_SESSION['user_uid'])) {
 
                 echo("
                 <div class='change-sector-section' id='change-sector-section' style='display:none;'>
-                <h3>Check the sectors that apply to your job search.</h3>
+                <h3 class='hThree'>Check the sectors that apply to your job search.</h3>
                 <form id='change-sector-form'>
                 <p class='form-message'></p>
                 <ul class='reset-list'>

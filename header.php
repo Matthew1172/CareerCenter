@@ -19,11 +19,8 @@
 <!--	BOOTBOX MODALS	        -->
 <script src='js/bootbox.min.js'></script>
 
-<!--
--->
-<script src="https://cloud.tinymce.com/5/tinymce.min.js"></script>
-<script>tinymce.init({ selector:'textarea' });</script>
-
+<script src='bootstrap/js/jquery.hotkeys.js'></script>
+<script src='bootstrap/js/bootstrap-wysiwyg.js'></script>
 
 <title>Career Center</title>
 
@@ -75,13 +72,13 @@ $(document).ready(function () {
           <li>
           <form id="logout-form" action="php/sign-out.php" method="POST">
           <ul class="navbar-nav ml-auto">
-          <li><button id="logout-btn" type="submit" name="logout" class="btn btn-outline-secondary my-5">Log out</button></li>
+          <li><button id="logout-btn" type="submit" name="logout" class="btn btn-outline-secondary my-5">Log out<span class="icon pl-2"><img src="open-iconic-master/svg/account-logout.svg" alt="icon logout"></span></button></li>
           </ul>
           </form>
           </li>
           ';
         } else {
-          echo'<li class="nav-item"><a class="nav-link" href="sign-in-page.php">Sign up or sign in</a></li>';
+          echo'<li class="nav-item"><a class="nav-link" href="sign-in-page.php">Sign up or sign in<span class="icon pl-2"><img src="open-iconic-master/svg/account-login.svg" alt="icon login"></span></a></li>';
         }
         ?>
       </ul>
