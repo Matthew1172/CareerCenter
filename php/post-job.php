@@ -30,7 +30,7 @@ if(isset($_POST['submit']))
     echo("<span class='form-error'>you must check atleast one sector</span>");
     $errorSectorEmpty = true;
   }
-  else if(strlen($job_title) > 250 || strlen($job_description) > 1000 || strlen($job_location) > 250)
+  else if(strlen($job_title) > 250 || strlen($job_description) > 10000 || strlen($job_location) > 250)
   {
     echo("<span class='form-error'>description cannot be more than 1000 words</span>");
     $errorLength = true;

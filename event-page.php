@@ -3,8 +3,6 @@ include 'header.php';
 session_start();
 if(isset($_SESSION['user_uid']))
 {
-  //include 'php/connect.php';
-
   echo('<link href="styles/event-page.css" rel="stylesheet" />');
 
   echo("
@@ -65,7 +63,6 @@ if(isset($_SESSION['user_uid']))
   });
   </script>
   ");
-
   $sql = $conn->prepare('SELECT * FROM users WHERE user_uid = ?');
   $sql->execute([$_SESSION['user_uid']]);
   $userInfo = $sql->fetch();

@@ -230,397 +230,7 @@ if (isset($_SESSION['user_uid'])) {
   echo('</script>');
   if ($result['user_type'] == "admin") {
     echo("<link href='styles/home-admin.css' rel='stylesheet'>");
-    echo('<script>');
-    echo("
-    $(document).ready(function(){
-      var announCount = 2;
-      var modCount = 2;
-      var currentCount = 2;
-      $('#announ-desc').wysiwyg();
-      $('#work-desc').wysiwyg();
-      $('#add-work-form').submit(function(event){
-        event.preventDefault();
-        var x = 'Are you sure you want to add this event?'
-        bootbox.confirm({
-          size: 'small',
-          message: x,
-          callback: function(result){
-            if(result)
-            {
-              var title = $('#work-title').val();
-              var description = $('#work-desc').val();
-              var location = $('#work-loc').val();
-              var start_date = $('#work-start-date').val();
-              var start_time = $('#work-start-time').val() + ':00';
-              var end_date = $('#work-end-date').val();
-              var end_time = $('#work-end-time').val() + ':00';
-
-              var med = $('#add-work-med');
-              var it = $('#add-work-it');
-              var bus = $('#add-work-bus');
-              var health = $('#add-work-health');
-              var food = $('#add-work-food');
-              var hosp = $('#add-work-hosp');
-              var cul = $('#add-work-cul');
-
-              var submit = $('#submit-workshop').val();
-
-              $('.form-message').load('php/add-workshop.php', {
-                title: title,
-                description: description,
-                location: location,
-                start_date: start_date,
-                start_time: start_time,
-                end_date: end_date,
-                end_time: end_time,
-                med: med.prop('checked'),
-                it: it.prop('checked'),
-                bus: bus.prop('checked'),
-                health: health.prop('checked'),
-                food: food.prop('checked'),
-                hosp: hosp.prop('checked'),
-                cul: cul.prop('checked'),
-                submit: submit
-              });
-            }
-          }
-        });
-      });
-      $(document).on('click','.rem-event-btn',function(){
-        var x = 'Are you sure you want to remove this event?'
-        var ID = $(this).attr('id');
-        bootbox.confirm({
-          size: 'small',
-          message: x,
-          callback: function(result){
-            if(result)
-            {
-              $('#event'+ID).hide();
-              $.ajax({
-                type: 'POST',
-                url: 'php/remove-event.php',
-                data: {
-                  ID: ID
-                },
-                success: function(html){
-                  $('#event'+ID).remove();
-                }
-              });
-            }
-          }
-        });
-      });
-      $('#add-announ-form').submit(function(event){
-        event.preventDefault();
-        var x = 'Are you sure you want to add this announcement?'
-        bootbox.confirm({
-          size: 'small',
-          message: x,
-          callback: function(result){
-            if(result)
-            {
-              var title = $('#announ-title').val();
-              var description = $('#announ-desc').cleanHtml();
-              var submit = $('#submit-announ').val();
-              $('.form-message').load('php/add-announ.php', {
-                title: title,
-                description: description,
-                submit: submit
-              });
-            }
-          }
-        });
-      });
-      $(document).on('click','.rem-announ-btn',function(){
-        var x = 'Are you sure you want to remove this announcement?'
-        var ID = $(this).attr('id');
-        bootbox.confirm({
-          size: 'small',
-          message: x,
-          callback: function(result){
-            if(result)
-            {
-              $('#announ'+ID).hide();
-              $.ajax({
-                type: 'POST',
-                url: 'php/remove-announ.php',
-                data: {
-                  ID: ID
-                },
-                success: function(html){
-                  $('#announ'+ID).remove();
-                }
-              });
-            }
-          }
-        });
-      });
-      $('#timesheet-form').submit(function(event){
-        event.preventDefault();
-        var formData = new FormData(this);
-        var x = 'Are you sure you want to upload this timesheet?'
-        bootbox.confirm({
-          size: 'small',
-          message: x,
-          callback: function(result){
-            if(result)
-            {
-              $.ajax({
-                url: 'php/upload-timesheet.php', // Url to which the request is send
-                type: 'POST',                 // Type of request to be send, called as method
-                data: formData,               // Data sent to server, a set of key/value pairs (i.e. form fields and values)
-                contentType: false,           // The content type used when sending data to the server.
-                cache: false,                 // To unable request pages to be cached
-                processData:false            // To send DOMDocument or non processed data file it is set to false
-              });
-            }
-          }
-        });
-      });
-      $(document).on('click','.rem-time-btn',function(){
-        var x = 'Are you sure you want to remove this timesheet?'
-        var ID = $(this).attr('id');
-        bootbox.confirm({
-          size: 'small',
-          message: x,
-          callback: function(result){
-            if(result)
-            {
-              $('#time'+ID).hide();
-              $.ajax({
-                type: 'POST',
-                url: 'php/remove-time.php',
-                data: {
-                  ID: ID
-                },
-                success: function(html){
-                  $('#time'+ID).remove();
-                }
-              });
-            }
-          }
-        });
-      });
-      $(document).on('click','.current-btn',function(){
-        $('#change-info').hide();
-        $('#mod-event-list').hide();
-        $('#add-work').hide();
-        $('#add-announ').hide();
-        $('#user-list').hide();
-        $('#timesheet-list').hide();
-        $('#current-event-list').show();
-      });
-      $(document).on('click','.mod-work-btn',function(){
-        $('#mod-event-list-section').load('php/load-mod-events.php', {
-          modNewCount: modCount
-        });
-        $('#current-event-list').hide();
-        $('#change-info').hide();
-        $('#add-work').hide();
-        $('#add-announ').hide();
-        $('#user-list').hide();
-        $('#timesheet-list').hide();
-        $('#mod-event-list').show();
-      });
-      $(document).on('click','.add-work-btn',function(){
-        $('#current-event-list').hide();
-        $('#change-info').hide();
-        $('#mod-event-list').hide();
-        $('#add-announ').hide();
-        $('#user-list').hide();
-        $('#timesheet-list').hide();
-        $('#add-work').show();
-      });
-      $(document).on('click','.user-btn',function(){
-        $('#change-info').hide();
-        $('#current-event-list').hide();
-        $('#mod-event-list').hide();
-        $('#add-announ').hide();
-        $('#add-work').hide();
-        $('#timesheet-list').hide();
-        $('#user-list').show();
-      });
-      $(document).on('click','.add-announ-btn',function(){
-        $('#announ-list-section').load('php/load-announcements-admin.php', {
-          announNewCount: announCount
-        });
-        $('#current-event-list').hide();
-        $('#change-info').hide();
-        $('#mod-event-list').hide();
-        $('#add-work').hide();
-        $('#user-list').hide();
-        $('#timesheet-list').hide();
-        $('#add-announ').show();
-      });
-      $(document).on('click','.timesheet-btn',function(){
-        $('#current-event-list').hide();
-        $('#mod-event-list').hide();
-        $('#add-work').hide();
-        $('#add-announ').hide();
-        $('#user-list').hide();
-        $('#change-info').hide();
-        $('#timesheet-list').show();
-      });
-      $(document).on('click','.change-btn',function(){
-        $('#current-event-list').hide();
-        $('#mod-event-list').hide();
-        $('#add-work').hide();
-        $('#add-announ').hide();
-        $('#user-list').hide();
-        $('#timesheet-list').hide();
-        $('#change-info').show();
-      });
-      $(document).on('click','.change-pw-btn',function(){
-        $('#change-phone').hide();
-        $('#change-email').hide();
-        $('#upload-section').hide();
-        $('#change-sector-section').hide();
-        $('#change-pw').show();
-      });
-      $(document).on('click','.change-phone-btn',function(){
-        $('#change-email').hide();
-        $('#change-pw').hide();
-        $('#upload-section').hide();
-        $('#change-sector-section').hide();
-        $('#change-phone').show();
-      });
-      $(document).on('click','.change-email-btn',function(){
-        $('#change-phone').hide();
-        $('#change-pw').hide();
-        $('#upload-section').hide();
-        $('#change-sector-section').hide();
-        $('#change-email').show();
-      });
-      $(document).on('click','.upload-btn',function(){
-        $('#change-phone').hide();
-        $('#change-pw').hide();
-        $('#change-email').hide();
-        $('#change-sector-section').hide();
-        $('#upload-section').show();
-      });
-      $(document).on('click','.change-sector-btn',function(){
-        $('#change-phone').hide();
-        $('#change-pw').hide();
-        $('#change-email').hide();
-        $('#upload-section').hide();
-        $('#change-sector-section').show();
-      });
-      $('#drop-selector').on('change',function(){
-        var selection = $(this).val();
-        switch(selection)
-        {
-          case 'current':
-          $('#change-info').hide();
-          $('#mod-event-list').hide();
-          $('#add-work').hide();
-          $('#add-announ').hide();
-          $('#user-list').hide();
-          $('#timesheet-list').hide();
-          $('#current-event-list').show();
-          break;
-          case 'mod':
-          $('#mod-event-list-section').load('php/load-mod-events.php', {
-            modNewCount: modCount
-          });
-          $('#change-info').hide();
-          $('#current-event-list').hide();
-          $('#add-work').hide();
-          $('#add-announ').hide();
-          $('#user-list').hide();
-          $('#timesheet-list').hide();
-          $('#mod-event-list').show();
-          break;
-          case 'add-work':
-          $('#change-info').hide();
-          $('#current-event-list').hide();
-          $('#mod-event-list').hide();
-          $('#add-announ').hide();
-          $('#user-list').hide();
-          $('#timesheet-list').hide();
-          $('#add-work').show();
-          break;
-          case 'user-list':
-          $('#change-info').hide();
-          $('#current-event-list').hide();
-          $('#mod-event-list').hide();
-          $('#add-announ').hide();
-          $('#add-work').hide();
-          $('#timesheet-list').hide();
-          $('#user-list').show();
-          break;
-          case 'add-announ':
-          $('#announ-list-section').load('php/load-announcements-admin.php', {
-            announNewCount: announCount
-          });
-          $('#change-info').hide();
-          $('#current-event-list').hide();
-          $('#mod-event-list').hide();
-          $('#add-work').hide();
-          $('#user-list').hide();
-          $('#timesheet-list').hide();
-          $('#add-announ').show();
-          break;
-          case 'update-acc':
-          $('#current-event-list').hide();
-          $('#mod-event-list').hide();
-          $('#add-work').hide();
-          $('#add-announ').hide();
-          $('#user-list').hide();
-          $('#timesheet-list').hide();
-          $('#change-info').show();
-          break;
-          case 'timesheet':
-          $('#current-event-list').hide();
-          $('#mod-event-list').hide();
-          $('#add-work').hide();
-          $('#add-announ').hide();
-          $('#user-list').hide();
-          $('#change-info').hide();
-          $('#timesheet-list').show();
-          break;
-          default:
-          break;
-        }
-      });
-      $('#more-announ-button').click(function(){
-        announCount += 2;
-        $('#announ-list-section').load('php/load-announcements-admin.php', {
-          announNewCount: announCount
-        });
-      });
-      $('#more-current-events-button').click(function(){
-        currentCount += 2;
-        $('#current-event-list-section').load('php/load-current-admin.php', {
-          currentNewCount: currentCount
-        });
-      });
-      $('#more-mod-button').click(function(){
-        modCount += 2;
-        $('#mod-event-list-section').load('php/load-mod-events.php', {
-          modNewCount: modCount
-        });
-      });
-      $('#search-user').keyup(function(){
-        var txt = $(this).val();
-        if(txt != '')
-        {
-          $.ajax({
-            url: 'php/search-user.php',
-            method: 'POST',
-            data: {txt: txt},
-            dataType: 'text',
-            success: function(response){
-              $('#user-list-section').html(response);
-            }
-          });
-        }
-        else{
-          $('#user-list-section').html('');
-        }
-      });
-    });
-    ");
-    echo('</script>');
+    echo('<script src="js/admin-home.js"></script>');
 
     echo("<div class='grid'>");
 
@@ -1042,240 +652,8 @@ if (isset($_SESSION['user_uid'])) {
           } elseif ($result['user_type'] == "employer") {
             echo("<link href='styles/home-employer.css' rel='stylesheet'>");
             echo("<link href='formhelper/css/bootstrap-formhelpers.css' rel='stylesheet'/>");
-            echo('<script>');
-            echo("
-            $(document).ready(function(){
-              var workRecCount = 2;
-              var allEventCount = 2;
-              var ownEventCount = 2;
-              var jobCount = 2;
-              $('#postJob-description').wysiwyg();
-              $('#postJob-form').submit(function(event){
-                event.preventDefault();
-                var x = 'Are you sure you want to post this job?'
-                bootbox.confirm({
-                  size: 'small',
-                  message: x,
-                  callback: function(result){
-                    if(result)
-                    {
+            echo('<script src="js/employer-home.js"></script>');
 
-                      var title = $('#postJob-title').val();
-                      var description = $('#postJob-description').val();
-                      var location = $('#postJob-location').val();
-
-                      var med = $('#postJob-med');
-                      var it = $('#postJob-it');
-                      var bus = $('#postJob-bus');
-                      var health = $('#postJob-health');
-                      var food = $('#postJob-food');
-                      var hosp = $('#postJob-hosp');
-                      var cul = $('#postJob-cul');
-
-                      var submit = $('#submit').val();
-
-                      $('.form-message').load('php/post-job.php', {
-                        title: title,
-                        description: description,
-                        location: location,
-                        med: med.prop('checked'),
-                        it: it.prop('checked'),
-                        bus: bus.prop('checked'),
-                        health: health.prop('checked'),
-                        food: food.prop('checked'),
-                        hosp: hosp.prop('checked'),
-                        cul: cul.prop('checked'),
-                        submit: submit
-                      });
-                    }
-                  }
-                });
-              });
-              $(document).on('click','.rem-btn',function(){
-                var x = 'Are you sure you want to remove this job?'
-                var ID = $(this).attr('id');
-                bootbox.confirm({
-                  size: 'small',
-                  message: x,
-                  callback: function(result){
-                    if(result)
-                    {
-                      $('#job'+ID).hide();
-                      $.ajax({
-                        type: 'POST',
-                        url: 'php/remove-job.php',
-                        data: {
-                          ID: ID
-                        },
-                        success: function(html){
-                          $('#job'+ID).remove();
-                        }
-                      });
-                    }
-                  }
-                });
-              });
-              $('#more-own-jobs-button').click(function(){
-                jobCount += 2;
-                $('#job-list-section').load('php/load-own-jobs.php', {
-                  jobNewCount: jobCount
-                });
-              });
-              $(document).on('click','.all-btn',function(){
-                $('#all-events-list-section').load('php/load-all-events.php', {
-                  allEventNewCount: allEventCount
-                });
-                $('#own-events-list').hide();
-                $('#change-info').hide();
-                $('#job-list').hide();
-                $('#post-job').hide();
-                $('#work-rec-list').hide();
-                $('#all-events-list').show();
-              });
-              $(document).on('click','.own-btn',function(){
-                $('#own-events-list-section').load('php/load-own-events.php', {
-                  ownEventNewCount: ownEventCount
-                });
-                $('#all-events-list').hide();
-                $('#change-info').hide();
-                $('#job-list').hide();
-                $('#post-job').hide();
-                $('#work-rec-list').hide();
-                $('#own-events-list').show();
-              });
-              $(document).on('click','.job-list-btn',function(){
-                $('#job-list-section').load('php/load-own-jobs.php', {
-                  jobNewCount: jobCount
-                });
-                $('#all-events-list').hide();
-                $('#change-info').hide();
-                $('#own-events-list').hide();
-                $('#post-job').hide();
-                $('#work-rec-list').hide();
-                $('#job-list').show();
-              });
-              $(document).on('click','.work-rec-btn',function(){
-                $('#work-rec-list-section').load('php/load-work-rec-events.php', {
-                  workRecNewCount: workRecCount
-                });
-                $('#all-events-list').hide();
-                $('#change-info').hide();
-                $('#own-events-list').hide();
-                $('#post-job').hide();
-                $('#job-list').hide();
-                $('#work-rec-list').show();
-              });
-              $(document).on('click','.post-job-btn',function(){
-                $('#all-events-list').hide();
-                $('#own-events-list').hide();
-                $('#job-list').hide();
-                $('#change-info').hide();
-                $('#work-rec-list').hide();
-                $('#post-job').show();
-              });
-              $(document).on('click','.change-btn',function(){
-                $('#all-events-list').hide();
-                $('#own-events-list').hide();
-                $('#job-list').hide();
-                $('#post-job').hide();
-                $('#work-rec-list').hide();
-                $('#change-info').show();
-              });
-              $(document).on('click','.change-pw-btn',function(){
-                $('#change-phone').hide();
-                $('#change-email').hide();
-                $('#change-sector-section').hide();
-                $('#change-pw').show();
-              });
-              $(document).on('click','.change-phone-btn',function(){
-                $('#change-email').hide();
-                $('#change-pw').hide();
-                $('#change-sector-section').hide();
-                $('#change-phone').show();
-              });
-              $(document).on('click','.change-email-btn',function(){
-                $('#change-phone').hide();
-                $('#change-pw').hide();
-                $('#change-sector-section').hide();
-                $('#change-email').show();
-              });
-              $(document).on('click','.change-sector-btn',function(){
-                $('#change-phone').hide();
-                $('#change-pw').hide();
-                $('#change-email').hide();
-                $('#change-sector-section').show();
-              });
-              $('#drop-selector').on('change',function(){
-                var selection = $(this).val();
-                switch(selection)
-                {
-                  case 'all':
-                  $('#all-events-list-section').load('php/load-all-events.php', {
-                    allEventNewCount: allEventCount
-                  });
-                  $('#own-events-list').hide();
-                  $('#change-info').hide();
-                  $('#job-list').hide();
-                  $('#post-job').hide();
-                  $('#work-rec-list').hide();
-                  $('#all-events-list').show();
-                  break;
-                  case 'own-work':
-                  $('#own-events-list-section').load('php/load-own-events.php', {
-                    ownEventNewCount: ownEventCount
-                  });
-                  $('#all-events-list').hide();
-                  $('#change-info').hide();
-                  $('#job-list').hide();
-                  $('#post-job').hide();
-                  $('#work-rec-list').hide();
-                  $('#own-events-list').show();
-                  break;
-                  case 'rec-work':
-                  $('#work-rec-list-section').load('php/load-work-rec-events.php', {
-                    workRecNewCount: workRecCount
-                  });
-                  $('#all-events-list').hide();
-                  $('#change-info').hide();
-                  $('#own-events-list').hide();
-                  $('#post-job').hide();
-                  $('#job-list').hide();
-                  $('#work-rec-list').show();
-                  break;
-                  case 'own-job':
-                  $('#job-list-section').load('php/load-own-jobs.php', {
-                    jobNewCount: jobCount
-                  });
-                  $('#all-events-list').hide();
-                  $('#change-info').hide();
-                  $('#own-events-list').hide();
-                  $('#post-job').hide();
-                  $('#work-rec-list').hide();
-                  $('#job-list').show();
-                  break;
-                  case 'post-job':
-                  $('#all-events-list').hide();
-                  $('#own-events-list').hide();
-                  $('#job-list').hide();
-                  $('#change-info').hide();
-                  $('#work-rec-list').hide();
-                  $('#post-job').show();
-                  break;
-                  case 'update-acc':
-                  $('#all-events-list').hide();
-                  $('#own-events-list').hide();
-                  $('#job-list').hide();
-                  $('#post-job').hide();
-                  $('#work-rec-list').hide();
-                  $('#change-info').show();
-                  break;
-                  default:
-                  break;
-                }
-              });
-            });
-            ");
-            echo('</script>');
             echo("<div class='grid'>");
 
             echo("<div class='hero1'></div>");
@@ -1453,15 +831,15 @@ if (isset($_SESSION['user_uid'])) {
               <li><b>Phone number: </b>" . $result['user_phone'] . "</li>
               <li><b>User name: </b>" . $result['user_uid'] . "</li>
               <li>
-              <b>Sectors: </b>
+              <b>Your sectors: </b>
               <ul>
-              <li>medical: " . $userOccupation['medical'] . "</li>
-              <li>IT: " . $userOccupation['IT'] . "</li>
-              <li>healthcare: " . $userOccupation['healthcare'] . "</li>
-              <li>business: " . $userOccupation['business'] . "</li>
-              <li>foodservice: " . $userOccupation['foodservice'] . "</li>
-              <li>hospitality: " . $userOccupation['hospitality'] . "</li>
-              <li>culinary: " . $userOccupation['culinary'] . "</li>
+              ");
+              $tags = getTags($userOccupation);
+              foreach($tags as $t)
+              {
+                echo('<li>' . $t . '</li>');
+              }
+              echo("
               </ul>
               </li>
               </ul>
@@ -1556,215 +934,8 @@ if (isset($_SESSION['user_uid'])) {
             } else {
               echo("<link href='styles/home-user.css' rel='stylesheet'>");
               echo("<link href='formhelper/css/bootstrap-formhelpers.css' rel='stylesheet'/>");
-              echo("
-              <script>
-              $(document).ready(function() {
-                var jobRecCount = 2;
-                var workRecCount = 2;
-                var allEventCount = 2;
-                var ownEventCount = 2;
-                $('#more-job-rec-button').click(function(){
-                  jobRecCount += 2;
-                  $('#job-rec-list-section').load('php/load-job-rec-events.php', {
-                    jobRecNewCount: jobRecCount
-                  });
-                });
-                $(document).on('click','.all-btn',function(){
-                  $('#all-events-list-section').load('php/load-all-events.php', {
-                    allEventNewCount: allEventCount
-                  });
-                  $('#own-events-list').hide();
-                  $('#change-info').hide();
-                  $('#work-rec-list').hide();
-                  $('#job-rec-list').hide();
-                  $('#all-events-list').show();
-                });
-                $(document).on('click','.own-btn',function(){
-                  $('#own-events-list-section').load('php/load-own-events.php', {
-                    ownEventNewCount: ownEventCount
-                  });
-                  $('#all-events-list').hide();
-                  $('#change-info').hide();
-                  $('#work-rec-list').hide();
-                  $('#job-rec-list').hide();
-                  $('#own-events-list').show();
-                });
-                $(document).on('click','.work-rec-btn',function(){
-                  $('#work-rec-list-section').load('php/load-work-rec-events.php', {
-                    workRecNewCount: workRecCount
-                  });
-                  $('#all-events-list').hide();
-                  $('#change-info').hide();
-                  $('#own-events-list').hide();
-                  $('#job-rec-list').hide();
-                  $('#work-rec-list').show();
-                });
-                $(document).on('click','.job-rec-btn',function(){
-                  $('#job-rec-list-section').load('php/load-job-rec-events.php', {
-                    jobRecNewCount: jobRecCount
-                  });
-                  $('#all-events-list').hide();
-                  $('#change-info').hide();
-                  $('#own-events-list').hide();
-                  $('#work-rec-list').hide();
-                  $('#job-rec-list').show();
-                });
-                $(document).on('click','.change-btn',function(){
-                  $('#all-events-list').hide();
-                  $('#own-events-list').hide();
-                  $('#work-rec-list').hide();
-                  $('#job-rec-list').hide();
-                  $('#change-info').show();
-                });
-                $(document).on('click','.change-pw-btn',function(){
-                  $('#change-phone').hide();
-                  $('#change-email').hide();
-                  $('#upload-section').hide();
-                  $('#change-sector-section').hide();
-                  $('#change-unemp-section').hide();
-                  $('#change-pw').show();
-                });
-                $(document).on('click','.change-phone-btn',function(){
-                  $('#change-email').hide();
-                  $('#change-pw').hide();
-                  $('#upload-section').hide();
-                  $('#change-sector-section').hide();
-                  $('#change-unemp-section').hide();
-                  $('#change-phone').show();
-                });
-                $(document).on('click','.change-email-btn',function(){
-                  $('#change-phone').hide();
-                  $('#change-pw').hide();
-                  $('#upload-section').hide();
-                  $('#change-sector-section').hide();
-                  $('#change-unemp-section').hide();
-                  $('#change-email').show();
-                });
-                $(document).on('click','.upload-btn',function(){
-                  $('#change-phone').hide();
-                  $('#change-pw').hide();
-                  $('#change-email').hide();
-                  $('#change-sector-section').hide();
-                  $('#change-unemp-section').hide();
-                  $('#upload-section').show();
-                });
-                $(document).on('click','.change-sector-btn',function(){
-                  $('#change-phone').hide();
-                  $('#change-pw').hide();
-                  $('#change-email').hide();
-                  $('#upload-section').hide();
-                  $('#change-unemp-section').hide();
-                  $('#change-sector-section').show();
-                });
-                $(document).on('click','.change-unemp-btn',function(){
-                  $('#change-phone').hide();
-                  $('#change-pw').hide();
-                  $('#change-email').hide();
-                  $('#upload-section').hide();
-                  $('#change-sector-section').hide();
-                  $('#change-unemp-section').show();
-                });
-                $('#upload-form').submit(function(event){
-                  event.preventDefault();
-                  var formData = new FormData(this);
-                  var x = 'Are you sure you want to upload this resume? (This will override your previous resume.)'
-                  bootbox.confirm({
-                    size: 'small',
-                    message: x,
-                    callback: function(result){
-                      if(result)
-                      {
-                        $.ajax({
-                          url: 'php/upload-resume.php', // Url to which the request is send
-                          type: 'POST',                 // Type of request to be send, called as method
-                          data: formData,               // Data sent to server, a set of key/value pairs (i.e. form fields and values)
-                          contentType: false,           // The content type used when sending data to the server.
-                          cache: false,                 // To unable request pages to be cached
-                          processData:false            // To send DOMDocument or non processed data file it is set to false
-                        });
-                      }
-                    }
-                  });
-                });
-                $('#change-unemp-form').submit(function(event){
-                  event.preventDefault();
-                  var x = 'Are you sure you want to change your state unemployment number?'
-                  bootbox.confirm({
-                    size: 'small',
-                    message: x,
-                    callback: function(result){
-                      if(result)
-                      {
-                        var change_unemp = $('#change-unemp-input').val();
-                        var change_unemp2 = $('#change-unemp2-input').val();
-                        var submit = $('#change-unemp-submit').val();
-                        $('.form-message').load('php/reset-unemp.php', {
-                          change_unemp: change_unemp,
-                          change_unemp2: change_unemp2,
-                          submit: submit
-                        });
-                      }
-                    }
-                  });
-                });
-                $('#drop-selector').on('change',function(){
-                  var selection = $(this).val();
-                  switch(selection)
-                  {
-                    case 'all':
-                    $('#all-events-list-section').load('php/load-all-events.php', {
-                      allEventNewCount: allEventCount
-                    });
-                    $('#own-events-list').hide();
-                    $('#change-info').hide();
-                    $('#work-rec-list').hide();
-                    $('#job-rec-list').hide();
-                    $('#all-events-list').show();
-                    break;
-                    case 'own-work':
-                    $('#own-events-list-section').load('php/load-own-events.php', {
-                      ownEventNewCount: ownEventCount
-                    });
-                    $('#all-events-list').hide();
-                    $('#change-info').hide();
-                    $('#work-rec-list').hide();
-                    $('#job-rec-list').hide();
-                    $('#own-events-list').show();
-                    break;
-                    case 'rec-work':
-                    $('#work-rec-list-section').load('php/load-work-rec-events.php', {
-                      workRecNewCount: workRecCount
-                    });
-                    $('#all-events-list').hide();
-                    $('#change-info').hide();
-                    $('#own-events-list').hide();
-                    $('#job-rec-list').hide();
-                    $('#work-rec-list').show();
-                    break;
-                    case 'rec-job':
-                    $('#job-rec-list-section').load('php/load-job-rec-events.php', {
-                      jobRecNewCount: jobRecCount
-                    });
-                    $('#all-events-list').hide();
-                    $('#change-info').hide();
-                    $('#own-events-list').hide();
-                    $('#work-rec-list').hide();
-                    $('#job-rec-list').show();
-                    break;
-                    case 'update-acc':
-                    $('#all-events-list').hide();
-                    $('#own-events-list').hide();
-                    $('#work-rec-list').hide();
-                    $('#job-rec-list').hide();
-                    $('#change-info').show();
-                    break;
-                    default:
-                    break;
-                  }
-                });
-              });
-              </script>
-              ");
+              echo("<script src='js/seeker-home.js'></script>");
+
               echo("<div class='grid'>");
 
               echo("<div class='hero1'></div>");
@@ -1876,15 +1047,15 @@ if (isset($_SESSION['user_uid'])) {
                 <li><b>Phone number: </b>" . $result['user_phone'] . "</li>
                 <li><b>User name: </b>" . $result['user_uid'] . "</li>
                 <li>
-                <b>Sectors: </b>
+                <b>Your sectors: </b>
                 <ul>
-                <li>medical: " . $userOccupation['medical'] . "</li>
-                <li>IT: " . $userOccupation['IT'] . "</li>
-                <li>healthcare: " . $userOccupation['healthcare'] . "</li>
-                <li>business: " . $userOccupation['business'] . "</li>
-                <li>foodservice: " . $userOccupation['foodservice'] . "</li>
-                <li>hospitality: " . $userOccupation['hospitality'] . "</li>
-                <li>culinary: " . $userOccupation['culinary'] . "</li>
+                ");
+                $tags = getTags($userOccupation);
+                foreach($tags as $t)
+                {
+                  echo('<li>' . $t . '</li>');
+                }
+                echo("
                 </ul>
                 </li>
                 </ul>
@@ -2021,5 +1192,41 @@ if (isset($_SESSION['user_uid'])) {
               include 'footer.php';
             } else {
               header("Location: index.php?error=signIn");
+            }
+
+            function getTags($userOccupation)
+            {
+              $tags = array();
+
+              if($userOccupation['medical'] == 'true')
+              {
+                $tags[] = 'medical';
+              }
+              if($userOccupation['IT'] == 'true')
+              {
+                $tags[] = 'IT';
+              }
+              if($userOccupation['healthcare'] == 'true')
+              {
+                $tags[] = 'healthcare';
+              }
+              if($userOccupation['business'] == 'true')
+              {
+                $tags[] = 'business';
+              }
+              if($userOccupation['foodservice'] == 'true')
+              {
+                $tags[] = 'foodservice';
+              }
+              if($userOccupation['hospitality'] == 'true')
+              {
+                $tags[] = 'hospitality';
+              }
+              if($userOccupation['culinary'] == 'true')
+              {
+                $tags[] = 'culinary';
+              }
+
+              return $tags;
             }
             ?>
