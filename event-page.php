@@ -168,40 +168,4 @@ else
   ');
   echo('</script>');
 }
-
-function getTags($eventListing)
-{
-  $tags = array();
-
-  if($eventListing['isMedical'] == 'true')
-  {
-    $tags[] = 'medical';
-  }
-  if($eventListing['isIT'] == 'true')
-  {
-    $tags[] = 'IT';
-  }
-  if($eventListing['isHealthcare'] == 'true')
-  {
-    $tags[] = 'healthcare';
-  }
-  if($eventListing['isBusiness'] == 'true')
-  {
-    $tags[] = 'business';
-  }
-  if($eventListing['isFoodservice'] == 'true')
-  {
-    $tags[] = 'foodservice';
-  }
-  if($eventListing['isHospitality'] == 'true')
-  {
-    $tags[] = 'hospitality';
-  }
-  if($eventListing['isCulinary'] == 'true')
-  {
-    $tags[] = 'culinary';
-  }
-
-  return $tags;
-}
 ?>

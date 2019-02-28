@@ -175,7 +175,7 @@ if(isset($_POST['submit']) && !isset($_SESSION['user_uid']))
               $stm2->execute([$user_uid]);
               $result = $stm2->fetch();
 
-              $stm3 = $conn->prepare('INSERT INTO user_occupations(user_id, medical, IT, business, foodservice, healthcare, hospitality, culinary) VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
+              $stm3 = $conn->prepare('INSERT INTO user_occupations(user_id, isMedical, isIT, isBusiness, isFoodservice, isHealthcare, isHospitality, isCulinary) VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
               $stm3->execute([$result['user_id'], $user_med, $user_it, $user_bus, $user_food, $user_health, $user_hosp, $user_cul]);
 
               $stm4 = $conn->prepare('INSERT INTO employers(user_id, employer_company, employer_tax, employer_unemployNum, employer_web) VALUES (?, ?, ?, ?, ?)');
@@ -199,7 +199,7 @@ if(isset($_POST['submit']) && !isset($_SESSION['user_uid']))
                 $stm->execute([$user_uid]);
                 $result = $stm->fetch();
 
-                $stm = $conn->prepare('INSERT INTO user_occupations(user_id, medical, IT, business, foodservice, healthcare, hospitality, culinary) VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
+                $stm = $conn->prepare('INSERT INTO user_occupations(user_id, isMedical, isIT, isBusiness, isFoodservice, isHealthcare, isHospitality, isCulinary) VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
                 $stm->execute([$result['user_id'], $user_med, $user_it, $user_bus, $user_food, $user_health, $user_hosp, $user_cul]);
 
                 $stm = $conn->prepare('INSERT INTO employers(user_id, employer_company, employer_tax, employer_unemployNum, employer_web) VALUES (?, ?, ?, ?, ?)');
@@ -227,7 +227,7 @@ if(isset($_POST['submit']) && !isset($_SESSION['user_uid']))
             $stm = $conn->prepare('INSERT INTO seekers(user_id, user_stateNum) VALUES (?, ?)');
             $stm->execute([$result['user_id'], 0000000000]);
 
-            $stm = $conn->prepare('INSERT INTO user_occupations(user_id, medical, IT, business, foodservice, healthcare, hospitality, culinary) VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
+            $stm = $conn->prepare('INSERT INTO user_occupations(user_id, isMedical, isIT, isBusiness, isFoodservice, isHealthcare, isHospitality, isCulinary) VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
             $stm->execute([$result['user_id'], $user_med, $user_it, $user_bus, $user_food, $user_health, $user_hosp, $user_cul]);
 
             echo("<span class='form-success'>Success.</span>");
@@ -249,7 +249,7 @@ if(isset($_POST['submit']) && !isset($_SESSION['user_uid']))
               $stm = $conn->prepare('INSERT INTO seekers(user_id, user_stateNum) VALUES (?, ?)');
               $stm->execute([$result['user_id'], $seeker_stateNum]);
 
-              $stm = $conn->prepare('INSERT INTO user_occupations(user_id, medical, IT, business, foodservice, healthcare, hospitality, culinary) VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
+              $stm = $conn->prepare('INSERT INTO user_occupations(user_id, isMedical, isIT, isBusiness, isFoodservice, isHealthcare, isHospitality, isCulinary) VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
               $stm->execute([$result['user_id'], $user_med, $user_it, $user_bus, $user_food, $user_health, $user_hosp, $user_cul]);
 
               echo("<span class='form-success'>Success.</span>");

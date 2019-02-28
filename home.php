@@ -12,6 +12,7 @@ if (isset($_SESSION['user_uid'])) {
   $userOccupation = $stm->fetch(PDO::FETCH_ASSOC);
   echo('<script src="js/reset-controls.js"></script>');
   echo('<script src="js/scroll.js"></script>');
+  echo('<script src="js/search.js"></script>');
 
   echo('<script>');
   echo("
@@ -494,22 +495,34 @@ if (isset($_SESSION['user_uid'])) {
 
     echo("<div id='all-events-list' class='event-list p-2'>");
     echo("<h2 class='dash-header hTwo'>All Workshops: </h2><hr>");
+    echo('<input type="text" name="search-allWork" id="search-allWork" placeholder="search all workshops" class="form-control my-5"/>');
     echo("<div id='all-events-list-section' class='container'>");
+    /*Infinte scroll*/
+    echo("</div>");
+    echo("<div id='all-events-list-section-search' class='container' style='display: none;'>");
     /*Infinte scroll*/
     echo("</div>");
     echo("</div>");
 
     echo("<div id='own-events-list' class='event-list p-2' style='display:none;'>");
     echo("<h2 class='dash-header hTwo'>Your Workshops: </h2><hr>");
+    echo('<input type="text" name="search-ownWork" id="search-ownWork" placeholder="search own workshops" class="form-control my-5"/>');
     echo("<div id='own-events-list-section' class='container'>");
-    /* javascript will load list of own events here when own-btn is pressed */
+    /*Endless scroll*/
+    echo("</div>");
+    echo("<div id='own-events-list-section-search' class='container' style='display: none;'>");
+    /*Endless scroll*/
     echo("</div>");
     echo("</div>");
 
     echo("<div id='work-rec-list' class='event-list p-2' style='display:none;'>");
     echo("<h2 class='dash-header hTwo'>Workshops for you: </h2><hr>");
+    echo('<input type="text" name="search-recWork" id="search-recWork" placeholder="search recommended workshops" class="form-control my-5"/>');
     echo("<div id='work-rec-list-section' class='container'>");
-    /* javascript will load list of rec events here when work-rec-btn is pressed */
+    /*Endless scroll*/
+    echo("</div>");
+    echo("<div id='work-rec-list-section-search' class='container' style='display: none;'>");
+    /*Endless scroll*/
     echo("</div>");
     echo("</div>");
 
@@ -766,35 +779,45 @@ if (isset($_SESSION['user_uid'])) {
     echo("<div class='control-area'>");
 
     echo("<div id='all-events-list' class='event-list p-2'>");
-
-    echo("<input type='text' name='search-user' id='search-user' placeholder='search user' class='form-control'/>");
-    echo("<div id='user-list-section' class='container'>");
-    /*javascript will populate this*/
-    echo("</div>");
-
     echo("<h2 class='dash-header hTwo'>All Workshops: </h2><hr>");
+    echo('<input type="text" name="search-allWork" id="search-allWork" placeholder="search all workshops" class="form-control my-5"/>');
     echo("<div id='all-events-list-section' class='container'>");
-    /*Endless scroll*/
+    /*Infinte scroll*/
+    echo("</div>");
+    echo("<div id='all-events-list-section-search' class='container' style='display: none;'>");
+    /*Infinte scroll*/
     echo("</div>");
     echo("</div>");
 
     echo("<div id='own-events-list' class='event-list p-2' style='display:none;'>");
     echo("<h2 class='dash-header hTwo'>Your Workshops: </h2><hr>");
+    echo('<input type="text" name="search-ownWork" id="search-ownWork" placeholder="search own workshops" class="form-control my-5"/>');
     echo("<div id='own-events-list-section' class='container'>");
+    /*Endless scroll*/
+    echo("</div>");
+    echo("<div id='own-events-list-section-search' class='container' style='display: none;'>");
     /*Endless scroll*/
     echo("</div>");
     echo("</div>");
 
     echo("<div id='work-rec-list' class='event-list p-2' style='display:none;'>");
     echo("<h2 class='dash-header hTwo'>Workshops for you: </h2><hr>");
+    echo('<input type="text" name="search-recWork" id="search-recWork" placeholder="search recommended workshops" class="form-control my-5"/>');
     echo("<div id='work-rec-list-section' class='container'>");
+    /*Endless scroll*/
+    echo("</div>");
+    echo("<div id='work-rec-list-section-search' class='container' style='display: none;'>");
     /*Endless scroll*/
     echo("</div>");
     echo("</div>");
 
     echo("<div id='job-rec-list' class='event-list p-2' style='display:none;'>");
     echo("<h2 class='dash-header hTwo'>Jobs for you: </h2><hr>");
+    echo('<input type="text" name="search-recJob" id="search-recJob" placeholder="search recommended jobs" class="form-control my-5"/>');
     echo("<div id='job-rec-list-section' class='container'>");
+    /*Endless scroll*/
+    echo("</div>");
+    echo("<div id='job-rec-list-section-search' class='container' style='display: none;'>");
     /*Endless scroll*/
     echo("</div>");
     echo("</div>");
@@ -956,41 +979,5 @@ if (isset($_SESSION['user_uid'])) {
   include 'footer.php';
 } else {
   header("Location: index.php?error=signIn");
-}
-
-function getTags($userOccupation)
-{
-  $tags = array();
-
-  if($userOccupation['medical'] == 'true')
-  {
-    $tags[] = 'medical';
-  }
-  if($userOccupation['IT'] == 'true')
-  {
-    $tags[] = 'IT';
-  }
-  if($userOccupation['healthcare'] == 'true')
-  {
-    $tags[] = 'healthcare';
-  }
-  if($userOccupation['business'] == 'true')
-  {
-    $tags[] = 'business';
-  }
-  if($userOccupation['foodservice'] == 'true')
-  {
-    $tags[] = 'foodservice';
-  }
-  if($userOccupation['hospitality'] == 'true')
-  {
-    $tags[] = 'hospitality';
-  }
-  if($userOccupation['culinary'] == 'true')
-  {
-    $tags[] = 'culinary';
-  }
-
-  return $tags;
 }
 ?>

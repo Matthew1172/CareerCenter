@@ -27,13 +27,28 @@ function getJobList() {
         reachedMax_job = true;
       }
       else {
-        $('#job-list').append(response);
+        $('#job-list-all').append(response);
       }
     }
   });
 }
 $(document).ready(function() {
   getJobList();
+  $('#search-jobList').keyup(function(){
+    var txt = $(this).val();
+    if(txt != '')
+    {
+      $('#allList').hide();
+      $('#searchList').show();
+      $('#job-list-search').load('php/search-jobList.php', {
+        txt: txt
+      });
+    }
+    else{
+      $('#searchList').hide();
+      $('#allList').show();
+    }
+  });
 });
 $(window).scroll(function () {
   if ($(window).scrollTop() >= $(document).height() - $(window).height() - 900)
@@ -44,33 +59,53 @@ $(window).scroll(function () {
 </script>
 ");
 
+echo('<div class="grid">');
+
+echo('<div class="hero1"></div>');
+
+echo('<div class="intro py-5"><h1>Welcome to our job board.</h1></div>');
+
+
 echo('
-<div class="grid">
-
-<div class="hero1"></div>
-
-<div class="intro py-5"><h1>Welcome to our job board.</h1></div>
-
 <div class="jobListing">
-  <div class="container table-responsive">
-    <h2>Job Postings</h2>
-    <p class="pb-5 pt-3 text-muted">*For the best user experience, view on desktop.</p>
-    <table class="table table-hover">
-      <thead>
-        <tr>
-        <th>Date Posted</th>
-        <th>Title</th>
-        <th>Location</th>
-        <th>Contact</th>
-        </tr>
-      </thead>
-      <tbody id="job-list"></tbody>
-    </table>
-  </div>
+
+<h2>Job Postings</h2>
+<p class="pb-5 pt-3 text-muted">*For the best user experience, view on desktop.</p>
+<input type="text" name="search-jobList" id="search-jobList" placeholder="search jobs" class="form-control my-5"/>
+
+<div class="container table-responsive" id="allList">
+<table class="table table-hover">
+<thead>
+<tr>
+<th>Date Posted</th>
+<th>Title</th>
+<th>Location</th>
+<th>Contact</th>
+</tr>
+</thead>
+<tbody id="job-list-all"></tbody>
+</table>
 </div>
+
+<div class="container table-responsive" id="searchList" style="display: none;">
+<table class="table table-hover">
+<thead>
+<tr>
+<th>Date Posted</th>
+<th>Title</th>
+<th>Location</th>
+<th>Contact</th>
+</tr>
+</thead>
+<tbody id="job-list-search"></tbody>
+</table>
+</div>
+
 
 </div>
 ');
+
+echo('</div>');
 
 require 'footer.php';
 ?>

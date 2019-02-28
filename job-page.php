@@ -81,38 +81,3 @@ if (isset($_SESSION['user_uid']))
   }
   require 'footer.php';
 }
-function getTags($jobListing)
-{
-  $tags = array();
-
-  if($jobListing['isMedical'] == 'true')
-  {
-    $tags[] = 'medical';
-  }
-  if($jobListing['isIT'] == 'true')
-  {
-    $tags[] = 'IT';
-  }
-  if($jobListing['isHealthcare'] == 'true')
-  {
-    $tags[] = 'healthcare';
-  }
-  if($jobListing['isBusiness'] == 'true')
-  {
-    $tags[] = 'business';
-  }
-  if($jobListing['isFoodservice'] == 'true')
-  {
-    $tags[] = 'foodservice';
-  }
-  if($jobListing['isHospitality'] == 'true')
-  {
-    $tags[] = 'hospitality';
-  }
-  if($jobListing['isCulinary'] == 'true')
-  {
-    $tags[] = 'culinary';
-  }
-
-  return $tags;
-}
