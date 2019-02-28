@@ -1,18 +1,5 @@
 $(document).ready(function() {
-  var jobRecCount = 2;
-  var workRecCount = 2;
-  var allEventCount = 2;
-  var ownEventCount = 2;
-  $('#more-job-rec-button').click(function(){
-    jobRecCount += 2;
-    $('#job-rec-list-section').load('php/load-job-rec-events.php', {
-      jobRecNewCount: jobRecCount
-    });
-  });
   $(document).on('click','.all-btn',function(){
-    $('#all-events-list-section').load('php/load-all-events.php', {
-      allEventNewCount: allEventCount
-    });
     $('#own-events-list').hide();
     $('#change-info').hide();
     $('#work-rec-list').hide();
@@ -20,9 +7,6 @@ $(document).ready(function() {
     $('#all-events-list').show();
   });
   $(document).on('click','.own-btn',function(){
-    $('#own-events-list-section').load('php/load-own-events.php', {
-      ownEventNewCount: ownEventCount
-    });
     $('#all-events-list').hide();
     $('#change-info').hide();
     $('#work-rec-list').hide();
@@ -30,9 +14,6 @@ $(document).ready(function() {
     $('#own-events-list').show();
   });
   $(document).on('click','.work-rec-btn',function(){
-    $('#work-rec-list-section').load('php/load-work-rec-events.php', {
-      workRecNewCount: workRecCount
-    });
     $('#all-events-list').hide();
     $('#change-info').hide();
     $('#own-events-list').hide();
@@ -40,9 +21,6 @@ $(document).ready(function() {
     $('#work-rec-list').show();
   });
   $(document).on('click','.job-rec-btn',function(){
-    $('#job-rec-list-section').load('php/load-job-rec-events.php', {
-      jobRecNewCount: jobRecCount
-    });
     $('#all-events-list').hide();
     $('#change-info').hide();
     $('#own-events-list').hide();
@@ -109,9 +87,6 @@ $(document).ready(function() {
     switch(selection)
     {
       case 'all':
-      $('#all-events-list-section').load('php/load-all-events.php', {
-        allEventNewCount: allEventCount
-      });
       $('#own-events-list').hide();
       $('#change-info').hide();
       $('#work-rec-list').hide();
@@ -119,9 +94,6 @@ $(document).ready(function() {
       $('#all-events-list').show();
       break;
       case 'own-work':
-      $('#own-events-list-section').load('php/load-own-events.php', {
-        ownEventNewCount: ownEventCount
-      });
       $('#all-events-list').hide();
       $('#change-info').hide();
       $('#work-rec-list').hide();
@@ -129,9 +101,6 @@ $(document).ready(function() {
       $('#own-events-list').show();
       break;
       case 'rec-work':
-      $('#work-rec-list-section').load('php/load-work-rec-events.php', {
-        workRecNewCount: workRecCount
-      });
       $('#all-events-list').hide();
       $('#change-info').hide();
       $('#own-events-list').hide();
@@ -139,9 +108,6 @@ $(document).ready(function() {
       $('#work-rec-list').show();
       break;
       case 'rec-job':
-      $('#job-rec-list-section').load('php/load-job-rec-events.php', {
-        jobRecNewCount: jobRecCount
-      });
       $('#all-events-list').hide();
       $('#change-info').hide();
       $('#own-events-list').hide();

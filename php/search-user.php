@@ -1,11 +1,10 @@
 <?php
 include 'connect.php';
-$response = '';
 $sql = $conn->prepare("SELECT * FROM users WHERE user_last LIKE '%".$_POST["txt"]."%'");
 $sql->execute();
 if($sql->rowCount() > 0)
 {
-  $response .= '<div class="container">
+  echo '<div class="container">
     <p class="pb-5 pt-3 text-muted">*For the best user experience, view on desktop.</p>
     <table class="table table-hover">
       <thead>
@@ -18,7 +17,7 @@ if($sql->rowCount() > 0)
       </thead>
       <tbody id="user-list">';
 while($result = $sql->fetch()){
-  $response .= '
+  echo '
     <tr>
     <td>'. $result['user_first'] .'</td>
     <td>'. $result['user_last'] .'</td>
@@ -27,11 +26,10 @@ while($result = $sql->fetch()){
     </tr>
   ';
 }
-  $response .= '
+  echo '
   </tbody>
   </table>
   </div>';
-  echo($response);
 }
 else {
   echo('No users found.');

@@ -4,6 +4,18 @@ $(document).ready(function(){
   var currentCount = 2;
   $('#announ-desc').wysiwyg();
   $('#work-desc').wysiwyg();
+  $('#search-user').keyup(function(){
+    var txt = $(this).val();
+    if(txt != '')
+    {
+      $('#user-list-section').load('php/search-user.php', {
+        txt: txt
+      });
+    }
+    else{
+      $('#user-list-section').html('');
+    }
+  });
   $('#add-work-form').submit(function(event){
     event.preventDefault();
     var x = 'Are you sure you want to add this event?'
@@ -14,7 +26,7 @@ $(document).ready(function(){
         if(result)
         {
           var title = $('#work-title').val();
-          var description = $('#work-desc').val();
+          var description = $('#work-desc').cleanHtml();
           var location = $('#work-loc').val();
           var start_date = $('#work-start-date').val();
           var start_time = $('#work-start-time').val() + ':00';
@@ -207,9 +219,6 @@ $(document).ready(function(){
     $('#user-list').show();
   });
   $(document).on('click','.add-announ-btn',function(){
-    $('#announ-list-section').load('php/load-announcements-admin.php', {
-      announNewCount: announCount
-    });
     $('#current-event-list').hide();
     $('#change-info').hide();
     $('#mod-event-list').hide();
@@ -315,9 +324,6 @@ $(document).ready(function(){
       $('#user-list').show();
       break;
       case 'add-announ':
-      $('#announ-list-section').load('php/load-announcements-admin.php', {
-        announNewCount: announCount
-      });
       $('#change-info').hide();
       $('#current-event-list').hide();
       $('#mod-event-list').hide();
@@ -348,12 +354,6 @@ $(document).ready(function(){
       break;
     }
   });
-  $('#more-announ-button').click(function(){
-    announCount += 2;
-    $('#announ-list-section').load('php/load-announcements-admin.php', {
-      announNewCount: announCount
-    });
-  });
   $('#more-current-events-button').click(function(){
     currentCount += 2;
     $('#current-event-list-section').load('php/load-current-admin.php', {
@@ -365,23 +365,5 @@ $(document).ready(function(){
     $('#mod-event-list-section').load('php/load-mod-events.php', {
       modNewCount: modCount
     });
-  });
-  $('#search-user').keyup(function(){
-    var txt = $(this).val();
-    if(txt != '')
-    {
-      $.ajax({
-        url: 'php/search-user.php',
-        method: 'POST',
-        data: {txt: txt},
-        dataType: 'text',
-        success: function(response){
-          $('#user-list-section').html(response);
-        }
-      });
-    }
-    else{
-      $('#user-list-section').html('');
-    }
   });
 });
