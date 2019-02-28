@@ -1,9 +1,7 @@
 <?php
 session_start();
 if (isset($_SESSION['user_uid'])) {
-  include 'php/user-class.php';
   include 'header.php';
-  //include 'php/connect.php';
   //get PDO of user info
   $sql = $conn->prepare("SELECT * FROM users WHERE user_uid=?");
   $sql->execute([$_SESSION['user_uid']]);

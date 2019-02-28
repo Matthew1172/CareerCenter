@@ -17,23 +17,37 @@ if(isset($_POST['submit']))
   $job_food = $_POST['food'];
   $job_cul = $_POST['cul'];
   $job_hosp = $_POST['hosp'];
+
   $errorEmpty = false;
   $errorSectorEmpty = false;
   $errorLength = false;
+  $errorValid = false;
+  $errorDesc = false;
+
   if(empty($job_title) || empty($job_description) || empty($job_location))
   {
-    echo("<span class='form-error'>Fill in all fields</span>");
+    echo("<span class='form-error'>Fill in all fields.</span>");
     $errorEmpty = true;
   }
   else if($job_med == 'false' && $job_it == 'false' && $job_bus == 'false' && $job_health == 'false' && $job_food == 'false' && $job_cul == 'false' && $job_hosp == 'false')
   {
-    echo("<span class='form-error'>you must check atleast one sector</span>");
+    echo("<span class='form-error'>You must check atleast one sector.</span>");
     $errorSectorEmpty = true;
   }
   else if(strlen($job_title) > 250 || strlen($job_description) > 10000 || strlen($job_location) > 250)
   {
-    echo("<span class='form-error'>description cannot be more than 1000 words</span>");
+    echo("<span class='form-error'>Description cannot be more than 1000 words.</span>");
     $errorLength = true;
+  }
+  else if(strlen($job_description) < 500)
+  {
+    echo("<span class='form-error'>Description must be more specific.</span>");
+    $errorDesc = true;
+  }
+  else if(is_numeric($job_title) || is_numeric($job_description) || is_numeric($job_location))
+  {
+    echo("<span class='form-error'>Field cannot be just numbers.</span>");
+    $errorValid = true;
   }
   else
   {
@@ -45,7 +59,7 @@ if(isset($_POST['submit']))
     $resultEmployer = $sql->fetch();
     $sql = $conn->prepare('INSERT INTO jobs(employer_id, job_title, job_description, job_location, isMedical, isIT, isHealthcare, isBusiness, isFoodservice, isHospitality, isCulinary, dateStamp) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
     $sql->execute([$resultEmployer['employer_id'], $job_title, $job_description, $job_location, $job_med, $job_it, $job_health, $job_bus, $job_food, $job_hosp, $job_cul, date('Y-m-d H:i:s')]);
-    echo("<span class='form-success'>Success~!</span>");
+    echo("<span class='form-success'>Success.</span>");
   }
 }
 else
@@ -59,6 +73,8 @@ $("#postJob-med, #postJob-it, #postJob-food, #postJob-health, #postJob-hosp, #po
 var errorEmpty = "<?php echo $errorEmpty; ?>";
 var errorSectorEmpty = "<?php echo $errorSectorEmpty; ?>";
 var errorLength = "<?php echo $errorLength; ?>";
+var errorValid = "<?php echo $errorValid; ?>";
+var errorDesc = "<?php echo $errorDesc; ?>";
 if(errorEmpty == true)
 {
   $("#postJob-title, #postJob-description, #postJob-location").addClass("input-error");
@@ -71,7 +87,15 @@ if(errorLength == true)
 {
   $("#postJob-title, #postJob-description, #postJob-location").addClass("input-error");
 }
-if(errorEmpty == false && errorSectorEmpty == false && errorLength == false)
+if(errorValid == true)
+{
+  $("#postJob-title, #postJob-description, #postJob-location").addClass("input-error");
+}
+if(errorDesc == true)
+{
+  $("#postJob-description").addClass("input-error");
+}
+if(errorEmpty == false && errorSectorEmpty == false && errorLength == false && errorValid == false && errorDesc == false)
 {
   $("#postJob-title, #postJob-description, #postJob-location").val("");
   $("#postJob-med, #postJob-it, #postJob-food, #postJob-health, #postJob-hosp, #postJob-cul, #postJob-bus").prop("checked", false);
