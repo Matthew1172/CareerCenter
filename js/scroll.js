@@ -166,6 +166,34 @@ function getAnnouns() {
     }
   });
 }
+var start_mod = 0;
+var limit_mod = 0;
+var reachedMax_mod = false;
+function getMod() {
+  if (reachedMax_mod){
+    return;
+  }
+  start_mod += limit_mod;
+  limit_mod += 2;
+  $.ajax({
+    url: 'php/getModEvents.php',
+    method: 'POST',
+    dataType: 'text',
+    data: {
+      getData: 1,
+      start: start_mod,
+      limit: limit_mod
+    },
+    success: function(response) {
+      if (response == "reachedMax"){
+        reachedMax_mod = true;
+      }
+      else {
+        $("#mod-event-list-section").append(response);
+      }
+    }
+  });
+}
 
 $(window).scroll(function () {
   if ($(window).scrollTop() >= $(document).height() - $(window).height() - 900)
@@ -176,6 +204,7 @@ $(window).scroll(function () {
     getRecJobs();
     getOwnJobs();
     getAnnouns();
+    getMod();
   }
 });
 
@@ -186,4 +215,5 @@ $(document).ready(function() {
   getRecJobs();
   getOwnJobs();
   getAnnouns();
+  getMod();
 });

@@ -1,7 +1,4 @@
 $(document).ready(function(){
-  var announCount = 2;
-  var modCount = 2;
-  var currentCount = 2;
   $('#announ-desc').wysiwyg();
   $('#work-desc').wysiwyg();
   $('#search-user').keyup(function(){
@@ -149,7 +146,34 @@ $(document).ready(function(){
             data: formData,               // Data sent to server, a set of key/value pairs (i.e. form fields and values)
             contentType: false,           // The content type used when sending data to the server.
             cache: false,                 // To unable request pages to be cached
-            processData:false            // To send DOMDocument or non processed data file it is set to false
+            processData:false,            // To send DOMDocument or non processed data file it is set to false
+            success(response){
+              switch(response){
+                case '1':
+                $('#timesheetToUpload').addClass('input-error');
+                $('#timesheet-msg').html('<span class="form-error">Invalid parameters.</span>');
+                break;
+                case '2':
+                $('#timesheetToUpload').addClass('input-error');
+                $('#timesheet-msg').html('<span class="form-error">No file sent.</span>');
+                break;
+                case '3':
+                $('#timesheetToUpload').addClass('input-error');
+                $('#timesheet-msg').html('<span class="form-error">Exceeded filesize limit.</span>');
+                break;
+                case '4':
+                $('#timesheetToUpload').addClass('input-error');
+                $('#timesheet-msg').html('<span class="form-error">Unknown errors.</span>');
+                break;
+                case '5':
+                $('#timesheetToUpload').addClass('input-error');
+                $('#timesheet-msg').html('<span class="form-error">Invalid file format.</span>');
+                break;
+                case '6':
+                window.location.reload();
+                break;
+              }
+            }
           });
         }
       }
@@ -179,20 +203,7 @@ $(document).ready(function(){
       }
     });
   });
-  $(document).on('click','.current-btn',function(){
-    $('#change-info').hide();
-    $('#mod-event-list').hide();
-    $('#add-work').hide();
-    $('#add-announ').hide();
-    $('#user-list').hide();
-    $('#timesheet-list').hide();
-    $('#current-event-list').show();
-  });
   $(document).on('click','.mod-work-btn',function(){
-    $('#mod-event-list-section').load('php/load-mod-events.php', {
-      modNewCount: modCount
-    });
-    $('#current-event-list').hide();
     $('#change-info').hide();
     $('#add-work').hide();
     $('#add-announ').hide();
@@ -201,7 +212,6 @@ $(document).ready(function(){
     $('#mod-event-list').show();
   });
   $(document).on('click','.add-work-btn',function(){
-    $('#current-event-list').hide();
     $('#change-info').hide();
     $('#mod-event-list').hide();
     $('#add-announ').hide();
@@ -211,7 +221,6 @@ $(document).ready(function(){
   });
   $(document).on('click','.user-btn',function(){
     $('#change-info').hide();
-    $('#current-event-list').hide();
     $('#mod-event-list').hide();
     $('#add-announ').hide();
     $('#add-work').hide();
@@ -219,7 +228,6 @@ $(document).ready(function(){
     $('#user-list').show();
   });
   $(document).on('click','.add-announ-btn',function(){
-    $('#current-event-list').hide();
     $('#change-info').hide();
     $('#mod-event-list').hide();
     $('#add-work').hide();
@@ -228,7 +236,6 @@ $(document).ready(function(){
     $('#add-announ').show();
   });
   $(document).on('click','.timesheet-btn',function(){
-    $('#current-event-list').hide();
     $('#mod-event-list').hide();
     $('#add-work').hide();
     $('#add-announ').hide();
@@ -237,7 +244,6 @@ $(document).ready(function(){
     $('#timesheet-list').show();
   });
   $(document).on('click','.change-btn',function(){
-    $('#current-event-list').hide();
     $('#mod-event-list').hide();
     $('#add-work').hide();
     $('#add-announ').hide();
@@ -284,21 +290,8 @@ $(document).ready(function(){
     var selection = $(this).val();
     switch(selection)
     {
-      case 'current':
-      $('#change-info').hide();
-      $('#mod-event-list').hide();
-      $('#add-work').hide();
-      $('#add-announ').hide();
-      $('#user-list').hide();
-      $('#timesheet-list').hide();
-      $('#current-event-list').show();
-      break;
       case 'mod':
-      $('#mod-event-list-section').load('php/load-mod-events.php', {
-        modNewCount: modCount
-      });
       $('#change-info').hide();
-      $('#current-event-list').hide();
       $('#add-work').hide();
       $('#add-announ').hide();
       $('#user-list').hide();
@@ -307,7 +300,6 @@ $(document).ready(function(){
       break;
       case 'add-work':
       $('#change-info').hide();
-      $('#current-event-list').hide();
       $('#mod-event-list').hide();
       $('#add-announ').hide();
       $('#user-list').hide();
@@ -316,7 +308,6 @@ $(document).ready(function(){
       break;
       case 'user-list':
       $('#change-info').hide();
-      $('#current-event-list').hide();
       $('#mod-event-list').hide();
       $('#add-announ').hide();
       $('#add-work').hide();
@@ -325,7 +316,6 @@ $(document).ready(function(){
       break;
       case 'add-announ':
       $('#change-info').hide();
-      $('#current-event-list').hide();
       $('#mod-event-list').hide();
       $('#add-work').hide();
       $('#user-list').hide();
@@ -333,7 +323,6 @@ $(document).ready(function(){
       $('#add-announ').show();
       break;
       case 'update-acc':
-      $('#current-event-list').hide();
       $('#mod-event-list').hide();
       $('#add-work').hide();
       $('#add-announ').hide();
@@ -342,7 +331,6 @@ $(document).ready(function(){
       $('#change-info').show();
       break;
       case 'timesheet':
-      $('#current-event-list').hide();
       $('#mod-event-list').hide();
       $('#add-work').hide();
       $('#add-announ').hide();
@@ -353,17 +341,5 @@ $(document).ready(function(){
       default:
       break;
     }
-  });
-  $('#more-current-events-button').click(function(){
-    currentCount += 2;
-    $('#current-event-list-section').load('php/load-current-admin.php', {
-      currentNewCount: currentCount
-    });
-  });
-  $('#more-mod-button').click(function(){
-    modCount += 2;
-    $('#mod-event-list-section').load('php/load-mod-events.php', {
-      modNewCount: modCount
-    });
   });
 });

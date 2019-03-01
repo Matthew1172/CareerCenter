@@ -2,91 +2,21 @@
 session_start();
 if (isset($_SESSION['user_uid'])) {
   include 'header.php';
-  //get PDO of user info
   $sql = $conn->prepare("SELECT * FROM users WHERE user_uid=?");
   $sql->execute([$_SESSION['user_uid']]);
   $result = $sql->fetch(PDO::FETCH_ASSOC);
-  //get occupations for logged in user
   $stm = $conn->prepare('SELECT * from user_occupations WHERE user_id = ?');
   $stm->execute([$result['user_id']]);
   $userOccupation = $stm->fetch(PDO::FETCH_ASSOC);
+
   echo('<script src="js/reset-controls.js"></script>');
   echo('<script src="js/scroll.js"></script>');
   echo('<script src="js/search.js"></script>');
+  echo('<script src="js/subscribe.js"></script>');
 
   echo('<script>');
   echo("
   $(document).ready(function(){
-    $(document).on('click','.event-btn',function(){
-      var x = 'Are you sure you want to subscribe?'
-      var ID = $(this).attr('id');
-      bootbox.confirm({
-        size: 'small',
-        message: x,
-        callback: function(result){
-          if(result)
-          {
-            $('#event'+ID).hide();
-            $.ajax({
-              type: 'POST',
-              url: 'php/subscribe.php',
-              data: {
-                ID: ID
-              },
-              success: function(response){
-                if(response == 'error100')
-                {
-                  bootbox.alert({
-                    size: 'small',
-                    message: 'You\\'re already subscribed for this workshop.'
-                  });
-                }
-                else
-                {
-                  $('#event'+ID).remove();
-                  bootbox.alert({
-                    size: 'small',
-                    message: 'You have subscribed for this workshop.'
-                  });
-                }
-              }
-            });
-          }
-        }
-      });
-    });
-    $(document).on('click','.sub-event-btn',function(){
-      var x = 'Are you sure you want to un-subscribe?'
-      var ID = $(this).attr('id');
-      bootbox.confirm({
-        size: 'small',
-        message: x,
-        callback: function(result){
-          if(result)
-          {
-            $('#event'+ID).hide();
-            $.ajax({
-              type: 'POST',
-              url: 'php/unsubscribe.php',
-              data: {
-                ID: ID
-              },
-              success: function(html){
-                $('#event'+ID).remove();
-              }
-            });
-          }
-        }
-      });
-    });
-
-    var workRecCount = 2;
-    $('#more-work-rec-button').click(function(){
-      workRecCount += 2;
-      $('#work-rec-list-section').load('php/load-work-rec-events.php', {
-        workRecNewCount: workRecCount
-      });
-    });
     $(window).on('resize', function(){
       var win = $(this);
       if (win.width() > 1000)
@@ -124,7 +54,6 @@ if (isset($_SESSION['user_uid'])) {
 
     echo("<div class='dashboard-control'>");
     echo('<div class="dash-control-btns btn-group btn-group-justified">'
-    . '<button class="btn-outline-secondary btn nav-link current-btn">Current Workshops</button>'
     . '<button class="btn-outline-secondary btn nav-link mod-work-btn">Modify workshops</button>'
     . '<button class="btn-outline-secondary btn nav-link add-work-btn">Add workshop</button>'
     . '<button class="btn-outline-secondary btn nav-link user-btn">User list</button>'
@@ -134,7 +63,6 @@ if (isset($_SESSION['user_uid'])) {
     . '</div>');
     echo('<div class="dash-control-drp" style="display: none;">
     <select class="form-control" id="drop-selector" style="height: 100%;">
-    <option value="current">Current workshops</option>
     <option value="mod">Modify workshops</option>
     <option value="add-work">Add workshop</option>
     <option value="user-list">User list</option>
@@ -146,31 +74,29 @@ if (isset($_SESSION['user_uid'])) {
 
     echo("<div class='control-area'>");
 
-    //list of current events
-    echo("<div id='current-event-list' class='event-list p-2'>");
-    echo("<h2 class='dash-header hTwo'>Current Workshops: </h2><hr>");
-    echo("<div id='current-event-list-section' class='container'>");
-
+    //list to modify workshops
+    echo("<div id='mod-event-list' class='event-list p-2'>");
+    echo("<h2 class='dash-header hTwo'>Modify Workshops: </h2><hr>");
+    echo('<input type="text" name="search-modWork" id="search-modWork" placeholder="search all workshops" class="form-control my-5"/>');
+    echo("<div id='mod-event-list-section' class='container'>");
+    /*javascript will populate this*/
     echo("</div>");
-    echo("<div class='show-more-container'>");
-    echo('<button id="more-current-events-button" class="btn btn-primary more-btn">Show more</button>');
+    echo("<div id='mod-event-list-section-search' class='container'>");
+    /*javascript will populate this*/
     echo("</div>");
     echo("</div>");
 
     //list to modify users
     echo("<div id='user-list' class='event-list p-2' style='display: none;'>");
     echo("<h2 class='dash-header hTwo'>User list: </h2><hr>");
-    echo("<input type='text' name='search-user' id='search-user' placeholder='search user' class='form-control'/>");
+    echo("<input type='text' name='search-user' id='search-user' placeholder='search user' class='form-control my-5'/>");
     echo("<div id='user-list-section' class='container'>");
     /*javascript will populate this*/
     echo("</div>");
-    echo("<div class='show-more-container'>");
-    echo('<button id="more-user-button" class="btn btn-primary more-btn">Show more</button>');
-    echo("</div>");
     echo("</div>");
 
-    //list to modify workshops
-    echo("<div id='mod-event-list' class='event-list p-2' style='display: none;'>");
+    //add a workshop form
+    echo("<div id='add-work' class='event-list p-2' style='display: none;'>");
     echo("<h2 class='dash-header hTwo'>Add workshop: </h2><hr>");
     echo('
     <form id="add-work-form">
@@ -204,8 +130,6 @@ if (isset($_SESSION['user_uid'])) {
     <li><input id="work-end-date" type="date" class="form-control" aria-label="small"></li>
     <li><input id="work-end-time" type="time" class="form-control" aria-label="small"></li>
     <li>
-    <ul class="reset-list">
-    <li>
     <div class="form-check">
     <input class="form-check-input" type="checkbox" value="TRUE" id="add-work-med">
     <label class="form-check-label" for="add-work-med">Medical</label>
@@ -230,88 +154,9 @@ if (isset($_SESSION['user_uid'])) {
     </div>
     </li>
     </ul>
-    </li>
-    </ul>
     <button id="submit-workshop" type="submit" class="btn btn-primary main-btn"><b>Add</b></button>
     </form>
     ');
-    echo("<h2 class='dash-header hTwo pt-5'>Modify Workshops: </h2><hr>");
-    echo("<div id='mod-event-list-section' class='container'>");
-    /*javascript will populate this*/
-    echo("</div>");
-    echo("<div class='show-more-container'>");
-    echo('<button id="more-mod-button" class="btn btn-primary more-btn">Show more</button>');
-    echo("</div>");
-    echo("</div>");
-
-    //add a workshop form
-    echo("<div id='add-work' class='event-list p-2' style='display: none;'>");
-    echo("<h2 class='dash-header hTwo'>Add a workshop: </h2><hr>");
-    echo("<div id='add-workshop-section' class='container'>");
-    echo('
-    <form id="add-work-form">
-    <p class="form-message"></p>
-    <ul class="reset-list">
-    <li><input id="work-title" type="text" placeholder="Workshop title" class="form-control" aria-label="small"></li>
-    <li><div class="btn-toolbar" data-role="editor-toolbar" data-target="#work-desc">
-    <div class="btn-group">
-    <a class="btn" data-edit="bold" title="" data-original-title="Bold (Ctrl/Cmd+B)"><img src="open-iconic-master/svg/bold.svg" alt="icon bold"></a>
-    <a class="btn" data-edit="italic" title="" data-original-title="Italic (Ctrl/Cmd+I)"><img src="open-iconic-master/svg/italic.svg" alt="icon italic"></a>
-    <a class="btn" data-edit="underline" title="" data-original-title="Underline (Ctrl/Cmd+U)"><img src="open-iconic-master/svg/underline.svg" alt="icon underline"></a>
-    </div>
-    <div class="btn-group">
-    <a class="btn" data-edit="insertunorderedlist" title="" data-original-title="Bullet list"><img src="open-iconic-master/svg/list.svg" alt="icon list"></a>
-    </div>
-    <div class="btn-group">
-    <a class="btn btn-info" data-edit="justifyleft" title="" data-original-title="Align Left (Ctrl/Cmd+L)"><img src="open-iconic-master/svg/align-left.svg" alt="icon align left"></a>
-    <a class="btn" data-edit="justifycenter" title="" data-original-title="Center (Ctrl/Cmd+E)"><img src="open-iconic-master/svg/align-center.svg" alt="icon align center"></a>
-    <a class="btn" data-edit="justifyright" title="" data-original-title="Align Right (Ctrl/Cmd+R)"><img src="open-iconic-master/svg/align-right.svg" alt="icon align right"></a>
-    <a class="btn" data-edit="justifyfull" title="" data-original-title="Justify (Ctrl/Cmd+J)"><img src="open-iconic-master/svg/justify-center.svg" alt="icon justify"></a>
-    </div>
-    <div class="btn-group">
-    <a class="btn" data-edit="undo" title="" data-original-title="Undo (Ctrl/Cmd+Z)"><img src="open-iconic-master/svg/action-undo.svg" alt="icon action undo"></a>
-    <a class="btn" data-edit="redo" title="" data-original-title="Redo (Ctrl/Cmd+Y)"><img src="open-iconic-master/svg/action-redo.svg" alt="icon action redo"></a>
-    </div>
-    </div></li>
-    <li><div id="work-desc" class="wysiwyg">Enter description here</div></li>
-    <li><input id="work-loc" type="text" placeholder="Workshop location" class="form-control" aria-label="small"></li>
-    <li><input id="work-start-date" type="date" class="form-control" aria-label="small"></li>
-    <li><input id="work-start-time" type="time" class="form-control" aria-label="small"></li>
-    <li><input id="work-end-date" type="date" class="form-control" aria-label="small"></li>
-    <li><input id="work-end-time" type="time" class="form-control" aria-label="small"></li>
-    <li>
-    <ul class="reset-list">
-    <li>
-    <div class="form-check">
-    <input class="form-check-input" type="checkbox" value="TRUE" id="add-work-med">
-    <label class="form-check-label" for="add-work-med">Medical</label>
-    <br/>
-    <input class="form-check-input" type="checkbox" value="TRUE" id="add-work-it">
-    <label class="form-check-label" for="add-work-it">IT</label>
-    <br/>
-    <input class="form-check-input" type="checkbox" value="TRUE" id="add-work-bus">
-    <label class="form-check-label" for="add-work-bus">Business</label>
-    <br/>
-    <input class="form-check-input" type="checkbox" value="TRUE" id="add-work-health">
-    <label class="form-check-label" for="add-work-health">Health care</label>
-    <br/>
-    <input class="form-check-input" type="checkbox" value="TRUE" id="add-work-food">
-    <label class="form-check-label" for="add-work-food">Food service</label>
-    <br/>
-    <input class="form-check-input" type="checkbox" value="TRUE" id="add-work-hosp">
-    <label class="form-check-label" for="add-work-hosp">Hospitality</label>
-    <br/>
-    <input class="form-check-input" type="checkbox" value="TRUE" id="add-work-cul">
-    <label class="form-check-label" for="add-work-cul">Culinary</label>
-    </div>
-    </li>
-    </ul>
-    </li>
-    </ul>
-    <button id="submit-workshop" type="submit" class="btn btn-primary main-btn"><b>Add</b></button>
-    </form>
-    ');
-    echo("</div>");
     echo("</div>");
 
     //add an announcement form
@@ -421,7 +266,7 @@ if (isset($_SESSION['user_uid'])) {
     echo("<div id='timesheet-list' class='event-list p-2' style='display: none;'>");
     echo("<h2 class='dash-header hTwo'>Upload timesheet: </h2><hr>");
     echo("<form action='php/upload-timesheet.php' method='post' id='timesheet-form' enctype='multipart/form-data'>
-    <p class='form-message'></p>
+    <p id='timesheet-msg'></p>
     <ul class='reset-list'>
     <li><input type='file' name='timesheet' id='timesheetToUpload'></li>
     </ul>
@@ -895,11 +740,10 @@ if (isset($_SESSION['user_uid'])) {
     </div>
     ");
 
-
     echo("<div class='upload-section' id='upload-section' style='display:none;'>");
     echo("
     <form action='php/upload-resume.php' method='post' id='upload-form' enctype='multipart/form-data'>
-    <p class='form-message'></p>
+    <p id='resume-msg'></p>
     <ul class='reset-list'>
     <li><input type='file' name='resume' id='fileToUpload'></li>
     </ul>

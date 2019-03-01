@@ -59,4 +59,19 @@ $(document).ready(function() {
       $('#job-rec-list-section').show();
     }
   });
+  $('#search-modWork').keyup(function(){
+    var txt = $(this).val();
+    if(txt != '')
+    {
+      $('#mod-event-list-section').hide();
+      $('#mod-event-list-section-search').show();
+      $('#mod-event-list-section-search').load('php/search-modWork.php', {
+        txt: txt
+      });
+    }
+    else{
+      $('#mod-event-list-section-search').hide();
+      $('#mod-event-list-section').show();
+    }
+  });
 });

@@ -1,13 +1,16 @@
 <?php
 session_start();
 require 'header.php';
+include 'htmlpurifier-4.10.0/library/HTMLPurifier.auto.php';
+$config = HTMLPurifier_Config::createDefault();
+$purifier = new HTMLPurifier($config);
 echo("<link href='styles/index.css' rel='stylesheet'>");
 echo("<link href='styles/carousel.css' rel='stylesheet'/>");
 echo("
 <script>
 $(document).ready(function() {
   var announcementCount = 1;
-  $('button').click(function(){
+  $('#button').click(function(){
     announcementCount += 1;
     $('#news').load('php/load-announcements.php', {
       announcementNewCount: announcementCount
@@ -38,12 +41,12 @@ $stm->execute();
 while($row = $stm->fetch(PDO::FETCH_ASSOC))
 {
   echo("<div class='my-2 p-2'>");
-  echo("<h4>" . $row["title"] . "</h4>");
-  echo("<p>" . $row["description"]);
+  echo("<h4>" . $purifier->purify($row["title"]) . "</h4>");
+  echo("<h4>" . $purifier->purify($row["description"]) . "</h4>");
   echo("<br />");
   echo("<br />");
   echo("<b>Date posted: </b>" . $row["dateStamp"]);
-  echo("</p></div><hr>");
+  echo("</div><hr>");
 }
 
 echo('

@@ -1,136 +1,136 @@
 .hero1
 {
-    grid-column: 1/-1;
-    grid-row: 1;
-    background-color: #016ba9;
+  grid-column: 1/-1;
+  grid-row: 1;
+  background-color: #016ba9;
 }
 
 .greet
 {
-    grid-area: g;
-    padding-left: 20px;
+  grid-area: g;
+  padding-left: 20px;
 }
 
 .main-btn
 {
-    width: 50%;
+  width: 50%;
 }
 
 .reset-btn
 {
-    width: 50%;
-    text-align: center;
+  width: 50%;
+  text-align: center;
 }
 
 .reset-list
 {
-    list-style-type: none;
-    padding: 0px;
+  list-style-type: none;
+  padding: 0px;
 }
 
 .reset-list li
 {
-    margin-top: 10px;
-    margin-bottom: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .dashboard-control
 {
-    grid-area: d;
+  grid-area: d;
 }
 
 .dash-control-btns
 {
-    width: 100%;
+  width: 100%;
 }
 
 .dash-control-drp
 {
-    width: 100%;
+  width: 100%;
 }
 
 .dash-control-drp select
 {
-    font-size: 22px;
+  font-size: 22px;
 }
 
 .dash-header
 {
-    padding-left: 15px;
-    padding-right: 15px;
+  padding-left: 15px;
+  padding-right: 15px;
 }
 
 .change-list
 {
-    list-style-type: none;
-    padding-left: 0px;
+  list-style-type: none;
+  padding-left: 0px;
 }
 
 .change-list li button
 {
-    width: 100%;
-    padding: 7px;
-    margin-top: 20px;
-    margin-bottom: 20px;
+  width: 100%;
+  padding: 7px;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 .change-section
 {
-    background-color: #fafafa;
+  background-color: #fafafa;
 }
 
 .control-area
 {
-    grid-area: a;
-    background-color: white;
+  grid-area: a;
+  background-color: white;
 }
 
 .event-list h3
 {
-    white-space: -moz-pre-wrap !important;  /* Mozilla, since 1999 */
-    white-space: -pre-wrap;      /* Opera 4-6 */
-    white-space: -o-pre-wrap;    /* Opera 7 */
-    white-space: pre-wrap;       /* css-3 */
-    word-wrap: break-word;       /* Internet Explorer 5.5+ */
-    white-space: -webkit-pre-wrap; /* Newer versions of Chrome/Safari*/
-    word-break: break-all;
-    white-space: normal;
+  white-space: -moz-pre-wrap !important;  /* Mozilla, since 1999 */
+  white-space: -pre-wrap;      /* Opera 4-6 */
+  white-space: -o-pre-wrap;    /* Opera 7 */
+  white-space: pre-wrap;       /* css-3 */
+  word-wrap: break-word;       /* Internet Explorer 5.5+ */
+  white-space: -webkit-pre-wrap; /* Newer versions of Chrome/Safari*/
+  word-break: break-all;
+  white-space: normal;
 }
 
 .current-info
 {
-    padding: 20px;
-    list-style-type: none;
+  padding: 20px;
+  list-style-type: none;
 }
 
 .grid
 {
-    background-color: #fafafa;
-    display: grid;
-    grid-template-rows: auto 100px auto 100px auto 100px;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    grid-template-areas:
-        "g g g g"
-        ". . . ."
-        "d d d d"
-        ". . . ."
-        "a a a a"
-        ". . . .";
+  background-color: #fafafa;
+  display: grid;
+  grid-template-rows: auto 100px auto 100px auto 100px;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-areas:
+  "g g g g"
+  ". . . ."
+  "d d d d"
+  ". . . ."
+  "a a a a"
+  ". . . .";
 }
 
 @media screen and (min-width: 1000px)
 {
-    .grid
-    {
-        display: grid;
-        grid-template-rows: auto 100px auto 100px auto 100px;
-        grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-        grid-template-areas:
-            ". g g g g g g ."
-            ". . . . . . . ."
-            ". d d d d d d ."
-            ". . . . . . . ."
-            ". a a a a a a ."
-            ". . . . . . . .";
-    }
+  .grid
+  {
+    display: grid;
+    grid-template-rows: auto 100px auto 100px auto 100px;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-areas:
+    ". g g g g g g ."
+    ". . . . . . . ."
+    ". d d d d d d ."
+    ". . . . . . . ."
+    ". a a a a a a ."
+    ". . . . . . . .";
+  }
 }

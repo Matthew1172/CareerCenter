@@ -1,3 +1,19 @@
+body
+{
+  background-color: white;
+}
+
+nav
+{
+  margin-bottom: 0px;
+}
+
+footer
+{
+  background-color: #ededed;
+  font-size: 12px;
+}
+
 .wysiwyg
 {
   overflow: scroll;
@@ -11,47 +27,36 @@
   height: 16px;
 }
 
-body
-{
-    background-color: white;
-}
-
-nav
-{
-    margin-bottom: 0px;
-}
-
-footer
-{
-    background-color: #ededed;
-    font-size: 12px;
-}
-
 .hOne
 {
   font-family: 'Muli', sans-serif;
   color: #016ba9;
 }
+
 .hTwo
 {
   font-family: 'Muli', sans-serif;
   color: #016ba9;
 }
+
 .hThree
 {
   font-family: 'Muli', sans-serif;
   color: #016ba9;
 }
+
 .hFour
 {
   font-family: 'Muli', sans-serif;
   color: #016ba9;
 }
+
 .hSix
 {
   font-family: 'Muli', sans-serif;
   color: #016ba9;
 }
+
 .pBlue
 {
   color: #016ba9;
@@ -59,127 +64,132 @@ footer
 
 .event-btn
 {
-    margin-top: 20px;
+  margin-top: 20px;
+}
+
+.rem-event-btn
+{
+  margin-top: 20px;
 }
 
 .sub-event-btn
 {
-    margin-top: 20px;
+  margin-top: 20px;
 }
 
 .show-more-container
 {
-    text-align: center;
-    padding-top: 20px;
-    padding-bottom: 20px;
+  text-align: center;
+  padding-top: 20px;
+  padding-bottom: 20px;
 }
 
 .more-btn
 {
-    width: 50%;
-    text-align: center;
+  width: 50%;
+  text-align: center;
 }
 
 .form-error
 {
-	color: red;
+  color: red;
 }
 
 .form-success
 {
-	color: green;
+  color: green;
 }
 
 .input-error
 {
-	box-shadow: 0 0 5px red;
+  box-shadow: 0 0 5px red;
 }
 
 .navbar-nav
 {
-	align-items: baseline;
+  align-items: baseline;
 }
 
 .nav-item
 {
-    padding-top: 20px;
-    padding-right: 20px;
+  padding-top: 20px;
+  padding-right: 20px;
 }
 
 .footer-head
 {
-    color: black;
-    padding-bottom: 20px;
+  color: black;
+  padding-bottom: 20px;
 }
 
 .footerOne
 {
-    grid-area: one;
-    padding: 20px;
+  grid-area: one;
+  padding: 20px;
 }
 
 .footerOne ul
 {
-    padding: 0px;
-    list-style-type: none;
+  padding: 0px;
+  list-style-type: none;
 }
 
 .footerTwo
 {
-    grid-area: two;
-    padding: 20px;
+  grid-area: two;
+  padding: 20px;
 }
 
 .footerTwo ul
 {
-    padding: 0px;
-    list-style-type: none;
+  padding: 0px;
+  list-style-type: none;
 }
 
 .footerTwo ul li
 {
-    padding-bottom: 10px;
+  padding-bottom: 10px;
 }
 
 .footerThree
 {
-    grid-area: three;
-    padding: 20px;
+  grid-area: three;
+  padding: 20px;
 }
 
 .footerCopy
 {
-    grid-area: c;
-    text-align: center;
-    margin-top: 30px;
-    margin-bottom: 0px;
-    padding-bottom: 0px;
+  grid-area: c;
+  text-align: center;
+  margin-top: 30px;
+  margin-bottom: 0px;
+  padding-bottom: 0px;
 }
 
 .footer-grid
 {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    grid-template-rows: 100px auto auto auto 100px;
-    grid-template-areas:
-    ". . . ."
-    "one one one one"
-    "two two two two"
-    "three three three three"
-    "c c c c";
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 100px auto auto auto 100px;
+  grid-template-areas:
+  ". . . ."
+  "one one one one"
+  "two two two two"
+  "three three three three"
+  "c c c c";
 }
 
 @media screen and (min-width: 1000px)
 {
-    .footer-grid
-    {
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-        grid-template-rows: 100px auto 100px;
-        grid-template-areas:
-        ". . . . . . . ."
-        ". one one two three three three ."
-        ". . . . . . . ."
-        "c c c c c c c c";
-    }
+  .footer-grid
+  {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 100px auto 100px;
+    grid-template-areas:
+    ". . . . . . . ."
+    ". one one two three three three ."
+    ". . . . . . . ."
+    "c c c c c c c c";
+  }
 }

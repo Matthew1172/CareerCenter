@@ -129,13 +129,41 @@ $(document).ready(function(){
       callback: function(result){
         if(result)
         {
+          $('#fileToUpload').removeClass('input-error');
           $.ajax({
             url: 'php/upload-resume.php', // Url to which the request is send
             type: 'POST',                 // Type of request to be send, called as method
             data: formData,               // Data sent to server, a set of key/value pairs (i.e. form fields and values)
             contentType: false,           // The content type used when sending data to the server.
             cache: false,                 // To unable request pages to be cached
-            processData:false            // To send DOMDocument or non processed data file it is set to false
+            processData:false,            // To send DOMDocument or non processed data file it is set to false
+            success(response){
+              switch(response){
+                case '1':
+                $('#fileToUpload').addClass('input-error');
+                $('#resume-msg').html('<span class="form-error">Invalid parameters.</span>');
+                break;
+                case '2':
+                $('#fileToUpload').addClass('input-error');
+                $('#resume-msg').html('<span class="form-error">No file sent.</span>');
+                break;
+                case '3':
+                $('#fileToUpload').addClass('input-error');
+                $('#resume-msg').html('<span class="form-error">Exceeded filesize limit.</span>');
+                break;
+                case '4':
+                $('#fileToUpload').addClass('input-error');
+                $('#resume-msg').html('<span class="form-error">Unknown errors.</span>');
+                break;
+                case '5':
+                $('#fileToUpload').addClass('input-error');
+                $('#resume-msg').html('<span class="form-error">Invalid file format.</span>');
+                break;
+                case '6':
+                window.location.reload();
+                break;
+              }
+            }
           });
         }
       }

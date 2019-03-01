@@ -1,5 +1,5 @@
 <?php
-if(isset($_POST['login']))
+if(isset($_POST['login']) && !isset($_SESSION['user_uid']))
 {
         require 'connect.php';
 
